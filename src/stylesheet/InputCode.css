@@ -1,0 +1,14 @@
+div.code-write {
+  width: 100%;
+  height: 50%;
+  margin: 0;
+  position: relative;
+  float: left;
+}
+textarea.code-write {
+  width: 98.5%;
+  height: 100%;
+  resize: none;
+  overflow-wrap: off;
+  background-color: white;
+}
