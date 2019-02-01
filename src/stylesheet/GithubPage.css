@@ -1,0 +1,13 @@
+div.github-page {
+  width: 10%;
+  height: 100%;
+  float: left;
+  text-align: center;
+  background-color: black;
+}
+
+a.github-address {
+  color: white;
+  vertical-align: middle;
+  text-decoration: none;
+}
