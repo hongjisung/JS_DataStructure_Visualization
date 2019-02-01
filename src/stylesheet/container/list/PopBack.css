@@ -1,0 +1,31 @@
+@keyframes ListPopBackCameOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.removing {
+  animation-name: ListPopBackCameOut;
+  animation-duration: 1s;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+}
+
+.popBackMoving {
+  animation-name: ListPopBackMove;
+  animation-delay: 1s;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes ListPopBackMove {
+  from {
+    transform: translateX(0px);
+  }
+  to {
+    transform: translateX(-85px);
+  }
+}
