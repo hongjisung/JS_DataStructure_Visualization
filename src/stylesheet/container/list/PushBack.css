@@ -1,0 +1,30 @@
+@keyframes cameOut {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.newAnimation {
+  animation-name: cameOut;
+  animation-duration: 1s;
+  animation-timing-function: ease-in;
+}
+
+.newMoving {
+  animation-name: moveBack;
+  animation-delay: 1s;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes moveBack {
+  from {
+    transform: translateX(0px);
+  }
+  to {
+    transform: translateX(85px);
+  }
+}
