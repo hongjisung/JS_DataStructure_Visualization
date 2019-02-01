@@ -1,0 +1,10 @@
+div.operation-state {
+  width: 40%;
+  height: 100%;
+  float: right;
+}
+
+.op-section {
+  vertical-align: middle;
+  color: white;
+}
