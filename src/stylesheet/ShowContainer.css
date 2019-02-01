@@ -1,0 +1,8 @@
+div.show-container {
+  width: 99.5%;
+  height: 64.3%;
+  border-width: 1px;
+  float: left;
+  border-color: black;
+  border-style: solid;
+}
