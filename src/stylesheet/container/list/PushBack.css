@@ -1,4 +1,4 @@
-@keyframes cameOut {
+@keyframes ListPushBackCameOut {
   from {
     opacity: 0;
   }
@@ -8,19 +8,19 @@
 }
 
 .newAnimation {
-  animation-name: cameOut;
+  animation-name: ListPushBackCameOut;
   animation-duration: 1s;
   animation-timing-function: ease-in;
 }
 
-.newMoving {
-  animation-name: moveBack;
+.pushBackMoving {
+  animation-name: ListPushBackMove;
   animation-delay: 1s;
   animation-duration: 1s;
   animation-fill-mode: forwards;
 }
 
-@keyframes moveBack {
+@keyframes ListPushBackMove {
   from {
     transform: translateX(0px);
   }

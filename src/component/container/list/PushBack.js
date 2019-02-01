@@ -14,7 +14,7 @@ const PushBack = ({object, params=[]}) => {
 
   // draw node
   let count = (list.size()>5)?5 : list.size();
-  express.push(<text id='back-text' className="newMoving" x={interval*count + width*(count-1)} y={40} width={30} height={15}>Back</text>)
+  express.push(<text id='back-text' className="pushBackMoving" x={interval*count + width*(count-1)} y={40} width={30} height={15}>Back</text>)
 
   while (itr !== list.rend() && count>0) {
     const data = itr.getData();
