@@ -28,7 +28,6 @@ const PopBack = ({object, params=[]}) => {
     }
     count -= 1
     itr = itr.getPrev();
-    console.log(count)
   }
 
   // draw arrow

@@ -21,7 +21,6 @@ const PushBack = ({object, params=[]}) => {
     DataNode({"key": count, "data": data.toString(), x : interval*(count) + width*(count-1), y: 50, "width": width}).map(n => express.push(n))
     count -= 1
     itr = itr.getPrev();
-    console.log(count)
   }
 
   // draw arrow
