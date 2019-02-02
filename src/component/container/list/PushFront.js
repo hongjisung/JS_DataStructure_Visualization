@@ -11,24 +11,26 @@ const PushFront = ({object, params=[]}) => {
   const newNodeArrow = []
   const width = 65;
   const interval = 20;
+  const shownodenum=7;
 
-  // draw node
-  let count = (list.size()>7)?7 : list.size();
+  let count = (list.size()>shownodenum)?shownodenum : list.size();
   if(count) {
     express.push(<text x={interval} y={40} width={30} height={15}>Front</text>)
   } else {
     express.push(<text className='pushFrontNew' x={interval} y={40} width={30} height={15}>Front</text>)
   }
-
-  while (itr !== list.end() && count>0) {
+  
+  // draw node
+  let dataitr = 1;
+  while (itr !== list.end() && count>=dataitr) {
     const data = itr.getData();
-    DataNode({"className": "front_origin", "key": count, "data": data.toString(), x : interval*(count) + width*(count-1), y: 50, "width": width}).map(n => express.push(n))
-    count -= 1
+    DataNode({"className": "front_origin", "key": dataitr, "data": data.toString(), x : interval*(dataitr) + width*(dataitr-1), y: 50, "width": width}).map(n => express.push(n))
+    dataitr += 1
     itr = itr.getNext();
   }
 
   // draw arrow
-  count = (list.size()>7)?7 : list.size();
+  count = (list.size()>shownodenum)?shownodenum : list.size();
   for (let i=1; i<count; i += 1) {
     Arrow(interval * i + width * i, 70, interval * (i+1) + width * i, 70, "front_origin").map(n => express.push(n))
     Arrow(interval * (i+1) + width * i, 80, interval * i + width * i, 80, "front_origin").map(n => express.push(n))
