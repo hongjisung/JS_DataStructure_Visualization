@@ -1,0 +1,32 @@
+@keyframes ListPopFrontMove {
+  from {
+    transform: translateX(0)
+  }
+  to {
+    transform: translateX(-85px)
+  }
+}
+
+@keyframes ListPopFrontDisappear {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.listPopFrontOrigin {
+  animation-name: ListPopFrontMove;
+  animation-delay: 1s;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.listPopFront {
+  opacity: 1;
+  animation-name: ListPopFrontDisappear;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
