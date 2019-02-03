@@ -3,7 +3,6 @@ import TopBar from './component/TopBar'
 import ShowSection from './component/ShowSection'
 import InputSection from './component/InputSection'
 import './App.css'
-import {List, Stack} from 'js_dsal'
 import testDatas from './data/testDatas'
 
 class App extends Component {

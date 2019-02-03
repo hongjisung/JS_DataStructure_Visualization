@@ -4,7 +4,7 @@ import Arrow from '../Arrow'
 import '../../../stylesheet/container/list/PushBack.css'
 
 
-const PushBack = ({nextStep=f=>f, object, params=[]}) => {
+const PushBack = ({initiate=f=>f, object, params=[]}) => {
   const list = object
   let itr = list.rbegin();
   const express = []
@@ -13,11 +13,14 @@ const PushBack = ({nextStep=f=>f, object, params=[]}) => {
   const interval = 20;
 
   // execute next code
-  setTimeout(nextStep, 2000)
+  initiate(2000)
 
   // draw node
   let count = (list.size()>5)?5 : list.size();
   express.push(<text id='back-text' className="pushBackMoving" x={interval*count + width*(count-1)} y={40} width={30} height={15}>Back</text>)
+
+  express.push(<text className='stackPushSizeDown' x={interval} y={20} width={30} height={15}>size: {list.size()}</text>)
+  express.push(<text className='stackPushSizeUp' x={interval} y={20} width={30} height={15}>size: {list.size() + 1}</text>)
 
   while (itr !== list.rend() && count>0) {
     const data = itr.getData();

@@ -3,7 +3,7 @@ import DataNode from '../DataNode'
 import '../../../stylesheet/container/stack/Push.css'
 
 
-const Push = ({nextStep=f=>f, object, params=[]}) => {
+const Push = ({initiate=f=>f, object, params=[]}) => {
   const stack = object
   const express = []
   const width = 65;
@@ -12,8 +12,8 @@ const Push = ({nextStep=f=>f, object, params=[]}) => {
   const showSize = stack.size();
 
   // execute next code
-  setTimeout(nextStep, 2000)
-  
+  initiate(2000)
+
   express.push(<text className='stackPushSizeDown' x={interval} y={20} width={30} height={15}>size: {showSize}</text>)
   express.push(<text className='stackPushSizeUp' x={interval} y={20} width={30} height={15}>size: {showSize + 1}</text>)
 

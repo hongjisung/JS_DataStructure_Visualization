@@ -3,7 +3,7 @@ import DataNode from '../DataNode'
 import Arrow from '../Arrow'
 import '../../../stylesheet/container/list/PopBack.css'
 
-const PopBack = ({nextStep=f=>f,object, params=[]}) => {
+const PopBack = ({initiate=f=>f,object, params=[]}) => {
   const list = object
   let itr = list.rbegin();
   const express = []
@@ -11,14 +11,19 @@ const PopBack = ({nextStep=f=>f,object, params=[]}) => {
   const interval = 20;
 
   // execute next code
-  setTimeout(nextStep, 2000)
+  initiate(2000)
 
   // draw node
   let count = (list.size()>5)?5 : list.size();
   if(count) {
     express.push(<text id='back-text' className="popBackMoving" x={interval*count + width*(count-1)} y={40} width={30} height={15}>Back</text>)
+    express.push(<text x={interval} y={130} width={30} height={15}>Return: true</text>)
+    express.push(<text className='stackPopSizeDown' x={interval} y={20} width={30} height={15}>size: {list.size()}</text>)
+    express.push(<text className='stackPopSizeUp' x={interval} y={20} width={30} height={15}>size: {list.size() - 1}</text>)
   } else {
     express.push(<text x={10} y={40} width={30} height={15}>error: no element but pop</text>)
+    express.push(<text x={interval} y={130} width={30} height={15}>Return: false</text>)
+    express.push(<text x={interval} y={20} width={30} height={15}>size: {list.size()}</text>)
   }
   
 

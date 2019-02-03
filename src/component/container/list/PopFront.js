@@ -4,7 +4,7 @@ import Arrow from '../Arrow'
 import '../../../stylesheet/container/list/PopFront.css'
 
 
-const PopFront = ({nextStep=f=>f, object, params=[]}) => {
+const PopFront = ({initiate=f=>f, object, params=[]}) => {
   const list = object
   let itr = list.begin();
   const express = []
@@ -13,15 +13,23 @@ const PopFront = ({nextStep=f=>f, object, params=[]}) => {
   const shownodenum = 9;
 
   // execute next code
-  setTimeout(nextStep, 2000)
+  initiate(2000)
 
   let count = (list.size()>shownodenum)?shownodenum : list.size();
   if(count>1) {
     express.push(<text x={interval} y={40} width={30} height={15}>Front</text>)
+    express.push(<text x={interval} y={130} width={30} height={15}>Return: true</text>)
+    express.push(<text className='stackPopSizeDown' x={interval} y={20} width={30} height={15}>size: {list.size()}</text>)
+    express.push(<text className='stackPopSizeUp' x={interval} y={20} width={30} height={15}>size: {list.size() - 1}</text>) 
   } else if (count === 1){
     express.push(<text className='listPopFront' x={interval} y={40} width={30} height={15}>Front</text>)
+    express.push(<text x={interval} y={130} width={30} height={15}>Return: true</text>)
+    express.push(<text className='stackPopSizeDown' x={interval} y={20} width={30} height={15}>size: {list.size()}</text>)
+    express.push(<text className='stackPopSizeUp' x={interval} y={20} width={30} height={15}>size: {list.size() - 1}</text>)
   } else {
     express.push(<text x={interval} y={40} width={30} height={15}>Error: No Data to eliminate</text>)
+    express.push(<text x={interval} y={130} width={30} height={15}>Return: false</text>)
+    express.push(<text x={interval} y={20} width={30} height={15}>size: {list.size()}</text>)
   }
   
   // draw node

@@ -4,7 +4,7 @@ import Arrow from '../Arrow'
 import '../../../stylesheet/container/list/PushFront.css'
 
 
-const PushFront = ({nextStep=f=>f, object, params=[]}) => {
+const PushFront = ({initiate=f=>f, object, params=[]}) => {
   const list = object
   let itr = list.begin();
   const express = []
@@ -14,7 +14,7 @@ const PushFront = ({nextStep=f=>f, object, params=[]}) => {
   const shownodenum=7;
 
   // execute next code
-  setTimeout(nextStep, 2000)
+  initiate(2000)
 
   let count = (list.size()>shownodenum)?shownodenum : list.size();
   if(count) {
@@ -22,6 +22,10 @@ const PushFront = ({nextStep=f=>f, object, params=[]}) => {
   } else {
     express.push(<text className='pushFrontNew' x={interval} y={40} width={30} height={15}>Front</text>)
   }
+
+  express.push(<text className='stackPushSizeDown' x={interval} y={20} width={30} height={15}>size: {list.size()}</text>)
+  express.push(<text className='stackPushSizeUp' x={interval} y={20} width={30} height={15}>size: {list.size() + 1}</text>)
+
   
   // draw node
   let dataitr = 1;
