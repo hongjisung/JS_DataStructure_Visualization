@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import '../stylesheet/ShowContainer.css'
-import * as List from './container/list'
+import std from './container'
 
 const ShowContainer = ({containerState= {}}) => {
   const objectName = containerState.object.constructor.name
@@ -12,16 +12,24 @@ const ShowContainer = ({containerState= {}}) => {
   if (objectName === 'List') {
     switch(method){
       case 'pushBack': 
-        Visualize = List.default.PushBack;
+        Visualize = std.List.PushBack;
         break;
       case 'popBack':
-        Visualize = List.default.PopBack;
+        Visualize = std.List.PopBack;
         break;
       case 'pushFront':
-        Visualize = List.default.PushFront;
+        Visualize = std.List.PushFront;
         break;
       case 'popFront':
-        Visualize = List.default.PopFront;
+        Visualize = std.List.PopFront;
+        break;
+      default:
+        Visualize = 'div';
+    }
+  } else if (objectName === 'Stack') {
+    switch(method) {
+      case 'push':
+        Visualize = std.Stack.Push;
         break;
       default:
         Visualize = 'div';

@@ -1,0 +1,73 @@
+@keyframes StackPushMove {
+  from {
+    transform: translateX(0)
+  }
+  to {
+    transform: translateX(65px)
+  }
+}
+
+@keyframes StackPushAppear {
+  20% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.stackPushMove {
+  animation-name: StackPushMove;
+  animation-delay: 1s;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.stackPushNew {
+  opacity: 0;
+  animation-name: StackPushAppear;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in;
+}
+
+@keyframes StackPushSizeDown {
+  0% {
+    opacity: 1;
+  }
+  79% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0; 
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.stackPushSizeDown {
+  animation-name: StackPushSizeDown;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes StackPushSizeUp {
+  80% {
+    opacity: 0;
+  }
+  81% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1; 
+  }
+}
+
+.stackPushSizeUp {
+  opacity: 0;
+  animation-name: StackPushSizeUp;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+}
+
