@@ -3,60 +3,46 @@ import TopBar from './component/TopBar'
 import ShowSection from './component/ShowSection'
 import InputSection from './component/InputSection'
 import './App.css'
-import {List} from 'js_dsal'
-
-const testDatas = [
-  {
-    show : `new List([1 , 3, 7, 15, -10, 6, 8])`,
-    executingCode: `li.pushBack(5)`,
-    containerState: `{"object": this.show, "method": 'pushBack', "params": [5]}`
-  },
-  {
-    show : `new List([1 , 3, 7, 15, -10, 6, 8])`,
-    executingCode: `li.popBack()`,
-    containerState: `{"object": this.show, "method": 'popBack', "params": []}`
-  },
-  {
-    show : `new List([1 , 3, 7, 15, -10, 6, 8])`,
-    executingCode: `li.pushFront(4)`,
-    containerState: `{"object": this.show, "method": 'pushFront', "params": [4]}`
-  },
-  {
-    show : `new List([1 , 3, 7, 15, -10, 6, 8])`,
-    executingCode: `li.popFront()`,
-    containerState: `{"object": this.show, "method": 'popFront', "params": []}`
-  }
-]
-
+import {List, Stack} from 'js_dsal'
+import testDatas from './data/testDatas'
 
 class App extends Component {
   constructor() {
     super()
-    this.show = new List([1, 3, 7, 15, -10, 6, 8, 100, 'dfd'])
-    this.executingCode = "li.pushFront(4)"
     this.state = {
-      dataStates: [{name: "li", value: this.show}, {name: "i", value: 3}, {name: "arr", value: [5,10,15]}],
-      containerState:{"object": this.show, "method": 'pushFront', "params": [4]},
+      dataStates: [{name: "li", value: testDatas[0].show}, {name: "i", value: 3}, {name: "arr", value: [5,10,15]}],
+      executingCode: testDatas[0].executingCode,
+      containerState: testDatas[0].containerState,
       code: ``,
       data: {},
+      testDatas: testDatas,
+      step: 0
     }
   }
 
   getCode = (code) => {
     this.setState({code})
-    console.log(this.state.code)
   }
   getData = (data) => {
     this.setState({data})
-    console.log(this.state.data)
   }
+  nextStep = () => {
+    const nextstep = this.state.step + 1
+    if (nextstep < Object.keys(this.state.testDatas).length) {
+      this.setState({
+        executingCode: this.state.testDatas[nextstep].executingCode,
+        containerState: this.state.testDatas[nextstep].containerState,
+        step: nextstep})
+    }
+  }
+
   render() {
     return (
       <div className="App">
         <TopBar github='https://github.com/hongjisung/DataStructure'
                 docLint=''
                 operationCount={{count: 0}}/>
-        <ShowSection dataStates={this.state.dataStates} executingCode = {this.executingCode} containerState={this.state.containerState}/>
+        <ShowSection  nextStep={this.nextStep} dataStates={this.state.dataStates} executingCode = {this.state.executingCode} containerState={this.state.containerState}/>
         <InputSection getCode={this.getCode} getData={this.getData}/>
       </div>
     );

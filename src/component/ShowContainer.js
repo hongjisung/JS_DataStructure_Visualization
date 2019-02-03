@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import '../stylesheet/ShowContainer.css'
 import std from './container'
 
-const ShowContainer = ({containerState= {}}) => {
+const ShowContainer = ({nextStep = f=>f, containerState= {}}) => {
   const objectName = containerState.object.constructor.name
   const method = containerState.method
   const params = containerState.params
@@ -41,7 +41,7 @@ const ShowContainer = ({containerState= {}}) => {
 
   return (
     <div className='show-container'>
-      <Visualize object={containerState.object} params = {params}/>
+      <Visualize nextStep={nextStep} object={containerState.object} params = {params}/>
     </div>
   )
 }

@@ -3,13 +3,16 @@ import DataNode from '../DataNode'
 import '../../../stylesheet/container/stack/Pop.css'
 
 
-const Pop = ({object, params=[]}) => {
+const Pop = ({nextStep=f=>f, object, params=[]}) => {
   const stack = object
   const express = []
   const width = 65;
   const interval = 20;
   const shownodenum=6;
   const showSize = stack.size();
+
+  // execute next code
+  setTimeout(nextStep, 2000)
   
   let size = (stack.size()>shownodenum)?shownodenum : stack.size();
   const lastpoint = (size>5)?5:size;

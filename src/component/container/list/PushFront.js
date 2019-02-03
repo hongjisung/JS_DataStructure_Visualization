@@ -4,7 +4,7 @@ import Arrow from '../Arrow'
 import '../../../stylesheet/container/list/PushFront.css'
 
 
-const PushFront = ({object, params=[]}) => {
+const PushFront = ({nextStep=f=>f, object, params=[]}) => {
   const list = object
   let itr = list.begin();
   const express = []
@@ -12,6 +12,9 @@ const PushFront = ({object, params=[]}) => {
   const width = 65;
   const interval = 20;
   const shownodenum=7;
+
+  // execute next code
+  setTimeout(nextStep, 2000)
 
   let count = (list.size()>shownodenum)?shownodenum : list.size();
   if(count) {

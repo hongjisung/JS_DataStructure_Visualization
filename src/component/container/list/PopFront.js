@@ -4,13 +4,16 @@ import Arrow from '../Arrow'
 import '../../../stylesheet/container/list/PopFront.css'
 
 
-const PopFront = ({object, params=[]}) => {
+const PopFront = ({nextStep=f=>f, object, params=[]}) => {
   const list = object
   let itr = list.begin();
   const express = []
   const width = 65;
   const interval = 20;
   const shownodenum = 9;
+
+  // execute next code
+  setTimeout(nextStep, 2000)
 
   let count = (list.size()>shownodenum)?shownodenum : list.size();
   if(count>1) {
@@ -25,7 +28,6 @@ const PopFront = ({object, params=[]}) => {
   let dataitr = 1;
   while (itr !== list.end() && count>=dataitr) {
     const data = itr.getData();
-    console.log(data);
     if (dataitr === 1) {
       DataNode({"className": "listPopFront", "key": dataitr, "data": data.toString(), x : interval*(dataitr) + width*(dataitr-1), y: 50, "width": width}).map(n => express.push(n))
     } else {
