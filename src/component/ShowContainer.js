@@ -31,6 +31,9 @@ const ShowContainer = ({containerState= {}}) => {
       case 'push':
         Visualize = std.Stack.Push;
         break;
+      case 'pop':
+        Visualize = std.Stack.Pop;
+        break;
       default:
         Visualize = 'div';
     }
