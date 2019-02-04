@@ -3,6 +3,14 @@ import PropTypes from 'prop-types'
 import '../stylesheet/ShowContainer.css'
 import std from './container'
 
+const NextComp = () => {
+  return (
+    <svg style={{width:"100%", height: "100%"}}>
+      <text x={20} y={50} width={200} height={40}>End this Method</text>
+    </svg>
+  )
+}
+
 class ShowContainer extends Component{
   constructor() {
     super()
@@ -65,10 +73,11 @@ class ShowContainer extends Component{
 
   initiate = (time) => {
     setTimeout(() => {
-      this.setState({Visualize: 'div'})
-      this.props.nextStep()
+      this.setState({Visualize: NextComp})
+      setTimeout(() => this.props.nextStep(), 1000)
     }, time)
   }
+
 
   render() {
     return (
