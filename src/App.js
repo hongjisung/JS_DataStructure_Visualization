@@ -27,7 +27,7 @@ class App extends Component {
   }
   nextStep = () => {
     const nextstep = this.state.step + 1
-    if (nextstep < Object.keys(this.state.testDatas).length) {
+    if (nextstep < 4){//Object.keys(this.state.testDatas).length) {
       this.setState({
         executingCode: this.state.testDatas[nextstep].executingCode,
         containerState: this.state.testDatas[nextstep].containerState,

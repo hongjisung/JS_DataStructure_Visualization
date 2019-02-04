@@ -43,6 +43,14 @@ class ShowContainer extends Component{
           break;
         default:
           this.setState({Visualize: 'div'});
+      } 
+    } else if (objectName === 'Queue') {
+      switch (method) {
+        case 'push':
+          this.setState({Visualize: std.Queue.Push});
+          break;
+        default:
+          this.setState({Visualize: 'div'});
       }
     }
   }

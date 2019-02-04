@@ -1,0 +1,69 @@
+@keyframes QueuePushMove {
+  from {
+    transform: translateX(0)
+  }
+  to {
+    transform: translateX(65px)
+  }
+}
+
+@keyframes QueuePushAppear {
+  20% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.queuePushMove {
+  animation-name: QueuePushMove;
+  animation-delay: 1s;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.queuePushEmerge {
+  opacity: 0;
+  animation-name: QueuePushAppear;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in;
+}
+
+@keyframes QueuePushDisappear {
+  99% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.queuePushDisappear {
+  opacity: 1;
+  animation-name: QueuePushDisappear;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in;
+}
+
+@keyframes QueuePushAppearNext {
+  1% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.queuePushAppearNext {
+  opacity: 0;
+  animation-name: QueuePushAppearNext;
+  animation-delay: 1s;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in;
+}
+
+
