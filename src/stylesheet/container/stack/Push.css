@@ -35,10 +35,10 @@
   0% {
     opacity: 1;
   }
-  69% {
+  49% {
     opacity: 1;
   }
-  70% {
+  50% {
     opacity: 0; 
   }
   100% {
@@ -53,10 +53,10 @@
 }
 
 @keyframes StackPushSizeUp {
-  70% {
+  50% {
     opacity: 0;
   }
-  71% {
+  51% {
     opacity: 1;
   }
   100% {
