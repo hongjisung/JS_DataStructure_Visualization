@@ -5,7 +5,11 @@ import '../stylesheet/InputCode.css'
 class InputCode extends Component {
   constructor() {
     super()
-    this.code = `import std from './js_dsal'
+    this.code = `let li = new std.List([1,2,3]);
+li.pushBack(4);
+let li2 = new std.List([2,4]);
+li.popFront();
+li2.pushBack(10);
 `
   }
   
@@ -18,6 +22,8 @@ class InputCode extends Component {
   render() {
     return (
       <div className = 'code-write'>
+        <div className = 'fixedCode'>import std from 'js_dsal</div>
+        <div className = 'fixedCode'>const data = inputDataObject</div>
         <textarea ref={input=>this.txtarea=input} className='code-write' spellCheck='false' wrap='off' defaultValue={this.code}>
         </textarea>
       </div>

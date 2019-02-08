@@ -4,11 +4,28 @@ div.code-write {
   margin: 0;
   position: relative;
   float: left;
+  border-color: black;
+  border-width: 1px;
+  border-style: solid;
 }
-textarea.code-write {
+
+div.fixedCode {
   width: 98.5%;
-  height: 100%;
+  height: 3%;
+  margin: 5px;
+  font-size: 13px;
+}
+
+textarea.code-write {
+  width: 98%;
+  height: 88%;
+  margin: 2px;
+  margin-top: 0px;
   resize: none;
   overflow-wrap: off;
   background-color: white;
+  border-color: white;
+  font-size: 13px;
+  font-family: initial;
+  outline:0px !important;
 }

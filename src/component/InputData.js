@@ -6,7 +6,9 @@ class InputData extends Component {
   constructor() {
     super()
     this.inputData = `{
-  
+  a:3,
+  b:10,
+  c:[1,2,3]
 }`
   }
 
