@@ -15,7 +15,7 @@ ex) 1,2,3,empty,empty,empty,10,6
 */
 const Push = ({initiate=f=>f, object, params=[]}) => {
   const queue = new Queue();
-  queue._elements = new Array();
+  queue._elements = [];
   object._elements.map(n => queue._elements.push(n))
   queue._size = object._size
   queue._maxSize = object._maxSize
