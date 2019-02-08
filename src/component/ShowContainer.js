@@ -11,11 +11,18 @@ const NextComp = () => {
   )
 }
 
+const CodeComp = ({executing}) => {
+  return (
+    <div className='codeText'>{executing}</div>
+  )
+}
+
 class ShowContainer extends Component{
   constructor() {
     super()
     this.state = {
-      Visualize: 'div'
+      Visualize: 'div',
+      Executing: CodeComp
     }
   }
 
@@ -27,38 +34,38 @@ class ShowContainer extends Component{
     if (objectName === 'List') {
       switch(method){
         case 'pushBack': 
-          this.setState({Visualize: std.List.PushBack});
+          this.setState({Visualize: std.List.PushBack, Executing: CodeComp});
           break;
         case 'popBack':
-          this.setState({Visualize: std.List.PopBack});
+          this.setState({Visualize: std.List.PopBack, Executing: CodeComp});
           break;
         case 'pushFront':
-          this.setState({Visualize: std.List.PushFront});
+          this.setState({Visualize: std.List.PushFront, Executing: CodeComp});
           break;
         case 'popFront':
-          this.setState({Visualize: std.List.PopFront});
+          this.setState({Visualize: std.List.PopFront, Executing: CodeComp});
           break;
         default:
-          this.setState({Visualize: 'div'});
+          this.setState({Visualize: 'div', Executing: CodeComp});
       }
     } else if (objectName === 'Stack') {
       switch(method) {
         case 'push':
-          this.setState({Visualize: std.Stack.Push});
+          this.setState({Visualize: std.Stack.Push, Executing: CodeComp});
           break;
         case 'pop':
-          this.setState({Visualize: std.Stack.Pop});
+          this.setState({Visualize: std.Stack.Pop, Executing: CodeComp});
           break;
         default:
-          this.setState({Visualize: 'div'});
+          this.setState({Visualize: 'div', Executing: CodeComp});
       } 
     } else if (objectName === 'Queue') {
       switch (method) {
         case 'push':
-          this.setState({Visualize: std.Queue.Push});
+          this.setState({Visualize: std.Queue.Push, Executing: CodeComp});
           break;
         default:
-          this.setState({Visualize: 'div'});
+          this.setState({Visualize: 'div', Executing: CodeComp});
       }
     }
   }
@@ -71,9 +78,10 @@ class ShowContainer extends Component{
     this.setVisualize(nextProps)
   }
 
+  // 마지막 선택에서는 svg를 초기화 하지않도록 한다.
   initiate = (time) => {
     setTimeout(() => {
-      this.setState({Visualize: NextComp})
+      this.setState({Visualize: NextComp, Executing: 'div'})
       setTimeout(() => this.props.nextStep(), 1000)
     }, time)
   }
@@ -82,7 +90,12 @@ class ShowContainer extends Component{
   render() {
     return (
       <div className='show-container'>
+        <div className='text-show2'>컨테이너 상태</div>
+        <div className='text-show3'>실행코드: </div>
+        <this.state.Executing executing = {this.props.executingCode} />
+        <div className='drawing'>
         <this.state.Visualize initiate={this.initiate} object={this.props.containerState.object} params = {this.params}/>
+        </div>
       </div>
     )
   }
@@ -90,12 +103,14 @@ class ShowContainer extends Component{
 
 ShowContainer.propTypes = {
   nextStep: PropTypes.func,
-  containerState: PropTypes.object
+  containerState: PropTypes.object,
+  executingCode: PropTypes.string
 }
 
 ShowContainer.defaultProps = {
   nexStep: f=>f,
-  containerState: {}
+  containerState: {},
+  executingCode: ''
 }
 
 export default ShowContainer

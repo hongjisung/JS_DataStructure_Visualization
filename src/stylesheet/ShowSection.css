@@ -15,23 +15,3 @@ div.text-show1 {
   text-align: middle;
 }
 
-div.text-show2 {
-  width: 40%;
-  height: 4.2%;
-  margin:0;
-  margin-top: 3%;
-  float:left;
-  position: relative;
-  text-align: middle;
-}
-
-
-div.text-show3 {
-  width: 55%;
-  height: 4.2%;
-  margin:0;
-  margin-top: 3%;
-  float:right;
-  position: relative;
-  text-align: middle;
-}
