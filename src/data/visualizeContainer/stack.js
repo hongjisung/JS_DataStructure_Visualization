@@ -44,9 +44,8 @@ class Stack {
    * Push a data in stack.
    * @param {*} data - The data pushed to stack.
    */
-  push(variableName='', variables={}, visualizeDatas=[], executingCode='', data) {
-    visualizeDatas.push({dataStates: Object.keys(variables).map(n => { return {name: n, value: variables[n]}}), 
-          executingCode: executingCode.trim(), containerState: {object: this, method: 'push', params: [data]}}) 
+  push(variableName='', dataStates=[], visualizeDatas=[], executingCode='', data) {
+    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'push', params: [data]}}) 
     this.stack.push(data);
   }
 
@@ -54,9 +53,8 @@ class Stack {
    * pop the top elements
    * @return {boolean} false if the stack is empty.
    */
-  pop(variableName='', variables={}, visualizeDatas=[], executingCode='') {
-    visualizeDatas.push({dataStates: Object.keys(variables).map(n => { return {name: n, value: variables[n]}}), 
-          executingCode: executingCode.trim(), containerState: {object: this, method: 'pop', params: []}}) 
+  pop(variableName='', dataStates=[], visualizeDatas=[], executingCode='') {
+    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'pop', params: []}}) 
     return this.stack.pop();
   }
 
@@ -71,9 +69,12 @@ class Stack {
   }
 
 
+  // new method
   copy() {
     return new Stack(this);
   }
+  make = (data) => new Stack(data)
 }
+
 
 export default Stack;

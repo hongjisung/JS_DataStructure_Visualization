@@ -2,14 +2,38 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import '../stylesheet/InputCode.css'
 
+const dump =`
+a.push();
+a.push().push();
+a.dfs()().bc().pushBack();
+abc.def.cd()
+abc.def().cde.pushBack();
+abc[].push()
+abc.push(dec.push())
+if(ab.pop())
+`
+
 class InputCode extends Component {
   constructor() {
     super()
     this.code = `let li = new std.List([1,2,3]);
-li.pushBack(4);
 let li2 = new std.List([2,4]);
+let getSize;
+li.pushBack(4);
 li.popFront();
 li2.pushBack(10);
+
+for(let i=5; i<10; i+=1) {
+  li.pushBack(i);
+}
+
+getSize = (li) => {
+  return li.size();
+ }
+
+li2.pushBack(getSize(li));
+
+li.pushBack('((((((');
 `
   }
   

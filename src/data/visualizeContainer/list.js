@@ -120,9 +120,8 @@ class List {
    * The data is added to end of list.
    * @param {*} data - the data of list.
    */
-  pushBack(variableName='', variables={}, visualizeDatas=[], executingCode='', data) {
-    visualizeDatas.push({dataStates: Object.keys(variables).map(n => { return {name: n, value: variables[n]}}), 
-          executingCode: executingCode.trim(), containerState: {object: this, method: 'pushBack', params: [data]}})  
+  pushBack(variableName='', dataStates=[], visualizeDatas=[], executingCode='', data) {
+    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'pushBack', params: [data]}})  
     this.list.pushBack(data);
   }
 
@@ -130,9 +129,8 @@ class List {
    * The data is added to front of list.
    * @param {*} data - the data of list.
    */
-  pushFront(variableName='', variables={}, visualizeDatas=[], executingCode='', data) {
-    visualizeDatas.push({dataStates: Object.keys(variables).map(n => { return {name: n, value: variables[n]}}), 
-          executingCode: executingCode.trim(), containerState: {object: this, method: 'pushFront', params: [data]}}) 
+  pushFront(variableName='', dataStates=[], visualizeDatas=[], executingCode='', data) {
+    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'pushFront', params: [data]}}) 
     this.list.pushFront(data);
   }
 
@@ -140,9 +138,8 @@ class List {
    * The data is removed from end of list.
    * @returns {boolean} false it the list is empty.
    */
-  popBack(variableName='', variables={}, visualizeDatas=[], executingCode='') {
-    visualizeDatas.push({dataStates: Object.keys(variables).map(n => { return {name: n, value: variables[n]}}), 
-          executingCode: executingCode.trim(), containerState: {object: this, method: 'popBack', params: []}}) 
+  popBack(variableName='', dataStates=[], visualizeDatas=[], executingCode='') {
+    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'popBack', params: []}}) 
     return this.list.popBack();
   }
 
@@ -150,9 +147,8 @@ class List {
    * The data is removed from front of list.
    * @returns {boolean} false it the list is empty.
    */
-  popFront(variableName='', variables={}, visualizeDatas=[], executingCode='') {
-    visualizeDatas.push({dataStates: Object.keys(variables).map(n => { return {name: n, value: variables[n]}}), 
-          executingCode: executingCode.trim(), containerState: {object: this, method: 'popFront', params: []}}) 
+  popFront(variableName='', dataStates=[], visualizeDatas=[], executingCode='') {
+    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'popFront', params: []}}) 
     return this.list.popFront();
   }
 
@@ -233,9 +229,11 @@ class List {
     return iterator;
   }
 
+  // new method
   copy() {
     return new List(this);
   }
+  make = (data) => new List(data);
 }
 
 
