@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "js_dsal": "file:../../../js_DataStructure",
+    "js_dsal": "git+https://github.com/hongjisung/DataStructure.git",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-scripts": "2.1.3"
