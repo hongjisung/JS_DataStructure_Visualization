@@ -45,7 +45,7 @@ class Stack {
    * @param {*} data - The data pushed to stack.
    */
   push(variableName='', dataStates=[], visualizeDatas=[], executingCode='', data) {
-    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'push', params: [data]}}) 
+    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'push', params: [data]}}); 
     this.stack.push(data);
   }
 
@@ -54,7 +54,7 @@ class Stack {
    * @return {boolean} false if the stack is empty.
    */
   pop(variableName='', dataStates=[], visualizeDatas=[], executingCode='') {
-    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'pop', params: []}}) 
+    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'pop', params: []}});
     return this.stack.pop();
   }
 
@@ -73,7 +73,7 @@ class Stack {
   copy() {
     return new Stack(this);
   }
-  make = (data) => new Stack(data)
+  make = (data) => new Stack(data);
 }
 
 

@@ -121,7 +121,7 @@ class List {
    * @param {*} data - the data of list.
    */
   pushBack(variableName='', dataStates=[], visualizeDatas=[], executingCode='', data) {
-    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'pushBack', params: [data]}})  
+    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'pushBack', params: [data]}}); 
     this.list.pushBack(data);
   }
 
@@ -130,7 +130,7 @@ class List {
    * @param {*} data - the data of list.
    */
   pushFront(variableName='', dataStates=[], visualizeDatas=[], executingCode='', data) {
-    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'pushFront', params: [data]}}) 
+    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'pushFront', params: [data]}}); 
     this.list.pushFront(data);
   }
 
@@ -139,7 +139,7 @@ class List {
    * @returns {boolean} false it the list is empty.
    */
   popBack(variableName='', dataStates=[], visualizeDatas=[], executingCode='') {
-    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'popBack', params: []}}) 
+    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'popBack', params: []}});
     return this.list.popBack();
   }
 
@@ -148,7 +148,7 @@ class List {
    * @returns {boolean} false it the list is empty.
    */
   popFront(variableName='', dataStates=[], visualizeDatas=[], executingCode='') {
-    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'popFront', params: []}}) 
+    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'popFront', params: []}});
     return this.list.popFront();
   }
 
