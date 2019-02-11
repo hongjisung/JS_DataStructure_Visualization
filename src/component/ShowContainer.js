@@ -64,6 +64,9 @@ class ShowContainer extends Component{
         case 'push':
           this.setState({Visualize: std.Queue.Push, Executing: CodeComp});
           break;
+        case 'pop':
+          this.setState({Visualize: std.Queue.Pop, Executing: CodeComp});
+          break;
         default:
           this.setState({Visualize: 'div', Executing: CodeComp});
       }

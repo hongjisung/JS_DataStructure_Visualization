@@ -10,37 +10,39 @@ class App extends Component {
   constructor() {
     super()
     this.testDatas =  testDatas
+    const start = 0;
     this.state = {
       dataStates: [],
       executingCode: '',
       containerState: {object:'', method: '', params:[]},
-      // executingCode: testDatas[0].executingCode,
-      // containerState: testDatas[0].containerState,
+      step: -1,
+      // executingCode: testDatas[start].executingCode,
+      // containerState: testDatas[start].containerState,
+      // step: start,
       code: ``,
       data: {},
-      step: -1,
+      stop: false,
     }
-    eval('const test = 3')
   }
 
   getCode = (code) => {
-    this.setState({code, step: -1})//, checkCall: this.state.checkCall + 1})
+    this.setState({code, step: -1, stop: true})//, checkCall: this.state.checkCall + 1})
   }
   getData = (data) => {
-    this.setState({data, step: -1})//, checkCall: this.state.checkCall + 1})
+    this.setState({data, step: -1, stop: true})//, checkCall: this.state.checkCall + 1})
   }
 
   // 여기서 data와 code로 파싱한다음 nextStep 함수를 호출한다.
   componentWillUpdate(nexpProps, nextState) {
-    if(this.state.code ===`` && this.state.code !== nextState.code && this.state.data !== nextState.data) {
+    if((this.state.code ===`` && this.state.code !== nextState.code && this.state.data !== nextState.data)) {
       // 파싱
       this.testDatas = parsing({inputCode: nextState.code, inputData: nextState.data});
       console.log(this.testDatas)
-      this.nextStep();
+      this.nextStep(true);
     }
   }
 
-  nextStep = () => {
+  nextStep = (initiate = false) => {
     const nextstep = this.state.step + 1
     const lastvalue = this.testDatas.length
     if (nextstep < lastvalue) {
