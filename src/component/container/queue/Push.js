@@ -14,13 +14,14 @@ ex) 1,2,3,empty,empty,empty,10,6
 4) empty
 */
 const Push = ({initiate=f=>f, object, params=[]}) => {
+  const origin = object.queue;
   const queue = new Queue();
   queue._elements = [];
-  object._elements.map(n => queue._elements.push(n))
-  queue._size = object._size
-  queue._maxSize = object._maxSize
-  queue._begin = object._begin
-  queue._end = object._end
+  origin._elements.map(n => queue._elements.push(n))
+  queue._size = origin._size
+  queue._maxSize = origin._maxSize
+  queue._begin = origin._begin
+  queue._end = origin._end
 
   const textSvg = [];
   const endSvg = [];
@@ -50,11 +51,12 @@ const Push = ({initiate=f=>f, object, params=[]}) => {
   // end and node svg
   let showSize = (queue.size() && queue._end + 1>shownodenum) ? shownodenum : queue._end + 1;
   let lastpoint = (queue.size() && queue._end + 1>5) ? 5 : queue._end + 1;
+  let showMax = 13;
   if(nodeSize === maxSize) {
     // full
     // erase node and end
-    endSvg.push(<text className='queuePushDisappear' x={interval + width*(lastpoint - 1)} y={40} width={30} height={15}>End</text>)
-    let total = 13;
+    endSvg.push(<text className='queuePushDisappear' x={interval + width*(lastpoint - 1)} y={40} width={30} height={15}>Back</text>)
+    let total = showMax;
     let idx = 0;
     // front nodes of base
     while(total > 0 && queue._end - idx >= 0 && showSize > idx) {
@@ -87,8 +89,8 @@ const Push = ({initiate=f=>f, object, params=[]}) => {
     nodeSize = queue.size()
     maxSize = queue._maxSize;
 
-    endSvg.push(<text className='queuePushAppearNext' x={interval + width*(lastpoint - 1)} y={40} width={30} height={15}>End</text>)
-    total = 13;
+    endSvg.push(<text className='queuePushAppearNext' x={interval + width*(lastpoint - 1)} y={40} width={30} height={15}>Back</text>)
+    total = showMax;
     idx = 0;
     // front nodes of base
     while(total > 0 && queue._end - idx >= 0 && showSize > idx) {
@@ -117,8 +119,8 @@ const Push = ({initiate=f=>f, object, params=[]}) => {
   } else if (queue._end === maxSize - 1){
     // not full, last
     // back node and end
-    endSvg.push(<text className='queuePushDisappear' x={interval + width*(lastpoint - 1)} y={40} width={30} height={15}>End</text>)
-    let total = 13;
+    endSvg.push(<text className='queuePushDisappear' x={interval + width*(lastpoint - 1)} y={40} width={30} height={15}>Back</text>)
+    let total = showMax;
     let idx = 0;
     while(total > 0 && queue._end - idx >= 0 && showSize > idx) {
       const data = queue._elements[queue._end - idx]
@@ -132,9 +134,9 @@ const Push = ({initiate=f=>f, object, params=[]}) => {
     }
 
     // front node and end
-    total = 13;
+    total = showMax;
     idx = 0;
-    endSvg.push(<text className='queuePushAppearNext' x={interval} y={40} width={30} height={15}>End</text>)
+    endSvg.push(<text className='queuePushAppearNext' x={interval} y={40} width={30} height={15}>Back</text>)
     while(total - idx > 0 && idx <= queue._end) {
       const data = queue._elements[idx]
       if (idx >= queue._begin) {
@@ -152,16 +154,16 @@ const Push = ({initiate=f=>f, object, params=[]}) => {
     DataNode({"color": "gray", x : interval, y: 50, "width": width}).map(n => nodeSvg.push(n))
     DataNode({"color": "gray", x : interval + width, y: 50, "width": width}).map(n => nodeSvg.push(n))
       
-    endSvg.push(<text className='queuePushEmerge' x={interval} y={40} width={30} height={15}>end</text>)
+    endSvg.push(<text className='queuePushEmerge' x={interval} y={40} width={30} height={15}>Back</text>)
     DataNode({"className": 'queuePushEmerge',"data": params[0].toString(), x : interval, y: 50, "width": width}).map(n => nodeSvg.push(n))
   
   } else {
     // not full, not last
     // end
-    endSvg.push(<text className='queuePushMove' x={interval + width*(lastpoint - 1)} y={40} width={30} height={15}>End</text>)
+    endSvg.push(<text className='queuePushMove' x={interval + width*(lastpoint - 1)} y={40} width={30} height={15}>Back</text>)
     
     // node
-    let total = 13;
+    let total = showMax;
     let idx = 0;
     // front nodes of base
     while(total > 0 && queue._end - idx >= 0 && showSize > idx) {
