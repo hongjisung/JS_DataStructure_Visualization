@@ -1,10 +1,10 @@
 import React from 'react'
 import DataNode from '../DataNode'
 import '../../../stylesheet/container/stack/Push.css'
-
+import {Stack} from 'js_dsal'
 
 const Push = ({initiate=f=>f, object, params=[]}) => {
-  const stack = object
+  const stack = new Stack(object.stack)
   const express = []
   const width = 65;
   const interval = 20;

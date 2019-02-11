@@ -1,10 +1,11 @@
 import React from 'react'
 import DataNode from '../DataNode'
 import '../../../stylesheet/container/stack/Pop.css'
+import {Stack} from 'js_dsal'
 
 
 const Pop = ({initiate=f=>f, object, params=[]}) => {
-  const stack = object
+  const stack = new Stack(object.stack)
   const express = []
   const width = 65;
   const interval = 20;
