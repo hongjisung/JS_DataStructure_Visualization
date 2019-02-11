@@ -22,7 +22,7 @@ class ShowContainer extends Component{
     super()
     this.state = {
       Visualize: 'div',
-      Executing: CodeComp
+      Executing: CodeComp,
     }
   }
 
@@ -73,22 +73,34 @@ class ShowContainer extends Component{
     }
   }
 
+
   componentWillMount() {
     this.setVisualize(this.props)
   }
 
   componentWillReceiveProps(nextProps) {
+    if (this.props.submitStack !== nextProps.submitStack) {
+      clearTimeout(this.sto1);
+      clearTimeout(this.sto2);
+      console.log('stop setTimeouts')
+    }
+    if (nextProps.step && this.props.step + 1 !== nextProps.step) {
+      return false;
+    }
     this.setVisualize(nextProps)
+    return true;
   }
 
   // 마지막 선택에서는 svg를 초기화 하지않도록 한다.
   initiate = (time) => {
-    setTimeout(() => {
+    const submitStack = this.props.submitStack;
+    console.log('call initiate')
+    console.log(this.props.containerState.object)
+    this.sto1 = setTimeout(() => {
       this.setState({Visualize: NextComp, Executing: 'div'})
-      setTimeout(() => this.props.nextStep(), 1000)
+      this.sto2 = setTimeout(() => this.props.nextStep(submitStack), 1000)
     }, time)
   }
-
 
   render() {
     return (
@@ -97,6 +109,7 @@ class ShowContainer extends Component{
         <div className='text-show3'>실행코드: </div>
         <this.state.Executing executing = {this.props.executingCode} />
         <div className='drawing'>
+        {console.log('out: ', this.props.containerState.object)}
         <this.state.Visualize initiate={this.initiate} object={this.props.containerState.object} params = {this.params}/>
         </div>
       </div>
@@ -105,12 +118,16 @@ class ShowContainer extends Component{
 }
 
 ShowContainer.propTypes = {
+  step: PropTypes.number,
+  submitStack: PropTypes.number,
   nextStep: PropTypes.func,
   containerState: PropTypes.object,
   executingCode: PropTypes.string
 }
 
 ShowContainer.defaultProps = {
+  step: 0,
+  submitStack: 0,
   nexStep: f=>f,
   containerState: {},
   executingCode: ''
