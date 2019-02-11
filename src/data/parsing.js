@@ -59,6 +59,9 @@ const parsing = ({inputCode='', inputData=''}) => {
   const visualizeDatas = [];
   const constructors = {'List': new std.List(),
     'Stack': new std.Stack(),
+    'Queue': new std.Queue(),
+    'Deque': new std.Deque(),
+    'PriorityQueue': new std.PriorityQueue()
   }; 
   
   // data에 값 할당
@@ -79,29 +82,6 @@ const parsing = ({inputCode='', inputData=''}) => {
   inputCode = constructorTransition(inputCode, constructors)
   
   console.log(inputCode)
-
-  console.log(constructors["List"])
-//   eval(`let li = constructors["List"].make([1,2,3]);
-//   let li2 = constructors["List"].make([2,4]);
-//   const getSize = (li) => {
-//     return li.size()
-//   }
-//   let sz
-  
-//   ((collectionName[li.constructor.name]!==undefined)?li.pushBack("li", variables.filter(n => eval("typeof("+n+")") !== "undefined").map(n => {return{name: n, value: eval(n)}}),visualizeDatas,"li.pushBack(4)",4):li.pushBack(4));
-//   ((collectionName[li.constructor.name]!==undefined)?li.popFront("li", variables.filter(n => eval("typeof("+n+")") !== "undefined").map(n => {return{name: n, value: eval(n)}}),visualizeDatas,"li.popFront()",):li.popFront());
-//   ((collectionName[li2.constructor.name]!==undefined)?li2.pushBack("li2", variables.filter(n => eval("typeof("+n+")") !== "undefined").map(n => {return{name: n, value: eval(n)}}),visualizeDatas,"li2.pushBack(10)",10):li2.pushBack(10));
-  
-//   for(let i=5; i<10; i+=1) {
-//     ((collectionName[li.constructor.name]!==undefined)?li.pushBack("li", variables.filter(n => eval("typeof("+n+")") !== "undefined").map(n => {return{name: n, value: eval(n)}}),visualizeDatas,"li.pushBack(i)",i):li.pushBack(i))
-//   }
-  
-//   sz = getSize(li);
-  
-//   //((collectionName[li2.constructor.name]!==undefined)?li2.pushBack("li2", [variables.filter(n => eval("typeof("+n+")") !== "undefined").map(n => {return{name: n, value: eval(n)}})],visualizeDatas,"li2.pushBack(sz)",sz):li2.pushBack(sz))
-  
-//   ((collectionName[li.constructor.name]!==undefined)?li.pushBack("li", variables.filter(n => eval("typeof("+n+")") !== "undefined").map(n => {return{name: n, value: eval(n)}}),visualizeDatas,"li.pushBack('((((((')",'(((((('):li.pushBack('(((((('))
-// `)
 
   eval(inputCode)
   return visualizeDatas
