@@ -21,7 +21,8 @@ class App extends Component {
       // step: start,
       code: ``,
       data: {},
-      submitStack: 0 // this is for stop the executing process now.
+      submitStack: 0, // this is for stop the executing process now.
+      stopShow: false,
     }
   }
 
@@ -32,7 +33,9 @@ class App extends Component {
       containerState: {object:'', method: '', params:[]},
       code, 
       step: -1, 
-      submitStack: this.state.submitStack+1})
+      submitStack: this.state.submitStack+1,
+      stopShow:false
+    })
   }
   getData = (data) => {
     this.setState({
@@ -41,7 +44,9 @@ class App extends Component {
       containerState: {object:'', method: '', params:[]},
       data, 
       step: -1, 
-      submitStack: this.state.submitStack+1})
+      submitStack: this.state.submitStack+1,
+      stopShow: false
+    })
   }
 
   // 여기서 data와 code로 파싱한다음 nextStep 함수를 호출한다.
@@ -59,8 +64,12 @@ class App extends Component {
   }
 
   nextStep = (submitStack, state = this.state) => {
+    if (this.state.stopShow) {
+      return;
+    }
+    
     const nextstep = state.step + 1
-    const lastvalue = this.testDatas.length
+    const lastvalue = this.testDatas.length 
     console.log("stack: ",submitStack, state.submitStack)
     console.log("step: ", nextstep, lastvalue)
       
@@ -76,9 +85,14 @@ class App extends Component {
         containerState: {object:'', method: '', params:[]},
         code:``,
         data:{},
-        step: -1
+        step: -1,
+        stopShow: false
       })
     }
+  }
+
+  changeStop = () => {
+    this.setState({stopShow: !this.state.stopShow})
   }
 
   render() {
@@ -87,7 +101,7 @@ class App extends Component {
         <TopBar github='https://github.com/hongjisung/DataStructure'
                 docLint=''
                 operationCount={{count: 0}}/> 
-        <ShowSection step={this.state.step} submitStack={this.state.submitStack} nextStep={this.nextStep} dataStates={this.state.dataStates} executingCode = {this.state.executingCode} containerState={this.state.containerState}/>
+        <ShowSection changeStop={this.changeStop} stopShow = {this.state.stopShow} step={this.state.step} submitStack={this.state.submitStack} nextStep={this.nextStep} dataStates={this.state.dataStates} executingCode = {this.state.executingCode} containerState={this.state.containerState}/>
         <InputSection getCode={this.getCode} getData={this.getData}/>
       </div>
     );

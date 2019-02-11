@@ -79,14 +79,30 @@ class ShowContainer extends Component{
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.submitStack !== nextProps.submitStack) {
+    // stopShow: true -> false , do rendering
+    if (!nextProps.stopShow && this.props.stopShow) {
+      console.log('true -> false')
+      this.setVisualize(this.props)
+      return true;
+    }
+    
+    // if submit times are different or next stopShow is true, then clear timeout
+    if (this.props.submitStack !== nextProps.submitStack || nextProps.stopShow) {
       clearTimeout(this.sto1);
       clearTimeout(this.sto2);
       console.log('stop setTimeouts')
     }
+
+    // if next stopShow is false, then stop rendering
+    if (nextProps.stopShow) {
+      return false;
+    }
+
+    // if next step is middle of animation and not sequential, then stop rendering
     if (nextProps.step && this.props.step + 1 !== nextProps.step) {
       return false;
     }
+
     this.setVisualize(nextProps)
     return true;
   }
@@ -118,6 +134,7 @@ class ShowContainer extends Component{
 }
 
 ShowContainer.propTypes = {
+  stopShow: PropTypes.bool,
   step: PropTypes.number,
   submitStack: PropTypes.number,
   nextStep: PropTypes.func,
@@ -126,6 +143,7 @@ ShowContainer.propTypes = {
 }
 
 ShowContainer.defaultProps = {
+  stopShow: false,
   step: 0,
   submitStack: 0,
   nexStep: f=>f,
