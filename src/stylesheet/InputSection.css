@@ -14,10 +14,57 @@ div.text-input1 {
   text-align: middle;
 }
 
+.precaution {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  float: left;
+  margin: 0;
+  margin-top: 1.5%;
+  position: relative;
+  border: none;
+  cursor: pointer;
+  background-size: cover;
+  outline:0px !important;
+}
+
+.cautionImg {
+  width: 22px;
+  height: 22px;
+  display: block;
+  float: left;
+}
+
+
+.coverDom {
+  width: 1000%;
+  height: 1000%;
+  top:0;
+  left:0;
+  right:0;
+  bottom: 0;
+  position: fixed;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.cautionContent {
+  width: 400px;
+  height: 300px;
+  top: 25%;
+  left: 25%;
+  right: 25%;
+  bottom: 25%;
+  position: fixed;
+  background-color: white;
+}
+
 button.input-button {
   margin-top: 1.5%;
   float: right;
   text-align: middle;
+  border: none;
+  background-color: white;
+  cursor: pointer;
 }
 
 div.text-input2 {
