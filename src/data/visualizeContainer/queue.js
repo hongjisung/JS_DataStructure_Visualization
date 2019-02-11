@@ -89,7 +89,14 @@ class Queue {
 
   //new method
   copy() {
-    return new Queue(this);
+    const output = new Queue();
+    output.queue._elements = [];
+    this.queue._elements.map(n => output.queue._elements.push(n))
+    output.queue._size = this.queue._size
+    output.queue._maxSize = this.queue._maxSize
+    output.queue._begin = this.queue._begin
+    output.queue._end = this.queue._end
+    return output;
   }
   
   make(data) {
@@ -97,4 +104,4 @@ class Queue {
   }
 }
 
-module.exports = Queue;
+export default Queue;
