@@ -71,7 +71,7 @@ class Stack {
 
   // new method
   copy() {
-    return new Stack(this);
+    return new Stack(this.stack);
   }
   make = (data) => new Stack(data);
 }

@@ -231,7 +231,7 @@ class List {
 
   // new method
   copy() {
-    return new List(this);
+    return new List(this.list);
   }
   make = (data) => new List(data);
 }
