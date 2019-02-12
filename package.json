@@ -12,8 +12,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "ionic:build": "node --max-old-space-size=8192 --stack-size=1968 node_modules/@ionic/app-scripts/bin/ionic-app-scripts.js build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
