@@ -24,7 +24,7 @@ const ShowDatas = ({dataStates = []}) => {
         })}
         {dataStates.map((data,i) => {
           return (
-            <text key={i} x={12*(i+1) + width*i} y="50" width={width} height="20">{(typeof data.value === 'object'?data.value.constructor.name.substring(0, 6): (typeof data.value).substring(0, 6))}</text>
+            <text key={i} x={12*(i+1) + width*i} y="50" width={width} height="20">{(typeof data.value === 'object' ? ((data.value.classname !== undefined) ? data.value.classname.substring(0,6) : data.value.constructor.name.substring(0, 6)) : (typeof data.value).substring(0, 6))}</text>
           )
         })}
       </svg>
