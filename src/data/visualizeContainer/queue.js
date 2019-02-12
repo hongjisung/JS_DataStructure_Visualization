@@ -74,10 +74,6 @@ class Queue {
    * @return {boolean} If queue is empty, return false.
    */
   pop(variableName='', dataStates=[], visualizeDatas=[], executingCode='') {
-    console.log(variableName)
-    console.log(dataStates)
-    console.log(visualizeDatas)
-    console.log(executingCode)
     visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'pop', params: []}});
     return this.queue.pop();
   }

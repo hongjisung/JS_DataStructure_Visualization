@@ -71,7 +71,6 @@ const parsing = ({inputCode='', inputData=''}) => {
   const variables = findVariables(inputCode);
   console.log(variables)
 
-  console.log(collectionName)
   
   // code 변환
   inputCode = codeTransition(inputCode)
@@ -80,20 +79,8 @@ const parsing = ({inputCode='', inputData=''}) => {
   // new 변환
   inputCode = constructorTransition(inputCode, constructors)
   
-  console.log(inputCode)
-
-  let test;
-  let testst;
-  inputCode += '\n test=qu;'
-  inputCode += '\n testst=st;'
-  
+  console.log(inputCode)  
   eval(inputCode)
-  
-  console.log("test result: ", test)
-  console.log("test name: ", test.constructor.name)
-  console.log("testst result: ", testst)
-  console.log("testst name: ", testst.constructor.name)
-
   return visualizeDatas
 }
 
