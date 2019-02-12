@@ -24,6 +24,7 @@ class ShowContainer extends Component{
       Visualize: 'div',
       Executing: CodeComp,
     }
+    this.showstep = 0;
   }
 
   setVisualize = (props) => {
@@ -73,38 +74,55 @@ class ShowContainer extends Component{
     }
   }
 
-
-  componentWillMount() {
-    this.setVisualize(this.props)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // stopShow: true -> false , do rendering
-    if (!nextProps.stopShow && this.props.stopShow) {
-      console.log('true -> false')
-      this.setVisualize(this.props)
+  shouldComponentUpdate(nextProps, nextState) {
+    // if state change, return true;
+    if (this.state !== nextState) {
+      console.log(this.state)
+      console.log(nextState)
       return true;
     }
-    
-    // if submit times are different or next stopShow is true, then clear timeout
-    if (this.props.submitStack !== nextProps.submitStack || nextProps.stopShow) {
+
+    // stopShow: true->false, do rendering
+    if (this.props.stopShow && !nextProps.stopShow) {
+      console.log('true -> false')
+      this.setVisualize(nextProps)
+      return false;
+    }
+
+    // if next stopShow is true, clear timeout and change Visualize to NextComp
+    if (!this.props.stopShow && nextProps.stopShow) {
       clearTimeout(this.sto1);
       clearTimeout(this.sto2);
-      console.log('stop setTimeouts')
-    }
-
-    // if next stopShow is false, then stop rendering
-    if (nextProps.stopShow) {
+      console.log('clear timeout, stopShow true');
+      // if (this.setState.Visualize === NextComp) {
+      //   return true;
+      // }
+      this.setState({Visualize: NextComp});
       return false;
     }
 
-    // if next step is middle of animation and not sequential, then stop rendering
-    if (nextProps.step && this.props.step + 1 !== nextProps.step) {
+    // if submitTimeout is different and not first method, clear timeout 
+    if (this.props.submitStack !== nextProps.submitStack) {
+      clearTimeout(this.sto1);
+      clearTimeout(this.sto2);
+      if (nextProps.step) {
+        this.setState({Visualize: NextComp});
+        return false;
+      }
+    }
+
+    // show animation sequentially
+    if (!nextProps.step || this.props.step + 1 === nextProps.step) {
+      console.log('step serial')      
+      this.setVisualize(nextProps)
       return false;
     }
 
-    this.setVisualize(nextProps)
     return true;
+  }
+
+  componentDidUpdate() {
+    this.showstep += 1;
   }
 
   // 마지막 선택에서는 svg를 초기화 하지않도록 한다.
@@ -113,6 +131,7 @@ class ShowContainer extends Component{
     console.log('call initiate')
     console.log(this.props.containerState.object)
     this.sto1 = setTimeout(() => {
+      console.log('change to div, ', this.props.stopShow)
       this.setState({Visualize: NextComp, Executing: 'div'})
       this.sto2 = setTimeout(() => this.props.nextStep(submitStack), 1000)
     }, time)
@@ -125,7 +144,7 @@ class ShowContainer extends Component{
         <div className='text-show3'>실행코드: </div>
         <this.state.Executing executing = {this.props.executingCode} />
         <div className='drawing'>
-        {console.log('out: ', this.props.containerState.object)}
+        {console.log('out: ', this.props.containerState.object, this.props.stopShow)}
         <this.state.Visualize initiate={this.initiate} object={this.props.containerState.object} params = {this.params}/>
         </div>
       </div>
