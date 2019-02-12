@@ -18,6 +18,9 @@ This Page will show you how the data structure method working with animation.
 ```
 yarn build
 ```
+**Precaution**  
+For deploy webpage, It should be done that change package.json homepage to "."  
+If not, the relative path make error.
 
 ### **Run Page**
 ```
