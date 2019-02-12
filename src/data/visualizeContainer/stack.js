@@ -11,6 +11,7 @@ class Stack {
    */
   constructor(data = null) {
     this.stack = new OldStack(data);
+    this.classname = 'Stack'
   }
 
   // element access

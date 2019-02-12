@@ -11,7 +11,8 @@ class List {
    * @param {null|object} data - The data of iteable object.
    */
   constructor(data = null) {
-    this.list = new OldList(data)
+    this.list = new OldList(data);
+    this.classname = 'List';
   }
 
   // Capacity

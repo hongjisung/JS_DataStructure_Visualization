@@ -33,7 +33,6 @@ const digits = '0123456789'.split('')
 let data;
 const openParens = ['(', '{', '[']
 const closeParens = [')', '}', ']']
-const escapeCode = [' ', '\b', '\f', '\n', '\r', '\t',  '\v']
 const reservedWord = [
   'abstract', 'arguments', 'await', 'boolean', 'break', 'byte', 'case', 'catch',
   'char', 'class', 'const', 'continue', 'debugger', 'default', 'delete', 'do', 
@@ -44,7 +43,6 @@ const reservedWord = [
   'throw', 'throws', 'transient', 'true', 'try', 'typeof', 'var', 'void', 'volatile', 'while', 
   'with', 'yield'
 ];
-const operSign = ['=','>', '<', '!', '&', '|']
 const visualizeMethod = ['push', 'pushFront', 'pushBack', 'pop', 'popFront', 'popBack']
 const varFilter = 'variables.filter(n => eval("typeof("+n+")") !== "undefined").map(n => {return{name: n, value: eval(n)}})'
 
@@ -66,13 +64,14 @@ const parsing = ({inputCode='', inputData=''}) => {
   
   // data에 값 할당
   eval('data = ' + inputData);
+  console.log(data);
   
 
   // find variables
   const variables = findVariables(inputCode);
   console.log(variables)
 
-  
+  console.log(collectionName)
   
   // code 변환
   inputCode = codeTransition(inputCode)
@@ -83,7 +82,18 @@ const parsing = ({inputCode='', inputData=''}) => {
   
   console.log(inputCode)
 
+  let test;
+  let testst;
+  inputCode += '\n test=qu;'
+  inputCode += '\n testst=st;'
+  
   eval(inputCode)
+  
+  console.log("test result: ", test)
+  console.log("test name: ", test.constructor.name)
+  console.log("testst result: ", testst)
+  console.log("testst name: ", testst.constructor.name)
+
   return visualizeDatas
 }
 
@@ -120,7 +130,7 @@ const convertMethod = (method, recentDot, lastOpen, lastClose) => {
   */
  
   let varName = method.substring(0, recentDot)
-  return '((collectionName['+varName+'.constructor.name]!==undefined)?'+
+  return '((collectionName['+varName+'.classname]!==undefined)?'+
   method.substring(0,lastOpen)+'("'+varName+'", '+ varFilter +',visualizeDatas,"'+
   method+'",'+method.substring(lastOpen+1,lastClose)+'):'+method+')'
 }

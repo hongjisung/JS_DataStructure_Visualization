@@ -28,7 +28,7 @@ class ShowContainer extends Component{
   }
 
   setVisualize = (props) => {
-    const objectName = props.containerState.object.constructor.name
+    const objectName = props.containerState.object.classname
     const method = props.containerState.method
     this.params = props.containerState.params
     
