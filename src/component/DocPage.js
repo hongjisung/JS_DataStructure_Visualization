@@ -4,7 +4,7 @@ import '../stylesheet/DocPage.css'
 
 const DocPage = ({ docLink='' }) =>
   <div className='doc-page'>
-  <a href={docLink} className ='doc-address'>Doc 페이지</a>
+    <a href={docLink} className ='doc-address'>Doc Page</a>
   </div>
 
 DocPage.propTypes = {
