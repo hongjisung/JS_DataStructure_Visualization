@@ -99,7 +99,7 @@ class App extends Component {
     return (
       <div className="App">
         <TopBar github='https://github.com/hongjisung/DataStructure'
-                docLint=''
+                docLink='https://hongjisung.github.io/DataStructure/'
                 operationCount={{count: 0}}/> 
         <ShowSection changeStop={this.changeStop} stopShow = {this.state.stopShow} step={this.state.step} submitStack={this.state.submitStack} nextStep={this.nextStep} dataStates={this.state.dataStates} executingCode = {this.state.executingCode} containerState={this.state.containerState}/>
         <InputSection getCode={this.getCode} getData={this.getData}/>
