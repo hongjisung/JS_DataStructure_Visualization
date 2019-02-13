@@ -17,35 +17,12 @@ class InputCode extends Component {
   constructor() {
     super()
     this.code = `
-let li = new std.List([1,2,3]);
-let li2 = new std.List([2,4]);
-let st = new std.Stack([10,9,8]);
-let getSize;
-let qu = new std.Queue(['a', 'b', 'c']);
-
-qu.push('d');
-qu.pop();
-qu.pop();
-qu.pop();
-qu.push('e');
-qu.pop();
-li.pushBack(4);
-li.popFront();
-li2.pushBack(10);
-st.pop();
-st.push('ststst');
-
-for(let i=data.a; i<data.b; i+=1) {
-  li.pushBack(i);
-}
-
-getSize = (li) => {
-  return li.size();
-  }
-
-li2.pushBack(getSize(li));
-
-li.pushBack('((((((');    
+let pq = new std.PriorityQueue();
+[1,10,5,3,7,6,2,8].map(n=>pq.push(n));
+pq.pop();
+pq.pop();
+pq.pop();
+pq.pop();
 `
   }
   
