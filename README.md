@@ -44,3 +44,4 @@ npm start
 
 ### **priority queue**
 - push
+- pop
