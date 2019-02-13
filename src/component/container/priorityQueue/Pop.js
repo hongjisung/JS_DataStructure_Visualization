@@ -33,8 +33,8 @@ class Pop extends Component {
     
     // size svg
     if (this.size) {
-      this.topSvg.push(<text key={this.id} className='stackPushSizeDown' x={this.interval} y={20} width={30} height={15}>size: {this.size}</text>)
-      this.topSvg.push(<text key={this.id+1} className='stackPushSizeUp' x={this.interval} y={20} width={30} height={15}>size: {this.size - 1}</text>)
+      this.topSvg.push(<text key={this.id} className='pqPopSizeErase' x={this.interval} y={20} width={30} height={15}>size: {this.size}</text>)
+      this.topSvg.push(<text key={this.id+1} className='pqPopSizeEmerge' x={this.interval} y={20} width={30} height={15}>size: {this.size - 1}</text>)
       this.id += 2;
     } else {
       this.topSvg.push(<text key={this.id} x={this.interval} y={20} width={30} height={15}>size: {this.size}</text>)
