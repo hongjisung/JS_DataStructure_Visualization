@@ -49,7 +49,7 @@ class Push extends Component {
     } else {
       this.topSvg.push(<text key={this.id} className='stackPushSizeDown' x={this.interval + 70} y={20} width={30} height={15}>max size: {this.maxSize}</text>)
       this.id += 1;
-      this.topSvg.push(<text key={this.id} className='stackPushSizeUp' x={this.interval + 70} y={20} width={30} height={15}>max size: {this.maxSize * 2}</text>)
+      this.topSvg.push(<text key={this.id} className='stackPushSizeUp' x={this.interval + 70} y={20} width={30} height={15}>max size: {this.maxSize * 2 + 1}</text>)
       this.id += 1;
     }
 
@@ -66,18 +66,7 @@ class Push extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (nextProps.stop) {
       clearTimeout(this.sto)
-      return true
-    }
-
-    // 실행중에 재실행될 때
-    if ((this.props.stop) && nextProps.object.classname === 'PriorityQueue') {
-      this.origin = new PriorityQueue('', nextProps.object.pq);
-      this.maxSize = this.origin._maxSize;
-      this.size = this.origin.size();
-      this.cmpfunc = this.origin.compareFunction();
-      
-      this.firstProcess(nextProps.params);
-      return false;
+      return false
     }
 
     return true
