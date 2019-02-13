@@ -22,3 +22,11 @@
   animation-duration: 1s;
   animation-fill-mode: forwards;
 }
+
+.appearAfter2s {
+  opacity: 0;
+  animation-name: pqPushCameOut;
+  animation-delay: 2s;  
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
