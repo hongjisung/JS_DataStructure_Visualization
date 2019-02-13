@@ -2,4 +2,6 @@ div.App {
   width: 1000px;
   height: 800px;
   margin: left;
+  background-size: cover;
+  outline:0px !important;  
 }
