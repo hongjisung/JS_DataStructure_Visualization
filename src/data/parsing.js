@@ -44,7 +44,7 @@ const reservedWord = [
   'with', 'yield'
 ];
 const visualizeMethod = ['push', 'pushFront', 'pushBack', 'pop', 'popFront', 'popBack']
-const varFilter = 'variables.filter(n => eval("typeof("+n+")") !== "undefined").map(n => {return{name: n, value: eval(n)}})'
+const varFilter = 'variables.filter(nkffadv_43s => eval("typeof("+nkffadv_43s+")") !== "undefined").map(nkffad_18dv_43s => {return{name: nkffad_18dv_43s, value: eval(nkffad_18dv_43s)}})'
 
 /**
  * make datas for visualize.
@@ -78,8 +78,9 @@ const parsing = ({inputCode='', inputData=''}) => {
   
   // new 변환
   inputCode = constructorTransition(inputCode, constructors)
-  
-  console.log(inputCode)  
+  console.log(inputCode)
+
+
   eval(inputCode)
   return visualizeDatas
 }
