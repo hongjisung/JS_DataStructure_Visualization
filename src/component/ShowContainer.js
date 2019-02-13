@@ -83,6 +83,9 @@ class ShowContainer extends Component{
         case 'push':
           this.setState({Visualize: std.PriorityQueue.Push, Executing: CodeComp,Stop: false});
           break;
+        case 'pop':
+          this.setState({Visualize: std.PriorityQueue.Pop, Executing: CodeComp, Stop: false});
+          break;
         default:
           this.setState({Visualize: EmptyComp, Executing: CodeComp,Stop: false});
       }
@@ -92,8 +95,6 @@ class ShowContainer extends Component{
   shouldComponentUpdate(nextProps, nextState) {
     // if state change, return true;
     if (this.state !== nextState) {
-      console.log(this.state)
-      console.log(nextState)
       return true;
     }
 

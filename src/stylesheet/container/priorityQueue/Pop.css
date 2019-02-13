@@ -1,0 +1,67 @@
+@keyframes pqPopDisappear{
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.disappearAfter2s {
+  opacity: 1;
+  animation-name: pqPopDisappear;
+  animation-delay: 2s;  
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.disappearAfter1s {
+  opacity: 1;
+  animation-name: pqPopDisappear;
+  animation-delay: 1s;  
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+
+@keyframes PQPopSizeErase {
+  0% {
+    opacity: 1;
+  }
+  69% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0; 
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.pqPopSizeErase {
+  animation-name: PQPopSizeErase;
+  animation-delay: 2s;
+  animation-duration: 4s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes PQPopSizeEmerge {
+  70% {
+    opacity: 0;
+  }
+  71% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1; 
+  }
+}
+
+.pqPopSizeEmerge {
+  opacity: 0;
+  animation-name: PQPopSizeEmerge;
+  animation-delay: 2s;
+  animation-duration: 4s;
+  animation-fill-mode: forwards;
+}
