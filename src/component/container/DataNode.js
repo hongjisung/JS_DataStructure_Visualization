@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const DataNode = ({data='', x=10, y=20, width=60, height=50, color='lightcyan', key = 1, className="DataNode"}) => {
+const DataNode = ({data='', x=10, y=20, width=60, height=50, color='lightcyan', key = 1, className="DataNode", border="black"}) => {
   return (
-    [<rect className={className} key={key} x={x} y={y} width={width} height={height} style={{"fill": color, "stroke":"black"}}></rect>,
+    [<rect className={className} key={key} x={x} y={y} width={width} height={height} style={{"fill": color, "stroke":border, "strokeWidth":'1.2px'}}></rect>,
     <text className={className} key={-1*key} x={x+2} y={y+height/2+5} width={width} height={20} >{data.substring(0,6)}</text>]
   )
 }
