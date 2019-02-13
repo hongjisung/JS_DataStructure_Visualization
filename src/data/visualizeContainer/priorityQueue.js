@@ -13,6 +13,7 @@ class PriorityQueue {
    */
   constructor(compare = (n1, n2) => n1 < n2, otherPriorityQueue = null) {
     this.pq = new OldPriorityQueue(compare, otherPriorityQueue);
+    this.classname = 'PriorityQueue';
   }
 
   // element access
@@ -54,7 +55,8 @@ class PriorityQueue {
    * Push new data into priority queue.
    * @param {*} data - the element of priority queue.
    */
-  push(data) {
+  push(variableName='', dataStates=[], visualizeDatas=[], executingCode='', data) {
+    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'push', params: [data]}});
     this.pq.push(data);
   }
 
@@ -62,7 +64,8 @@ class PriorityQueue {
    * pop the top element of priority queue.
    * @returns {boolean} check well eliminated.
    */
-  pop() {
+  pop(variableName='', dataStates=[], visualizeDatas=[], executingCode='', ) {
+    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'pop', params: []}});
     return this.pq.pop();
   }
 
@@ -70,7 +73,7 @@ class PriorityQueue {
 
   //new method
   copy() {
-    return new PriorityQueue(this.pq);
+    return new PriorityQueue(this.pq.compareFunction(), this.pq);
   }
   
   make(compare, otherPriorityQueue) {

@@ -41,6 +41,7 @@ method:
 class Deque {
   constructor(data = null) {
     this.deque = new OldDeque(data);
+    this.classname = 'Deque';
   }
 
   /**
