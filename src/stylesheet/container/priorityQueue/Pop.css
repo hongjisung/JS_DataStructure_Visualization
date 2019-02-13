@@ -42,7 +42,7 @@
 .pqPopSizeErase {
   animation-name: PQPopSizeErase;
   animation-delay: 2s;
-  animation-duration: 4s;
+  animation-duration: 3s;
   animation-fill-mode: forwards;
 }
 
@@ -62,6 +62,6 @@
   opacity: 0;
   animation-name: PQPopSizeEmerge;
   animation-delay: 2s;
-  animation-duration: 4s;
+  animation-duration: 3s;
   animation-fill-mode: forwards;
 }
