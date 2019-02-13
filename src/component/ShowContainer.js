@@ -17,12 +17,19 @@ const CodeComp = ({executing}) => {
   )
 }
 
+const EmptyComp = () => {
+  return (
+    <div />
+  )
+}
+
 class ShowContainer extends Component{
   constructor() {
     super()
     this.state = {
-      Visualize: 'div',
+      Visualize: EmptyComp,
       Executing: CodeComp,
+      Stop: false,
     }
     this.showstep = 0;
   }
@@ -35,41 +42,49 @@ class ShowContainer extends Component{
     if (objectName === 'List') {
       switch(method){
         case 'pushBack': 
-          this.setState({Visualize: std.List.PushBack, Executing: CodeComp});
+          this.setState({Visualize: std.List.PushBack, Executing: CodeComp,Stop: false});
           break;
         case 'popBack':
-          this.setState({Visualize: std.List.PopBack, Executing: CodeComp});
+          this.setState({Visualize: std.List.PopBack, Executing: CodeComp,Stop: false});
           break;
         case 'pushFront':
-          this.setState({Visualize: std.List.PushFront, Executing: CodeComp});
+          this.setState({Visualize: std.List.PushFront, Executing: CodeComp,Stop: false});
           break;
         case 'popFront':
-          this.setState({Visualize: std.List.PopFront, Executing: CodeComp});
+          this.setState({Visualize: std.List.PopFront, Executing: CodeComp,Stop: false});
           break;
         default:
-          this.setState({Visualize: 'div', Executing: CodeComp});
+          this.setState({Visualize: EmptyComp, Executing: CodeComp,Stop: false});
       }
     } else if (objectName === 'Stack') {
       switch(method) {
         case 'push':
-          this.setState({Visualize: std.Stack.Push, Executing: CodeComp});
+          this.setState({Visualize: std.Stack.Push, Executing: CodeComp,Stop: false});
           break;
         case 'pop':
-          this.setState({Visualize: std.Stack.Pop, Executing: CodeComp});
+          this.setState({Visualize: std.Stack.Pop, Executing: CodeComp,Stop: false});
           break;
         default:
-          this.setState({Visualize: 'div', Executing: CodeComp});
+          this.setState({Visualize: EmptyComp, Executing: CodeComp,Stop: false});
       } 
     } else if (objectName === 'Queue') {
       switch (method) {
         case 'push':
-          this.setState({Visualize: std.Queue.Push, Executing: CodeComp});
+          this.setState({Visualize: std.Queue.Push, Executing: CodeComp,Stop: false});
           break;
         case 'pop':
-          this.setState({Visualize: std.Queue.Pop, Executing: CodeComp});
+          this.setState({Visualize: std.Queue.Pop, Executing: CodeComp,Stop: false});
           break;
         default:
-          this.setState({Visualize: 'div', Executing: CodeComp});
+          this.setState({Visualize: EmptyComp, Executing: CodeComp,Stop: false});
+      }
+    } else if (objectName === 'PriorityQueue') {
+      switch (method) {
+        case 'push':
+          this.setState({Visualize: std.PriorityQueue.Push, Executing: CodeComp,Stop: false});
+          break;
+        default:
+          this.setState({Visualize: EmptyComp, Executing: CodeComp,Stop: false});
       }
     }
   }
@@ -94,25 +109,29 @@ class ShowContainer extends Component{
       clearTimeout(this.sto1);
       clearTimeout(this.sto2);
       console.log('clear timeout, stopShow true');
-      // if (this.setState.Visualize === NextComp) {
-      //   return true;
-      // }
-      this.setState({Visualize: NextComp});
+      this.setState({Stop: true})
+      this.sto1 = setTimeout(() => this.setState({Visualize: NextComp, Stop: false}), 50);
       return false;
     }
 
     // if submitTimeout is different and not first method, clear timeout 
     if (this.props.submitStack !== nextProps.submitStack) {
-      clearTimeout(this.sto1);
-      clearTimeout(this.sto2);
-      if (nextProps.step) {
-        this.setState({Visualize: NextComp});
+      if (!this.props.submitStack) {
+        this.setVisualize(nextProps)
         return false;
       }
+      clearTimeout(this.sto1);
+      clearTimeout(this.sto2);
+      this.setState({Stop: true});
+      this.sto2 = setTimeout(() => this.setState({Visualize: NextComp, Executing: EmptyComp, Stop: false}), 50);
+      if (!nextProps.step) {
+        this.sto1 = setTimeout(() => this.setVisualize(nextProps),1000)
+      }
+      return false;
     }
 
     // show animation sequentially
-    if (!nextProps.step || this.props.step + 1 === nextProps.step) {
+    if (this.props.step + 1 === nextProps.step) {
       console.log('step serial')      
       this.setVisualize(nextProps)
       return false;
@@ -131,8 +150,7 @@ class ShowContainer extends Component{
     console.log('call initiate')
     console.log(this.props.containerState.object)
     this.sto1 = setTimeout(() => {
-      console.log('change to div, ', this.props.stopShow)
-      this.setState({Visualize: NextComp, Executing: 'div'})
+      this.setState({Visualize: NextComp, Executing: EmptyComp, Stop: false})
       this.sto2 = setTimeout(() => this.props.nextStep(submitStack), 1000)
     }, time)
   }
@@ -145,7 +163,7 @@ class ShowContainer extends Component{
         <this.state.Executing executing = {this.props.executingCode} />
         <div className='drawing'>
         {console.log('out: ', this.props.containerState.object, this.props.stopShow)}
-        <this.state.Visualize initiate={this.initiate} object={this.props.containerState.object} params = {this.params}/>
+        <this.state.Visualize stop={this.state.Stop} initiate={this.initiate} object={this.props.containerState.object} params = {this.params}/>
         </div>
       </div>
     )
