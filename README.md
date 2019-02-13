@@ -26,3 +26,21 @@ If not, the relative path make error.
 ```
 npm start
 ```
+
+## **Implemented Method**
+### **list**
+- pushBack
+- popBack
+- pushFront
+- popFront
+
+### **Stack**
+- push
+- pop
+
+### **queue**
+- push
+- pop
+
+### **priority queue**
+- push
