@@ -3,7 +3,7 @@ import DataNode from '../DataNode'
 import Arrow from '../Arrow'
 import '../../../stylesheet/container/list/PopBack.css'
 
-const PopBack = ({initiate=f=>f,object, params=[], duration = 0.3}) => {
+const PopBack = ({initiate=f=>f,object, params=[], duration = 1}) => {
   const list = object
   let itr = list.rbegin();
   const express = []
