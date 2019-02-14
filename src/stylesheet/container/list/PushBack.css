@@ -8,15 +8,14 @@
 }
 
 .newAnimation {
+  opacity: 0;
   animation-name: ListPushBackCameOut;
-  animation-duration: 1s;
+  animation-fill-mode: forwards;
   animation-timing-function: ease-in;
 }
 
 .pushBackMoving {
   animation-name: ListPushBackMove;
-  animation-delay: 1s;
-  animation-duration: 1s;
   animation-fill-mode: forwards;
 }
 
