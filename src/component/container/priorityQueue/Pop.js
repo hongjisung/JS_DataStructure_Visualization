@@ -25,6 +25,8 @@ class Pop extends Component {
     this.width = 65;
     this.interval = 20;
     this.id = 1;
+
+    this.duration = 2;
     
     this.topSvg = [
       <text key={this.id} x={this.interval + 70} y={20} width={30} height={15}>max size: {this.maxSize}</text>
@@ -67,12 +69,9 @@ class Pop extends Component {
       const indexSvg = [<text key={this.id} x={this.interval} y={60} width={30} height={20}>Error: No data but pop</text>]
       this.id += 1;
       this.setState({indexSvg, nodeSvg:[]});
-      this.props.initiate(2000);
+      this.props.initiate(this.duration* 1000);
     } else {
-      this.setState({indexSvg: [<text key={this.id} x={this.interval} y={60} width={30} height={20}>First, change first and last, then, remove last</text>], nodeSvg: [], step: this.state.step + 1})
-      this.id += 1;
-
-      this.sto = setTimeout(() => this.firstProcess(this.props.params), 2000);
+      this.firstProcess(this.props.params)
     }
   }
 
@@ -89,8 +88,13 @@ class Pop extends Component {
       <text key={this.id} x={this.interval + this.width*(lastpoint)} y={40} width={30} height={15}>index: 0</text>
     ]
     this.id += 1;
+
+    // explanation
+    indexSvg.push(<text key={this.id} x={this.interval} y={130} width={30} height={20}>First, change first and last, then, remove last</text>)
+    this.id += 1;
+
     if (isSecondExpress) {
-      indexSvg.push(<text className='disappearAfter2s' key={this.id} x={this.interval + this.width*(this.size - 1)} y={40} width={30} height={15}>index: {this.size - 1}</text>)
+      indexSvg.push(<text className='disappear' style={{animationDuration: (this.duration).toString() + 's', animationDelay: (this.duration*3/2).toString() + 's'}} key={this.id} x={this.interval + this.width*(this.size - 1)} y={40} width={30} height={15}>index: {this.size - 1}</text>)
       this.id += 1;
     }
     let nodeSvg = this.addNodes(lastpoint);
@@ -101,7 +105,7 @@ class Pop extends Component {
       change = false;
     }
     nodeSvg = nodeSvg.concat(this.compareTwoIndex(lastpoint, this.size - 1, 0, this.size - 1, isSecondExpress, change))
-    DataNode({key: this.id, className: "appearAfter2s", color:'gray', x: this.interval + this.width*(this.size - 1), y: 50, "width": this.width}).map(n => nodeSvg.push(n))
+    DataNode({ani_delay: (this.duration*3/2).toString() + 's', ani_dur: (this.duration).toString() + 's', key: this.id, className: "appear", color:'gray', x: this.interval + this.width*(this.size - 1), y: 50, "width": this.width}).map(n => nodeSvg.push(n))
     this.id += 1;
     
     // update
@@ -112,9 +116,9 @@ class Pop extends Component {
     
     // if size is 0, stop else do next compare
     if (!this.size) {
-      this.props.initiate(3000);
+      this.props.initiate((this.duration * 5 / 2)*1000);
     } else {
-      this.sto = setTimeout(()=> this.compareNextIndex(), 3000);
+      this.sto = setTimeout(()=> this.compareNextIndex(), (this.duration * 5 / 2)*1000);
     }
   }
 
@@ -128,55 +132,44 @@ class Pop extends Component {
     if (left >= this.size) {
       this.setState({indexSvg: [<text key={this.id} x={this.interval} y={60} width={30} height={20}>No more compare data</text>], nodeSvg: [], step: this.state.step + 1})
       this.id += 1;
-      this.props.initiate(2000)
+      this.props.initiate(this.duration * 1000)
       return;
     }
 
     // show left compare text
-    let indexSvg = [<text key={this.id} x={this.interval} y={60} width={30} height={20}>Compare with index[{this.state.index}] and index[{left}]</text>]
-    this.id += 1;
-    this.setState({indexSvg, nodeSvg: [], step: this.state.step + 1})
+    // let indexSvg = [<text key={this.id} x={this.interval} y={60} width={30} height={20}>Compare with index[{this.state.index}] and index[{left}]</text>]
+    // this.id += 1;
+    // this.setState({indexSvg, nodeSvg: [], step: this.state.step + 1})
 
     // do left compare
-    let leftresult = false;
-    this.sto = setTimeout(() => {
-      leftresult = this.compareAndShow(this.state.index, left)
+    let leftresult = this.compareAndShow(this.state.index, left)
 
-      this.sto2 = setTimeout(()=> {
-        if (!leftresult) {
-          // no right data
-          if (right >= this.size) {
-            this.setState({indexSvg: [<text key={this.id} x={this.interval} y={60} width={30} height={20}>No more compare data</text>], nodeSvg: [], step: this.state.step + 1})
-            this.id += 1;
-            this.props.initiate(2000)
-            return;
-          }
-
-          // show right compare text
-          indexSvg = [<text key={this.id} x={this.interval} y={60} width={30} height={20}>Compare with index[{this.state.index}] and index[{right}]</text>]
+    this.sto2 = setTimeout(()=> {
+      if (!leftresult) {
+        // no right data
+        if (right >= this.size) {
+          this.setState({indexSvg: [<text key={this.id} x={this.interval} y={60} width={30} height={20}>No more compare data</text>], nodeSvg: [], step: this.state.step + 1})
           this.id += 1;
-          this.setState({indexSvg, nodeSvg:[], step: this.state.step + 1});
-    
-          // do right compare
-          let rightresult = false;  
-          this.sto3 = setTimeout(() => {
-            rightresult = this.compareAndShow(this.state.index, right)
-            
-            if (rightresult) {
-              this.sto4 = setTimeout(() => {
-                this.setState({index: right, indevSvg: [], nodeSvg: [], step: this.state.step + 1})
-                this.compareNextIndex()
-              }, 2000)
-            } else {
-              this.props.initiate(2000);
-            }
-          }, 2000);
-        } else {
-          this.setState({index: left, indevSvg: [], nodeSvg: [], step: this.state.step + 1})
-          this.compareNextIndex()
+          this.props.initiate(this.duration * 1000)
+          return;
         }
-      }, 2000);
-    }, 2000);
+  
+        // do right compare
+        let rightresult = this.compareAndShow(this.state.index, right)
+          
+        if (rightresult) {
+          this.sto4 = setTimeout(() => {
+            this.setState({index: right, indevSvg: [], nodeSvg: [], step: this.state.step + 1})
+            this.compareNextIndex()
+          }, (this.duration * 3 / 2) * 1000)
+        } else {
+          this.props.initiate((this.duration * 3 / 2) * 1000);
+        }
+      } else {
+        this.setState({index: left, indevSvg: [], nodeSvg: [], step: this.state.step + 1})
+        this.compareNextIndex()
+      }
+    }, (this.duration * 3 / 2) * 1000);
 
   }
 
@@ -189,6 +182,11 @@ class Pop extends Component {
       <text key={this.id + 1} x={this.interval + this.width*(lastpoint)} y={40} width={30} height={15}>index: {idx2}</text>
     ]
     this.id += 2;
+
+    // compare text
+    indexSvg.push(<text key={this.id} x={this.interval} y={130} width={30} height={20}>Compare with index[{idx1}] and index[{idx2}] : {(change)?'true':'false'}</text>)
+    this.id += 1;
+    
     let nodeSvg = this.addNodes(idx2);
     let isSecondExpress = false;
     if (idx2 - idx1 <= 5) {
@@ -232,14 +230,14 @@ class Pop extends Component {
       this.origin._elements[idx1] = this.origin._elements[idx2]
       this.origin._elements[idx2] = temp
 
-      DataNode({key: this.id, className: "pqPushErase", border: 'yellow', x: this.interval + this.width*(idx1pos), y: 50, "width": this.width}).map(n => nodeSvg.push(n))  
+      DataNode({ani_delay:(this.duration*9/20).toString()+'s', ani_dur: (this.duration/20).toString()+'s', key: this.id, className: "pqPushErase", border: 'yellow', x: this.interval + this.width*(idx1pos), y: 50, "width": this.width}).map(n => nodeSvg.push(n))  
       this.id += 1;
-      DataNode({key: this.id, className: "animationAfter1s" ,border: 'yellow', data: this.origin._elements[idx1].toString(), x: this.interval + this.width*(idx1pos), y: 50, "width": this.width}).map(n => nodeSvg.push(n))  
+      DataNode({ani_delay:(this.duration/2).toString()+'s', ani_dur: this.duration.toString() + 's', key: this.id, className: "appear" ,border: 'yellow', data: this.origin._elements[idx1].toString(), x: this.interval + this.width*(idx1pos), y: 50, "width": this.width}).map(n => nodeSvg.push(n))  
       this.id += 1;
       if (isSecondExpress) {
-        DataNode({key: this.id, className: "pqPushErase", border: 'yellow', x: this.interval + this.width*(idx2pos), y: 50, "width": this.width}).map(n => nodeSvg.push(n))
+        DataNode({ani_delay:(this.duration*9/20).toString()+'s', ani_dur: (this.duration/20).toString()+'s', key: this.id, className: "pqPushErase", border: 'yellow', x: this.interval + this.width*(idx2pos), y: 50, "width": this.width}).map(n => nodeSvg.push(n))
         this.id += 1;
-        DataNode({key: this.id, className: "animationAfter1s",border: 'yellow', data: this.origin._elements[idx2].toString(), x: this.interval + this.width*(idx2pos), y: 50, "width": this.width}).map(n => nodeSvg.push(n))
+        DataNode({ani_delay:(this.duration/2).toString()+'s', ani_dur: this.duration.toString() + 's', key: this.id, className: "appear",border: 'yellow', data: this.origin._elements[idx2].toString(), x: this.interval + this.width*(idx2pos), y: 50, "width": this.width}).map(n => nodeSvg.push(n))
         this.id += 1;
       }
     }

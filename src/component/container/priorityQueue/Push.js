@@ -34,6 +34,8 @@ class Push extends Component {
     this.interval = 20;
     this.sto = null;
     this.id = 1;
+
+    this.duration = 2;
     
     this.topSvg = [
       // size svg
@@ -75,9 +77,9 @@ class Push extends Component {
   componentDidMount() {
     this.firstProcess(this.props.params);
     if (this.state.index === 0) {
-      this.props.initiate(2000);
+      this.props.initiate(this.duration * 3 / 2);
     } else {
-      this.sto = setTimeout(() => this.compareNextIndex(),2000);
+      this.sto = setTimeout(() => this.compareNextIndex(),this.duration * 3 / 2);
     }
   }
 
@@ -87,14 +89,18 @@ class Push extends Component {
   firstProcess(params) {
     const lastpoint = (this.size - 1 > 4) ? 4 : this.size - 1;
     const indexSvg = [
-      <text key={this.id} className='animationAfter1s' x={this.interval + this.width*(lastpoint + 1)} y={40} width={30} height={15}>index: {this.size}</text>
+      <text key={this.id} style={{animationDuration: this.duration.toString()+'s', animationDelay: (this.duration/2).toString()+'s'}} className='appear' x={this.interval + this.width*(lastpoint + 1)} y={40} width={30} height={15}>index: {this.size}</text>
     ]
     this.id += 1;
     const nodeSvg = this.addNodes(this.size - 1);
 
+    // add data to end
+    indexSvg.push(<text key={this.id} x={this.interval} y={130} width={30} height={20}>Add data to end: index[{this.size}]</text>)
+    this.id += 1;
+
     
     // appear one node.
-    DataNode({key: this.id, border: 'yellow', className:"animationAfter1s", data: params[0].toString(), x: this.interval + this.width*(lastpoint + 1), y: 50, "width": this.width}).map(n => nodeSvg.push(n))
+    DataNode({ani_delay:(this.duration/2).toString()+'s', ani_dur: this.duration.toString() + 's', key: this.id, border: 'yellow', className:"appear", data: params[0].toString(), x: this.interval + this.width*(lastpoint + 1), y: 50, "width": this.width}).map(n => nodeSvg.push(n))
     this.id += 1;
     if (this.size === this.maxSize) {
       // add gray node
@@ -102,7 +108,7 @@ class Push extends Component {
         if (this.size + i > this.maxSize * 2 + 1) {
           break;
         }
-        DataNode({key: this.id, className:"animationAfter1s", color: "gray", x: this.interval + this.width*(lastpoint + i), y: 50, "width": this.width}).map(n => nodeSvg.push(n))
+        DataNode({ani_delay:(this.duration/2).toString()+'s', ani_dur: this.duration.toString() + 's', key: this.id, className:"appear", color: "gray", x: this.interval + this.width*(lastpoint + i), y: 50, "width": this.width}).map(n => nodeSvg.push(n))
         this.id +=1;
       }
     }
@@ -120,10 +126,7 @@ class Push extends Component {
 
   // compare next index
   compareNextIndex() {
-    const indexSvg = [<text key={this.id} x={this.interval} y={60} width={30} height={20}>Compare with index[{Math.floor((this.state.index-1)/2)}] and index[{this.state.index}]</text>]
-    this.id += 1;
-    this.setState({indexSvg, nodeSvg: [], step: this.state.step + 1})
-    this.sto = setTimeout(() => this.compareProcess() ,1000)
+    this.compareProcess()
   }
 
   // compare next index and decide to change or not
@@ -158,25 +161,29 @@ class Push extends Component {
       this.origin._elements[nextindex] = this.origin._elements[index]
       this.origin._elements[index] = temp
 
-      DataNode({key: this.id, className: "pqPushErase", border: 'yellow', x: this.interval + this.width*(lastpoint), y: 50, "width": this.width}).map(n => nodeSvg.push(n))  
+      DataNode({ani_delay:(this.duration*9/20).toString()+'s', ani_dur: (this.duration/20).toString()+'s', key: this.id, className: "pqPushErase", border: 'yellow', x: this.interval + this.width*(lastpoint), y: 50, "width": this.width}).map(n => nodeSvg.push(n))  
       this.id += 1;
-      DataNode({key: this.id, className: "animationAfter1s" ,border: 'yellow', data: this.origin._elements[nextindex].toString(), x: this.interval + this.width*(lastpoint), y: 50, "width": this.width}).map(n => nodeSvg.push(n))  
+      DataNode({ani_delay:(this.duration/2).toString()+'s', ani_dur: this.duration.toString()+'s', key: this.id, className: "appear" ,border: 'yellow', data: this.origin._elements[nextindex].toString(), x: this.interval + this.width*(lastpoint), y: 50, "width": this.width}).map(n => nodeSvg.push(n))  
       this.id += 1;
       if (index <= nextindex + 14 - ((nextindex > 5) ? 7 : nextindex + 1)) {
-        DataNode({key: this.id, className: "pqPushErase", border: 'yellow', x: this.interval + this.width*(index - nextindex + lastpoint), y: 50, "width": this.width}).map(n => nodeSvg.push(n))
+        DataNode({ani_delay:(this.duration*9/20).toString()+'s', ani_dur: (this.duration/20).toString()+'s',key: this.id, className: "pqPushErase", border: 'yellow', x: this.interval + this.width*(index - nextindex + lastpoint), y: 50, "width": this.width}).map(n => nodeSvg.push(n))
         this.id += 1;
-        DataNode({key: this.id, className: "animationAfter1s",border: 'yellow', data: this.origin._elements[index].toString(), x: this.interval + this.width*(index - nextindex + lastpoint), y: 50, "width": this.width}).map(n => nodeSvg.push(n))
+        DataNode({ani_delay:(this.duration/2).toString()+'s', ani_dur: this.duration.toString()+'s', key: this.id, className: "appear",border: 'yellow', data: this.origin._elements[index].toString(), x: this.interval + this.width*(index - nextindex + lastpoint), y: 50, "width": this.width}).map(n => nodeSvg.push(n))
         this.id += 1;
       }
     }
+    
+    // show compare index txt
+    indexSvg.push(<text key={this.id} x={this.interval} y={130} width={30} height={20}>Compare with index[{Math.floor((this.state.index-1)/2)}] and index[{this.state.index}] : {(change)? 'true': 'false'}</text>)
+    this.id += 1;
 
     this.setState({index: nextindex, indexSvg, nodeSvg, step: this.state.step + 1})
 
     // 다음이 0이거나 비교로 교환안됫으면 끝
     if (!nextindex || !change) {
-      this.props.initiate(2000)
+      this.props.initiate(this.duration * 3 / 2)
     } else {
-      this.sto = setTimeout(() => this.compareNextIndex(), 2000)
+      this.sto = setTimeout(() => this.compareNextIndex(), this.duration * 3 / 2)
     }
   }
 

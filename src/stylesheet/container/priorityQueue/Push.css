@@ -10,23 +10,25 @@
 .pqPushErase {
   opacity: 0;
   animation-name: pqPushCameOut;
-  animation-delay: 0.9s;
-  animation-duration: 0.1s;
   animation-fill-mode: forwards;
 }
 
-.animationAfter1s {
+.appear {
+  opacity: 0;
+  animation-name: pqPushCameOut;
+  animation-fill-mode: forwards;
+}
+
+.appearAfter1s {
   opacity: 0;
   animation-name: pqPushCameOut;
   animation-delay: 1s;  
-  animation-duration: 1s;
   animation-fill-mode: forwards;
 }
 
-.appearAfter2s {
+.appearAfter3s {
   opacity: 0;
   animation-name: pqPushCameOut;
-  animation-delay: 2s;  
-  animation-duration: 1s;
+  animation-delay: 3s;  
   animation-fill-mode: forwards;
 }

@@ -7,11 +7,10 @@
   }
 }
 
-.disappearAfter2s {
+.disappearAfter3s {
   opacity: 1;
   animation-name: pqPopDisappear;
-  animation-delay: 2s;  
-  animation-duration: 1s;
+  animation-delay: 3s;
   animation-fill-mode: forwards;
 }
 
@@ -19,10 +18,14 @@
   opacity: 1;
   animation-name: pqPopDisappear;
   animation-delay: 1s;  
-  animation-duration: 1s;
   animation-fill-mode: forwards;
 }
 
+.disappear {
+  opacity: 1;
+  animation-name: pqPopDisappear;
+  animation-fill-mode: forwards;
+}
 
 @keyframes PQPopSizeErase {
   0% {
@@ -41,8 +44,7 @@
 
 .pqPopSizeErase {
   animation-name: PQPopSizeErase;
-  animation-delay: 2s;
-  animation-duration: 3s;
+  animation-duration: 2s;
   animation-fill-mode: forwards;
 }
 
@@ -61,7 +63,6 @@
 .pqPopSizeEmerge {
   opacity: 0;
   animation-name: PQPopSizeEmerge;
-  animation-delay: 2s;
-  animation-duration: 3s;
+  animation-duration: 2s;
   animation-fill-mode: forwards;
 }
