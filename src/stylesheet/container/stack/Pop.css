@@ -18,56 +18,13 @@
 
 .stackPopMove {
   animation-name: StackPopMove;
-  animation-delay: 1s;
-  animation-duration: 1s;
   animation-fill-mode: forwards;
 }
 
 .stackPopDisappear {
   opacity: 1;
   animation-name: StackPopDisappear;
-  animation-duration: 1s;
   animation-fill-mode: forwards;
   animation-timing-function: ease-in;
-}
-
-@keyframes StackPopSizeDown {
-  0% {
-    opacity: 1;
-  }
-  69% {
-    opacity: 1;
-  }
-  70% {
-    opacity: 0; 
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-.stackPopSizeDown {
-  animation-name: StackPopSizeDown;
-  animation-duration: 2s;
-  animation-fill-mode: forwards;
-}
-
-@keyframes StackPopSizeUp {
-  70% {
-    opacity: 0;
-  }
-  71% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 1; 
-  }
-}
-
-.stackPopSizeUp {
-  opacity: 0;
-  animation-name: StackPopSizeUp;
-  animation-duration: 2s;
-  animation-fill-mode: forwards;
 }
 
