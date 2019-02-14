@@ -7,26 +7,8 @@
   }
 }
 
-@keyframes ListPushFrontCameOut {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 .front_origin {
   animation-name: ListPushFrontMove;
-  animation-duration: 1s;
-  animation-fill-mode: forwards;
-}
-
-.pushFrontNew {
-  opacity: 0;
-  animation-name: ListPushFrontCameOut;
-  animation-delay: 1s;
-  animation-duration: 1s;
   animation-fill-mode: forwards;
 }
 
