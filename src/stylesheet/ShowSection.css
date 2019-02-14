@@ -6,9 +6,9 @@ section.show-section {
 }
 
 div.text-show1 {
-  width: 40%;
+  width: 25%;
   height: 4.2%;
-  margin:0;
+  margin: 1px;
   margin-top: 1.5%;
   float: left;
   position: relative;
