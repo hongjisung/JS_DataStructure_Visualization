@@ -29,11 +29,11 @@ class InputSection extends Component {
   render() {
     return (
       <section className='input-section'>
-        <div className='text-input1'>코드 작성</div>
+        <div className='text-input1'>Write Code</div>
         <button className='precaution' onClick={this.changeShow}><img className='cautionImg' src={require('../public/caution.png')} alt='caution'/></button>    
-        <button className='input-button' onClick={input => this.setState({submit: true})}>제출</button>
+        <button className='input-button' onClick={input => this.setState({submit: true})}>submit</button>
         <InputCode submit={this.state.submit} getCode={this.props.getCode}/>
-        <div className='text-input2'>인풋 데이타 json</div>
+        <div className='text-input2'>Input Data JSON</div>
         <InputData submit={this.state.submit} getData={this.props.getData}/>
         {(this.state.showCaution)?
         <div className='coverDom'>
