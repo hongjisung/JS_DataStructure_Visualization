@@ -35,12 +35,12 @@ class Push extends Component {
     this.sto = null;
     this.id = 1;
 
-    this.duration = 2;
+    this.duration = 1;
     
     this.topSvg = [
       // size svg
-      <text key={this.id} className='stackPushSizeDown' x={this.interval} y={20} width={30} height={15}>size: {this.size}</text>,
-      <text key={this.id+1} className='stackPushSizeUp' x={this.interval} y={20} width={30} height={15}>size: {this.size + 1}</text>,
+      <text key={this.id} className='pqPopSizeErase' style={{animationDuration: this.duration.toString()+'s'}} x={this.interval} y={20} width={30} height={15}>size: {this.size}</text>,
+      <text key={this.id+1} className='pqPopSizeEmerge' style={{animationDuration: this.duration.toString()+'s'}} x={this.interval} y={20} width={30} height={15}>size: {this.size + 1}</text>,
     ]
     this.id += 2;
 
@@ -49,9 +49,9 @@ class Push extends Component {
       this.topSvg.push(<text key={this.id} x={this.interval + 70} y={20} width={30} height={15}>max size: {this.maxSize}</text>)
       this.id += 1;
     } else {
-      this.topSvg.push(<text key={this.id} className='stackPushSizeDown' x={this.interval + 70} y={20} width={30} height={15}>max size: {this.maxSize}</text>)
+      this.topSvg.push(<text key={this.id} className='pqPopSizeErase' style={{animationDuration: this.duration.toString()+'s'}} x={this.interval + 70} y={20} width={30} height={15}>max size: {this.maxSize}</text>)
       this.id += 1;
-      this.topSvg.push(<text key={this.id} className='stackPushSizeUp' x={this.interval + 70} y={20} width={30} height={15}>max size: {this.maxSize * 2 + 1}</text>)
+      this.topSvg.push(<text key={this.id} className='pqPopSizeEmerge' style={{animationDuration: this.duration.toString()+'s'}} x={this.interval + 70} y={20} width={30} height={15}>max size: {this.maxSize * 2 + 1}</text>)
       this.id += 1;
     }
 
@@ -77,9 +77,9 @@ class Push extends Component {
   componentDidMount() {
     this.firstProcess(this.props.params);
     if (this.state.index === 0) {
-      this.props.initiate(this.duration * 3 / 2);
+      this.props.initiate((this.duration * 3 / 2)* 1000);
     } else {
-      this.sto = setTimeout(() => this.compareNextIndex(),this.duration * 3 / 2);
+      this.sto = setTimeout(() => this.compareNextIndex(),(this.duration * 3 / 2) * 1000 );
     }
   }
 
@@ -181,9 +181,9 @@ class Push extends Component {
 
     // 다음이 0이거나 비교로 교환안됫으면 끝
     if (!nextindex || !change) {
-      this.props.initiate(this.duration * 3 / 2)
+      this.props.initiate((this.duration * 3 / 2)* 1000)
     } else {
-      this.sto = setTimeout(() => this.compareNextIndex(), this.duration * 3 / 2)
+      this.sto = setTimeout(() => this.compareNextIndex(), (this.duration * 3 / 2)* 1000 );
     }
   }
 
