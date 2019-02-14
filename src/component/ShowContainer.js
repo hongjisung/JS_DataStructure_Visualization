@@ -176,12 +176,16 @@ class ShowContainer extends Component{
   render() {
     return (
       <div className='show-container'>
-        <div className='text-show2'>컨테이너 상태</div>
-        <div className='text-show3'>실행코드: </div>
+        <div className='text-show2'>DataStructure</div>
+        <div className='slidercontainer'> 
+          <div className='slidername'>speed bar</div>
+          <input type='range' min={20} max={250} value={this.props.duration} onChange={e => this.props.changeDuration(e.target.value)} className='slider' />
+        </div>
+        <div className='text-show3'>Executing: </div>
         <this.state.Executing executing = {this.props.executingCode} />
         <div className='drawing'>
         {console.log('out: ', this.props.containerState.object, this.props.stopShow)}
-        <this.state.Visualize stop={this.state.Stop} initiate={this.initiate} object={this.props.containerState.object} params = {this.params}/>
+        <this.state.Visualize duration={Number(this.props.duration)/100} stop={this.state.Stop} initiate={this.initiate} object={this.props.containerState.object} params = {this.params}/>
         </div>
       </div>
     )
@@ -194,7 +198,9 @@ ShowContainer.propTypes = {
   submitStack: PropTypes.number,
   nextStep: PropTypes.func,
   containerState: PropTypes.object,
-  executingCode: PropTypes.string
+  executingCode: PropTypes.string,
+  duration: PropTypes.number,
+  changeDuration: PropTypes.func,
 }
 
 ShowContainer.defaultProps = {
@@ -203,7 +209,9 @@ ShowContainer.defaultProps = {
   submitStack: 0,
   nextStep: f=>f,
   containerState: {},
-  executingCode: ''
+  executingCode: '',
+  duration: 1,
+  changeDuration: f=>f,
 }
 
 export default ShowContainer

@@ -23,6 +23,7 @@ class App extends Component {
       data: {},
       submitStack: 0, // this is for stop the executing process now.
       stopShow: false,
+      duration: '100',
     }
   }
 
@@ -95,13 +96,18 @@ class App extends Component {
     this.setState({stopShow: !this.state.stopShow})
   }
 
+  changeDuration = (value) => {
+    console.log('change duration: ', value)
+    this.setState({duration: value});
+  }
+
   render() {
     return (
       <div className="App">
         <TopBar github='https://github.com/hongjisung/DataStructure'
                 docLink='https://hongjisung.github.io/DataStructure/'
                 operationCount={{count: 0}}/> 
-        <ShowSection changeStop={this.changeStop} stopShow = {this.state.stopShow} step={this.state.step} submitStack={this.state.submitStack} nextStep={this.nextStep} dataStates={this.state.dataStates} executingCode = {this.state.executingCode} containerState={this.state.containerState}/>
+        <ShowSection duration={this.state.duration} changeDuration={this.changeDuration} changeStop={this.changeStop} stopShow = {this.state.stopShow} step={this.state.step} submitStack={this.state.submitStack} nextStep={this.nextStep} dataStates={this.state.dataStates} executingCode = {this.state.executingCode} containerState={this.state.containerState}/>
         <InputSection getCode={this.getCode} getData={this.getData}/>
       </div>
     );
