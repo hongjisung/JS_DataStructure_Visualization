@@ -93,6 +93,7 @@ class ShowContainer extends Component{
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    console.log(nextProps, this.props)
     // if state change, return true;
     if (this.state !== nextState) {
       return true;
@@ -101,6 +102,8 @@ class ShowContainer extends Component{
     // stopShow: true->false, do rendering
     if (this.props.stopShow && !nextProps.stopShow) {
       console.log('true -> false')
+      clearTimeout(this.sto1);
+      clearTimeout(this.sto2);
       this.setVisualize(nextProps)
       return false;
     }
@@ -118,15 +121,29 @@ class ShowContainer extends Component{
     // if submitTimeout is different and not first method, clear timeout 
     if (this.props.submitStack !== nextProps.submitStack) {
       if (!this.props.submitStack) {
+        clearTimeout(this.sto1);
+        clearTimeout(this.sto2);
         this.setVisualize(nextProps)
         return false;
       }
+
       clearTimeout(this.sto1);
       clearTimeout(this.sto2);
       this.setState({Stop: true});
-      this.sto2 = setTimeout(() => this.setState({Visualize: NextComp, Executing: EmptyComp, Stop: false}), 50);
+      this.sto2 = setTimeout(() => {
+        clearTimeout(this.sto1);
+        clearTimeout(this.sto2);
+        this.setState({Visualize: NextComp, Executing: EmptyComp, Stop: false})
+      }, 50);
+
       if (!nextProps.step) {
-        this.sto1 = setTimeout(() => this.setVisualize(nextProps),1000)
+        clearTimeout(this.stoNewSubmit)
+        this.stoNewSubmit = setTimeout(() => {
+          clearTimeout(this.sto1);
+          clearTimeout(this.sto2);
+          console.log('here');
+          this.setVisualize(nextProps)
+        },500)
       }
       return false;
     }
@@ -184,7 +201,7 @@ ShowContainer.defaultProps = {
   stopShow: false,
   step: 0,
   submitStack: 0,
-  nexStep: f=>f,
+  nextStep: f=>f,
   containerState: {},
   executingCode: ''
 }
