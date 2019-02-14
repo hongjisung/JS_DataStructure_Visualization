@@ -22,13 +22,13 @@ let qu = new std.Queue();
 let st = new std.Stack();
 
 [1,6,3,10,9,2,5,4].map(n=>pq.push(n));
-[1,1,1,1,].map(n=>pq.pop());
+[1,1,1,1,].map(k=>pq.pop());
 
-[1,2,3,4].map(n=>qu.push(n));
+[1,2,3,4].map(m=>qu.push(m));
 qu.pop();
 qu.pop();
 qu.pop();
-[1,2,3].map(n=>qu.push(n));
+[1,2,3].map(i=>qu.push(i));
 qu.push(4);
 
 st.push(3);
