@@ -22,7 +22,7 @@ full size일 때는 appear로 sizeup후 삽입
 
 class Push extends Component {
   // constructor
-  constructor({stop, initiate, object, params}) {
+  constructor({stop, initiate, object, params, duration}) {
     super()
     
     this.origin = new PriorityQueue('', object.pq);
@@ -35,7 +35,7 @@ class Push extends Component {
     this.sto = null;
     this.id = 1;
 
-    this.duration = 1;
+    this.duration = duration;
     
     this.topSvg = [
       // size svg
@@ -234,14 +234,16 @@ Push.propTypes = {
   stop: PropTypes.bool,
   initiate: PropTypes.func,
   object: PropTypes.object,
-  params: PropTypes.array
+  params: PropTypes.array,
+  duration: PropTypes.number,
 }
 
 Push.defaultProps = {
   stop: false,
   initiate: f=>f,
   object: {},
-  params: []
+  params: [],
+  duration: 1,
 }
 
 export default Push

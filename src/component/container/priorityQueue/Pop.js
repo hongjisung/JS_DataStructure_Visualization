@@ -13,7 +13,7 @@ import {PriorityQueue} from 'js_dsal'
 
 class Pop extends Component {
   // constructor
-  constructor({stop, initiate, object, params}) {
+  constructor({stop, initiate, object, params, duration}) {
     super()
     
     console.log(object)
@@ -26,7 +26,7 @@ class Pop extends Component {
     this.interval = 20;
     this.id = 1;
 
-    this.duration = 1;
+    this.duration = duration;
     
     this.topSvg = [
       <text key={this.id} x={this.interval + 70} y={20} width={30} height={15}>max size: {this.maxSize}</text>
@@ -292,14 +292,16 @@ Pop.propTypes = {
   stop: PropTypes.bool,
   initiate: PropTypes.func,
   object: PropTypes.object,
-  params: PropTypes.array
+  params: PropTypes.array,
+  duration: PropTypes.number,
 }
 
 Pop.defaultProps = {
   stop: false,
   initiate: f=>f,
   object: {},
-  params: []
+  params: [],
+  duration: 1,
 }
 
 export default Pop
