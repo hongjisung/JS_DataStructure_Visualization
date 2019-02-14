@@ -4,32 +4,44 @@ import Arrow from '../Arrow'
 import '../../../stylesheet/container/list/PopFront.css'
 
 
-const PopFront = ({initiate=f=>f, object, params=[]}) => {
+const PopFront = ({initiate=f=>f, object, params=[], duration = 1}) => {
   const list = object
   let itr = list.begin();
   const express = []
   const width = 65;
   const interval = 20;
   const shownodenum = 9;
+  let keyid = 1;
 
   // execute next code
-  initiate(2000)
+  initiate(duration* 2 * 1000)
 
   let count = (list.size()>shownodenum)?shownodenum : list.size();
   if(count>1) {
-    express.push(<text x={interval} y={40} width={30} height={15}>Front</text>)
-    express.push(<text x={interval} y={130} width={30} height={15}>Return: true</text>)
-    express.push(<text className='stackPopSizeDown' x={interval} y={20} width={30} height={15}>size: {list.size()}</text>)
-    express.push(<text className='stackPopSizeUp' x={interval} y={20} width={30} height={15}>size: {list.size() - 1}</text>) 
+    express.push(<text key={keyid} x={interval} y={40} width={30} height={15}>Front</text>)
+    keyid += 1;
+    express.push(<text key={keyid} x={interval} y={130} width={30} height={15}>Return: true</text>)
+    keyid += 1;
+    express.push(<text key={keyid} className='pqPopSizeErase' style={{animationDuration: (duration*2).toString() +'s'}}  x={interval} y={20} width={30} height={15}>size: {list.size()}</text>)
+    keyid += 1;
+    express.push(<text key={keyid} className='pqPopSizeEmerge' style={{animationDuration: (duration*2).toString() +'s'}} x={interval} y={20} width={30} height={15}>size: {list.size() - 1}</text>) 
+    keyid += 1;
   } else if (count === 1){
-    express.push(<text className='listPopFront' x={interval} y={40} width={30} height={15}>Front</text>)
-    express.push(<text x={interval} y={130} width={30} height={15}>Return: true</text>)
-    express.push(<text className='stackPopSizeDown' x={interval} y={20} width={30} height={15}>size: {list.size()}</text>)
-    express.push(<text className='stackPopSizeUp' x={interval} y={20} width={30} height={15}>size: {list.size() - 1}</text>)
+    express.push(<text key={keyid} className='disappear' style={{animationDuration: (duration).toString() +'s'}} x={interval} y={40} width={30} height={15}>Front</text>)
+    keyid += 1;
+    express.push(<text key={keyid} x={interval} y={130} width={30} height={15}>Return: true</text>)
+    keyid += 1;
+    express.push(<text key={keyid} className='pqPopSizeErase' style={{animationDuration: (duration*2).toString() +'s'}} x={interval} y={20} width={30} height={15}>size: {list.size()}</text>)
+    keyid += 1;
+    express.push(<text key={keyid} className='pqPopSizeEmerge' style={{animationDuration: (duration*2).toString() +'s'}} x={interval} y={20} width={30} height={15}>size: {list.size() - 1}</text>)
+    keyid += 1;
   } else {
-    express.push(<text x={interval} y={40} width={30} height={15}>Error: No Data to eliminate</text>)
-    express.push(<text x={interval} y={130} width={30} height={15}>Return: false</text>)
-    express.push(<text x={interval} y={20} width={30} height={15}>size: {list.size()}</text>)
+    express.push(<text key={keyid} x={interval} y={40} width={30} height={15}>Error: No Data to eliminate</text>)
+    keyid += 1;
+    express.push(<text key={keyid} x={interval} y={130} width={30} height={15}>Return: false</text>)
+    keyid += 1;
+    express.push(<text key={keyid} x={interval} y={20} width={30} height={15}>size: {list.size()}</text>)
+    keyid += 1;
   }
   
   // draw node
@@ -37,9 +49,11 @@ const PopFront = ({initiate=f=>f, object, params=[]}) => {
   while (itr !== list.end() && count>=dataitr) {
     const data = itr.getData();
     if (dataitr === 1) {
-      DataNode({"className": "listPopFront", "key": dataitr, "data": data.toString(), x : interval*(dataitr) + width*(dataitr-1), y: 50, "width": width}).map(n => express.push(n))
+      DataNode({key: keyid, ani_delay: '0s', ani_dur:duration.toString()+'s', "className": "disappear", "data": data.toString(), x : interval*(dataitr) + width*(dataitr-1), y: 50, "width": width}).map(n => express.push(n))
+      keyid += 1;
     } else {
-      DataNode({"className": "listPopFrontOrigin", "key": dataitr, "data": data.toString(), x : interval*(dataitr) + width*(dataitr-1), y: 50, "width": width}).map(n => express.push(n))
+      DataNode({key: keyid, ani_delay: duration.toString()+'s', ani_dur:duration.toString()+'s', "className": "listPopFrontOrigin", "data": data.toString(), x : interval*(dataitr) + width*(dataitr-1), y: 50, "width": width}).map(n => express.push(n))
+      keyid += 1;
     }
     dataitr+=1
     itr = itr.getNext();
@@ -49,11 +63,15 @@ const PopFront = ({initiate=f=>f, object, params=[]}) => {
   count = (list.size()>shownodenum)?shownodenum : list.size();
   for (let i=1; i<count; i += 1) {
     if (i === 1 ) {
-      Arrow(interval * i + width * i, 70, interval * (i+1) + width * i, 70, "listPopFront").map(n => express.push(n))
-      Arrow(interval * (i+1) + width * i, 80, interval * i + width * i, 80, "listPopFront").map(n => express.push(n))
+      Arrow(interval * i + width * i, 70, interval * (i+1) + width * i, 70, "disappear", keyid, '0s', duration.toString()+'s').map(n => express.push(n))
+      keyid += 1;
+      Arrow(interval * (i+1) + width * i, 80, interval * i + width * i, 80, "disappear", keyid, '0s', duration.toString()+'s').map(n => express.push(n))
+      keyid += 1;
     } else {
-      Arrow(interval * i + width * i, 70, interval * (i+1) + width * i, 70, "listPopFrontOrigin").map(n => express.push(n))
-      Arrow(interval * (i+1) + width * i, 80, interval * i + width * i, 80, "listPopFrontOrigin").map(n => express.push(n))
+      Arrow(interval * i + width * i, 70, interval * (i+1) + width * i, 70, "listPopFrontOrigin", keyid,duration.toString()+'s',duration.toString()+'s').map(n => express.push(n))
+      keyid += 1;
+      Arrow(interval * (i+1) + width * i, 80, interval * i + width * i, 80, "listPopFrontOrigin", keyid, duration.toString()+'s', duration.toString()+'s').map(n => express.push(n))
+      keyid += 1;
     }
   }
 
