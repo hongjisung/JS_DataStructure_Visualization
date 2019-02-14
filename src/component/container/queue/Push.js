@@ -13,7 +13,7 @@ ex) 1,2,3,empty,empty,empty,10,6
 3) full
 4) empty
 */
-const Push = ({initiate=f=>f, object, params=[]}) => {
+const Push = ({initiate=f=>f, object, params=[], duration=1}) => {
   const origin = object.queue;
   const queue = new Queue();
   queue._elements = [];
@@ -22,7 +22,8 @@ const Push = ({initiate=f=>f, object, params=[]}) => {
   queue._maxSize = origin._maxSize
   queue._begin = origin._begin
   queue._end = origin._end
-
+  
+  let keyid = 1;
   const textSvg = [];
   const endSvg = [];
   const nodeSvg = [];
@@ -33,18 +34,23 @@ const Push = ({initiate=f=>f, object, params=[]}) => {
   let maxSize = queue._maxSize;
 
   // execute next code
-  initiate(2000)
+  initiate(duration*2*1000)
 
   // size svg
-  textSvg.push(<text className='stackPushSizeDown' x={interval} y={20} width={30} height={15}>size: {nodeSize}</text>)
-  textSvg.push(<text className='stackPushSizeUp' x={interval} y={20} width={30} height={15}>size: {nodeSize + 1}</text>)
+  textSvg.push(<text key={keyid} className='pqPopSizeErase' style={{animationDuration: (duration*2).toString()+'s'}} x={interval} y={20} width={30} height={15}>size: {nodeSize}</text>)
+  keyid += 1;
+  textSvg.push(<text key={keyid} className='pqPopSizeEmerge' style={{animationDuration: (duration*2).toString()+'s'}} x={interval} y={20} width={30} height={15}>size: {nodeSize + 1}</text>)
+  keyid += 1;
   
   // max size svg
   if (nodeSize !== maxSize) {
-    textSvg.push(<text x={interval + 50} y={20} width={30} height={15}>max size: {maxSize}</text>)
+    textSvg.push(<text key={keyid} x={interval + 50} y={20} width={30} height={15}>max size: {maxSize}</text>)
+    keyid += 1;
   } else {
-    textSvg.push(<text className='stackPushSizeDown' x={interval + 50} y={20} width={30} height={15}>max size: {maxSize}</text>)
-    textSvg.push(<text className='stackPushSizeUp' x={interval + 50} y={20} width={30} height={15}>max size: {maxSize * 2}</text>)
+    textSvg.push(<text key={keyid} className='pqPopSizeErase' style={{animationDuration: (duration*2).toString()+'s'}} x={interval + 50} y={20} width={30} height={15}>max size: {maxSize}</text>)
+    keyid += 1;
+    textSvg.push(<text key={keyid} className='pqPopSizeEmerge' style={{animationDuration: (duration*2).toString()+'s'}} x={interval + 50} y={20} width={30} height={15}>max size: {maxSize * 2}</text>)
+    keyid += 1;
   }
   
 
@@ -55,16 +61,19 @@ const Push = ({initiate=f=>f, object, params=[]}) => {
   if(nodeSize === maxSize) {
     // full
     // erase node and end
-    endSvg.push(<text className='queuePushDisappear' x={interval + width*(lastpoint - 1)} y={40} width={30} height={15}>Back</text>)
+    endSvg.push(<text key={keyid} className='queuePushDisappear' style={{animationDuration: (duration).toString()+'s'}} x={interval + width*(lastpoint - 1)} y={40} width={30} height={15}>Back</text>)
+    keyid += 1;
     let total = showMax;
     let idx = 0;
     // front nodes of base
     while(total > 0 && queue._end - idx >= 0 && showSize > idx) {
       const data = queue._elements[queue._end - idx]
       if (idx < queue.size()) {
-        DataNode({"className":'queuePushDisappear', "data": data.toString(), x : interval + width*(lastpoint - 1 - idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        DataNode({key: keyid, ani_delay:'0s', ani_dur: (duration).toString()+'s', "className":'queuePushDisappear', "data": data.toString(), x : interval + width*(lastpoint - 1 - idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        keyid += 1;
       } else {
-        DataNode({"className":'queuePushDisappear',"color": "gray", x : interval + width*(lastpoint - 1 - idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        DataNode({key: keyid, ani_delay:'0s', ani_dur: (duration).toString()+'s', "className":'queuePushDisappear',"color": "gray", x : interval + width*(lastpoint - 1 - idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        keyid += 1;
       }
       idx += 1;
       total -= 1;
@@ -74,9 +83,11 @@ const Push = ({initiate=f=>f, object, params=[]}) => {
     while(total > 0 && queue._end + idx < maxSize) {
       const data = queue._elements[queue._end + idx]
       if (queue._begin > queue._end && queue._begin <= queue._end + idx) {
-        DataNode({"className":'queuePushDisappear', "data": data.toString(), x : interval + width*(lastpoint - 1 + idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        DataNode({key: keyid, ani_delay:'0s', ani_dur: (duration).toString()+'s', "className":'queuePushDisappear', "data": data.toString(), x : interval + width*(lastpoint - 1 + idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        keyid += 1;
       } else {
-        DataNode({"className":'queuePushDisappear', "color": "gray", x : interval + width*(lastpoint - 1 + idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        DataNode({key: keyid, ani_delay:'0s', ani_dur: (duration).toString()+'s', "className":'queuePushDisappear', "color": "gray", x : interval + width*(lastpoint - 1 + idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        keyid += 1;
       }
       idx += 1;
       total -= 1;
@@ -89,16 +100,19 @@ const Push = ({initiate=f=>f, object, params=[]}) => {
     nodeSize = queue.size()
     maxSize = queue._maxSize;
 
-    endSvg.push(<text className='queuePushAppearNext' x={interval + width*(lastpoint - 1)} y={40} width={30} height={15}>Back</text>)
+    endSvg.push(<text key={keyid} className='queuePushAppearNext' style={{animationDelay: (duration).toString()+'s',  animationDuration: (duration).toString()+'s'}} x={interval + width*(lastpoint - 1)} y={40} width={30} height={15}>Back</text>)
+    keyid += 1;
     total = showMax;
     idx = 0;
     // front nodes of base
     while(total > 0 && queue._end - idx >= 0 && showSize > idx) {
       const data = queue._elements[queue._end - idx]
       if (idx < queue.size()) {
-        DataNode({"className":'queuePushAppearNext', "data": data.toString(), x : interval + width*(lastpoint - 1 - idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        DataNode({key:keyid, ani_delay: (duration).toString()+'s', ani_dur: (duration).toString()+'s', "className":'queuePushAppearNext', "data": data.toString(), x : interval + width*(lastpoint - 1 - idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        keyid += 1;
       } else {
-        DataNode({"className":'queuePushAppearNext',"color": "gray", x : interval + width*(lastpoint - 1 - idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        DataNode({key: keyid, ani_delay: (duration).toString()+'s', ani_dur: (duration).toString()+'s', "className":'queuePushAppearNext',"color": "gray", x : interval + width*(lastpoint - 1 - idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        keyid += 1;
       }
       idx += 1;
       total -= 1;
@@ -108,9 +122,11 @@ const Push = ({initiate=f=>f, object, params=[]}) => {
     while(total > 0 && queue._end + idx < maxSize) {
       const data = queue._elements[queue._end + idx]
       if (queue._begin > queue._end && queue._begin <= queue._end + idx) {
-        DataNode({"className":'queuePushAppearNext', "data": data.toString(), x : interval + width*(lastpoint - 1 + idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        DataNode({key:keyid, ani_delay: (duration).toString()+'s', ani_dur: (duration).toString()+'s', "className":'queuePushAppearNext', "data": data.toString(), x : interval + width*(lastpoint - 1 + idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        keyid += 1;
       } else {
-        DataNode({"className":'queuePushAppearNext', "color": "gray", x : interval + width*(lastpoint - 1 + idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        DataNode({key: keyid, ani_delay: (duration).toString()+'s', ani_dur: (duration).toString()+'s', "className":'queuePushAppearNext', "color": "gray", x : interval + width*(lastpoint - 1 + idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        keyid += 1;
       }
       idx += 1;
       total -= 1;
@@ -119,15 +135,18 @@ const Push = ({initiate=f=>f, object, params=[]}) => {
   } else if (queue._end === maxSize - 1){
     // not full, last
     // back node and end
-    endSvg.push(<text className='queuePushDisappear' x={interval + width*(lastpoint - 1)} y={40} width={30} height={15}>Back</text>)
+    endSvg.push(<text key={keyid} className='queuePushDisappear' style={{animationDuration: (duration).toString()+'s'}} x={interval + width*(lastpoint - 1)} y={40} width={30} height={15}>Back</text>)
+    keyid += 1;
     let total = showMax;
     let idx = 0;
     while(total > 0 && queue._end - idx >= 0 && showSize > idx) {
       const data = queue._elements[queue._end - idx]
       if (idx < queue.size()) {
-        DataNode({"className": "queuePushDisappear", "data": data.toString(), x : interval + width*(lastpoint - 1 - idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        DataNode({key: keyid, ani_delay:'0s', ani_dur: (duration).toString()+'s', "className": "queuePushDisappear", "data": data.toString(), x : interval + width*(lastpoint - 1 - idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        keyid += 1;
       } else {
-        DataNode({"className": "queuePushDisappear", "color": "gray", x : interval + width*(lastpoint - 1 - idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        DataNode({key: keyid, ani_delay:'0s', ani_dur: (duration).toString()+'s', "className": "queuePushDisappear", "color": "gray", x : interval + width*(lastpoint - 1 - idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        keyid += 1;
       }
       idx += 1;
       total -= 1;
@@ -136,31 +155,39 @@ const Push = ({initiate=f=>f, object, params=[]}) => {
     // front node and end
     total = showMax;
     idx = 0;
-    endSvg.push(<text className='queuePushAppearNext' x={interval} y={40} width={30} height={15}>Back</text>)
+    endSvg.push(<text key={keyid} className='queuePushAppearNext' style={{animationDelay: (duration).toString()+'s',  animationDuration: (duration).toString()+'s'}} x={interval} y={40} width={30} height={15}>Back</text>)
+    keyid += 1;
     while(total - idx > 0 && idx <= queue._end) {
       const data = queue._elements[idx]
       if (idx >= queue._begin) {
-        DataNode({"className": "queuePushAppearNext", "data": data.toString(), x : interval + width*(idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        DataNode({key:keyid, ani_delay: (duration).toString()+'s', ani_dur: (duration).toString()+'s', "className": "queuePushAppearNext", "data": data.toString(), x : interval + width*(idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        keyid += 1;
       } else if(idx === 0) {
-        DataNode({"className": "queuePushAppearNext", "data": params[0].toString(), x : interval + width*(idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        DataNode({key: keyid, ani_delay: (duration).toString()+'s', ani_dur: (duration).toString()+'s', "className": "queuePushAppearNext", "data": params[0].toString(), x : interval + width*(idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        keyid += 1;
       } else {
-        DataNode({"className": "queuePushAppearNext", "color": "gray", x : interval + width*(idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        DataNode({key: keyid, ani_delay: (duration).toString()+'s', ani_dur: (duration).toString()+'s', "className": "queuePushAppearNext", "color": "gray", x : interval + width*(idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        keyid += 1;
       }
       idx += 1;
     }
 
   } else if (nodeSize === 0) {
     // empty
-    DataNode({"color": "gray", x : interval, y: 50, "width": width}).map(n => nodeSvg.push(n))
-    DataNode({"color": "gray", x : interval + width, y: 50, "width": width}).map(n => nodeSvg.push(n))
+    DataNode({key: keyid, "color": "gray", x : interval, y: 50, "width": width}).map(n => nodeSvg.push(n))
+    keyid += 1;
+    DataNode({key: keyid, "color": "gray", x : interval + width, y: 50, "width": width}).map(n => nodeSvg.push(n))
+    keyid += 1;
       
-    endSvg.push(<text className='queuePushEmerge' x={interval} y={40} width={30} height={15}>Back</text>)
-    DataNode({"className": 'queuePushEmerge',"data": params[0].toString(), x : interval, y: 50, "width": width}).map(n => nodeSvg.push(n))
-  
+    endSvg.push(<text key={keyid} className='queuePushEmerge' style={{animationDuration: (duration).toString()+'s'}} x={interval} y={40} width={30} height={15}>Back</text>)
+    keyid += 1;
+    DataNode({key: keyid, ani_delay:'0s', ani_dur: (duration).toString()+'s', "className": 'queuePushEmerge',"data": params[0].toString(), x : interval, y: 50, "width": width}).map(n => nodeSvg.push(n))
+    keyid += 1;
   } else {
     // not full, not last
     // end
-    endSvg.push(<text className='queuePushMove' x={interval + width*(lastpoint - 1)} y={40} width={30} height={15}>Back</text>)
+    endSvg.push(<text key={keyid} className='queuePushMove' style={{animationDelay: (duration).toString()+'s',  animationDuration: (duration).toString()+'s'}} x={interval + width*(lastpoint - 1)} y={40} width={30} height={15}>Back</text>)
+    keyid += 1;
     
     // node
     let total = showMax;
@@ -169,9 +196,11 @@ const Push = ({initiate=f=>f, object, params=[]}) => {
     while(total > 0 && queue._end - idx >= 0 && showSize > idx) {
       const data = queue._elements[queue._end - idx]
       if (idx < queue.size()) {
-        DataNode({"data": data.toString(), x : interval + width*(lastpoint - 1 - idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        DataNode({key:keyid, "data": data.toString(), x : interval + width*(lastpoint - 1 - idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        keyid += 1;
       } else {
-        DataNode({"color": "gray", x : interval + width*(lastpoint - 1 - idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        DataNode({key: keyid, "color": "gray", x : interval + width*(lastpoint - 1 - idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        keyid += 1;
       }
       idx += 1;
       total -= 1;
@@ -181,16 +210,19 @@ const Push = ({initiate=f=>f, object, params=[]}) => {
     while(total > 0 && queue._end + idx < maxSize) {
       const data = queue._elements[queue._end + idx]
       if (queue._begin > queue._end && queue._begin <= queue._end + idx) {
-        DataNode({"data": data.toString(), x : interval + width*(lastpoint - 1 + idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        DataNode({key: keyid, "data": data.toString(), x : interval + width*(lastpoint - 1 + idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        keyid += 1;
       } else {
-        DataNode({"color": "gray", x : interval + width*(lastpoint - 1 + idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        DataNode({key: keyid, "color": "gray", x : interval + width*(lastpoint - 1 + idx), y: 50, "width": width}).map(n => nodeSvg.push(n))
+        keyid += 1;
       }
       idx += 1;
       total -= 1;
     }
 
     // new node
-    DataNode({"className": "queuePushEmerge","data": params[0].toString(), x : interval + width*(lastpoint), y: 50, "width": width}).map(n => nodeSvg.push(n))
+    DataNode({key: keyid, ani_delay:'0s', ani_dur: (duration).toString()+'s', "className": "queuePushEmerge","data": params[0].toString(), x : interval + width*(lastpoint), y: 50, "width": width}).map(n => nodeSvg.push(n))
+    keyid += 1;
   }
 
   return (
