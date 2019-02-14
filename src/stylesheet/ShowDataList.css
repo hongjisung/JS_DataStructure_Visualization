@@ -1,0 +1,84 @@
+.showdata {
+  width: 15%;
+  height: 4.2%;
+  float: left;
+  position: relative;
+  margin:0;
+  margin-top: 1.5%;
+}
+.showdatabutton {
+  width: 100%;
+  height: 100%;
+  text-align: middle;
+  border: none;
+  background-color: white;
+}
+
+.coverDom2 {
+  width: 1000%;
+  height: 1000%;
+  top:0;
+  left:0;
+  right:0;
+  bottom: 0;
+  position: fixed;
+  background-color: rgba(0,0,0,0);
+  z-index: 1000;
+}
+
+.dataContent {
+  width: 400px;
+  height: 300px;
+  top: 25%;
+  left: 25%;
+  right: 25%;
+  bottom: 25%;
+  overflow: scroll;
+  position: fixed;
+  border-color: black;
+  border-width: 2px;
+  border-style: double;
+  background-color: white;
+  z-index: 1001;
+}
+
+.datascript {
+  height: 30px;
+  position: relative;
+  border-color: black;
+  border-width: 1px;
+  overflow: hidden;
+  border-style: solid;
+}
+
+.dataname {
+  height: 100%;
+  position:relative;
+  float: left;
+}
+
+.consolelog {
+  width: 20%;
+  height: 90%;
+  text-align: middle;
+  border: none;
+  margin:2px;
+  margin-top:1px;
+  float: right;
+  position: relative;
+  background-color: Black;
+  color: white;
+  cursor: pointer;
+}
+
+.closeshowdata {
+  width: 50px;
+  height: 30px;
+  text-align: middle;
+  border: none;
+  background-color: Black;
+  color: white;
+  margin-top:2px;
+  float: left;
+  position: relative;
+}
