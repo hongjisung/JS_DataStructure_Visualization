@@ -3,15 +3,17 @@ import PropTypes from 'prop-types'
 import '../stylesheet/ShowDataList.css'
 
 class ShowDataList extends React.Component {
-  constructor({dataStates=[], changeStop= f=>f}) {
+  constructor({dataStates=[], changeStop= f=>f, stopShow=false}) {
     super()
     this.state = {
       showdata: false,
     }
   }
 
-  changeShowdata = () => {
-    this.props.changeStop();
+  changeShowdata = (did = true) => {
+    if (did || !this.props.stopShow) {
+      this.props.changeStop();
+    }
     this.setState({showdata:!this.state.showdata});
   }
 
@@ -31,7 +33,7 @@ class ShowDataList extends React.Component {
   render() {
     return (
       <div className='showdata'>
-        <button className='showdatabutton' onClick={this.changeShowdata}>show data</button>
+        <button className='showdatabutton' onClick={() => this.changeShowdata(false)}>Show Data</button>
         {(this.state.showdata)?
         <div className='coverDom2'>
           <div className='dataContent'>
