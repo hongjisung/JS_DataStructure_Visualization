@@ -64,11 +64,13 @@ div.text-input1 {
 }
 
 button.input-button {
-  margin-top: 1.5%;
+  height:4.2%;
+  margin-top: 1%;
   float: right;
   text-align: middle;
   border: none;
-  background-color: white;
+  background-color: Black;
+  color: white;
   cursor: pointer;
 }
 
