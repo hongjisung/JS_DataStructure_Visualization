@@ -56,7 +56,17 @@ class PriorityQueue {
    * @param {*} data - the element of priority queue.
    */
   push(variableName='', dataStates=[], visualizeDatas=[], executingCode='', data) {
-    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'push', params: [data]}});
+    // array, object, js_dsal의 class만 deepcopy하자
+    const newdataStates = dataStates.map(n => {
+      if (n.value.classname !== undefined) {
+        return {...n, value: n.value.copy()}
+      } else if (typeof n.value === 'object') {
+        return {...n, value: JSON.parse(JSON.stringify(n))};
+      } else {
+        return n;
+      }
+    })
+    visualizeDatas.push({dataStates: newdataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'push', params: [data]}});
     this.pq.push(data);
   }
 
@@ -65,7 +75,17 @@ class PriorityQueue {
    * @returns {boolean} check well eliminated.
    */
   pop(variableName='', dataStates=[], visualizeDatas=[], executingCode='', ) {
-    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'pop', params: []}});
+    // array, object, js_dsal의 class만 deepcopy하자
+    const newdataStates = dataStates.map(n => {
+      if (n.value.classname !== undefined) {
+        return {...n, value: n.value.copy()}
+      } else if (typeof n.value === 'object') {
+        return {...n, value: JSON.parse(JSON.stringify(n))};
+      } else {
+        return n;
+      }
+    })
+    visualizeDatas.push({dataStates: newdataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'pop', params: []}});
     return this.pq.pop();
   }
 

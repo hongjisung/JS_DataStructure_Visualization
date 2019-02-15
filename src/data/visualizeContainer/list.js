@@ -122,7 +122,17 @@ class List {
    * @param {*} data - the data of list.
    */
   pushBack(variableName='', dataStates=[], visualizeDatas=[], executingCode='', data) {
-    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'pushBack', params: [data]}}); 
+    // array, object, js_dsal의 class만 deepcopy하자
+    const newdataStates = dataStates.map(n => {
+      if (n.value.classname !== undefined) {
+        return {...n, value: n.value.copy()}
+      } else if (typeof n.value === 'object') {
+        return {...n, value: JSON.parse(JSON.stringify(n))};
+      } else {
+        return n;
+      }
+    })
+    visualizeDatas.push({dataStates: newdataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'pushBack', params: [data]}}); 
     this.list.pushBack(data);
   }
 
@@ -131,7 +141,17 @@ class List {
    * @param {*} data - the data of list.
    */
   pushFront(variableName='', dataStates=[], visualizeDatas=[], executingCode='', data) {
-    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'pushFront', params: [data]}}); 
+    // array, object, js_dsal의 class만 deepcopy하자
+    const newdataStates = dataStates.map(n => {
+      if (n.value.classname !== undefined) {
+        return {...n, value: n.value.copy()}
+      } else if (typeof n.value === 'object') {
+        return {...n, value: JSON.parse(JSON.stringify(n))};
+      } else {
+        return n;
+      }
+    })
+    visualizeDatas.push({dataStates: newdataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'pushFront', params: [data]}}); 
     this.list.pushFront(data);
   }
 
@@ -140,7 +160,17 @@ class List {
    * @returns {boolean} false it the list is empty.
    */
   popBack(variableName='', dataStates=[], visualizeDatas=[], executingCode='') {
-    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'popBack', params: []}});
+    // array, object, js_dsal의 class만 deepcopy하자
+    const newdataStates = dataStates.map(n => {
+      if (n.value.classname !== undefined) {
+        return {...n, value: n.value.copy()}
+      } else if (typeof n.value === 'object') {
+        return {...n, value: JSON.parse(JSON.stringify(n))};
+      } else {
+        return n;
+      }
+    })
+    visualizeDatas.push({dataStates: newdataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'popBack', params: []}});
     return this.list.popBack();
   }
 
@@ -149,7 +179,17 @@ class List {
    * @returns {boolean} false it the list is empty.
    */
   popFront(variableName='', dataStates=[], visualizeDatas=[], executingCode='') {
-    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'popFront', params: []}});
+    // array, object, js_dsal의 class만 deepcopy하자
+    const newdataStates = dataStates.map(n => {
+      if (n.value.classname !== undefined) {
+        return {...n, value: n.value.copy()}
+      } else if (typeof n.value === 'object') {
+        return {...n, value: JSON.parse(JSON.stringify(n))};
+      } else {
+        return n;
+      }
+    })
+    visualizeDatas.push({dataStates: newdataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'popFront', params: []}});
     return this.list.popFront();
   }
 

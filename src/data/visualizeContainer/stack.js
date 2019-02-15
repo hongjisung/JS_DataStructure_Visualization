@@ -46,7 +46,17 @@ class Stack {
    * @param {*} data - The data pushed to stack.
    */
   push(variableName='', dataStates=[], visualizeDatas=[], executingCode='', data) {
-    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'push', params: [data]}}); 
+    // array, object, js_dsal의 class만 deepcopy하자
+    const newdataStates = dataStates.map(n => {
+      if (n.value.classname !== undefined) {
+        return {...n, value: n.value.copy()}
+      } else if (typeof n.value === 'object') {
+        return {...n, value: JSON.parse(JSON.stringify(n))};
+      } else {
+        return n;
+      }
+    })
+    visualizeDatas.push({dataStates: newdataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'push', params: [data]}}); 
     this.stack.push(data);
   }
 
@@ -55,7 +65,17 @@ class Stack {
    * @return {boolean} false if the stack is empty.
    */
   pop(variableName='', dataStates=[], visualizeDatas=[], executingCode='') {
-    visualizeDatas.push({dataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'pop', params: []}});
+    // array, object, js_dsal의 class만 deepcopy하자
+    const newdataStates = dataStates.map(n => {
+      if (n.value.classname !== undefined) {
+        return {...n, value: n.value.copy()}
+      } else if (typeof n.value === 'object') {
+        return {...n, value: JSON.parse(JSON.stringify(n))};
+      } else {
+        return n;
+      }
+    })
+    visualizeDatas.push({dataStates: newdataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'pop', params: []}});
     return this.stack.pop();
   }
 
