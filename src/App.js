@@ -96,6 +96,16 @@ class App extends Component {
     this.setState({stopShow: !this.state.stopShow})
   }
 
+  goMethod = (idx) => {
+    this.setState({
+      stopShow: !this.state.stopShow,
+      dataStates: this.testDatas[idx].dataStates,
+      executingCode: this.testDatas[idx].executingCode,
+      containerState: this.testDatas[idx].containerState,
+      step: idx,
+    })
+  }
+
   changeDuration = (value) => {
     console.log('change duration: ', value)
     this.setState({duration: value});
@@ -107,7 +117,7 @@ class App extends Component {
         <TopBar github='https://github.com/hongjisung/DataStructure'
                 docLink='https://hongjisung.github.io/DataStructure/'
                 operationCount={{count: 0}}/> 
-        <ShowSection duration={this.state.duration} changeDuration={this.changeDuration} changeStop={this.changeStop} stopShow = {this.state.stopShow} step={this.state.step} submitStack={this.state.submitStack} nextStep={this.nextStep} dataStates={this.state.dataStates} executingCode = {this.state.executingCode} containerState={this.state.containerState}/>
+        <ShowSection goMethod={this.goMethod} methodList={this.testDatas.filter(n=>n.executingCode)} duration={this.state.duration} changeDuration={this.changeDuration} changeStop={this.changeStop} stopShow = {this.state.stopShow} step={this.state.step} submitStack={this.state.submitStack} nextStep={this.nextStep} dataStates={this.state.dataStates} executingCode = {this.state.executingCode} containerState={this.state.containerState}/>
         <InputSection getCode={this.getCode} getData={this.getData}/>
       </div>
     );

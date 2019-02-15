@@ -1,0 +1,69 @@
+.showmethod {
+  width: 20%;
+  height: 4.2%;
+  float: left;
+  position: relative;
+  margin:0;
+  margin-top: 0.8%;
+}
+
+.showmethodbutton {
+  width: 100%;
+  height: 100%;
+  text-align: middle;
+  border: none;
+  background-color: Black;
+  color: white;
+  margin-left: 10px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.methodContent {
+  width: 500px;
+  height: 300px;
+  top: 25%;
+  left: 25%;
+  right: 25%;
+  bottom: 25%;
+  overflow: scroll;
+  position: fixed;
+  border-color: black;
+  border-width: 2px;
+  border-style: double;
+  background-color: white;
+  z-index: 1001;
+}
+
+
+.methodscript {
+  width: 100%;
+  height: 30px;
+  position: relative;
+  border-color: black;
+  border-width: 1px;
+  overflow: hidden;
+  border-style: solid;
+}
+
+.methodCommand {
+  height: 100%;
+  position:relative;
+  float: left;
+  margin: 3px;
+}
+
+.goMethod {
+  width: 10%;
+  height: 90%;
+  text-align: middle;
+  border: none;
+  margin:2px;
+  margin-right: 3px;
+  margin-top:1px;
+  float: right;
+  position: relative;
+  background-color: Black;
+  color: white;
+  cursor: pointer;
+}
