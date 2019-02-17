@@ -11,9 +11,9 @@ const NextComp = () => {
   )
 }
 
-const CodeComp = ({executing}) => {
+const CodeComp = ({executing, step}) => {
   return (
-    <div className='codeText'>{executing}</div>
+    <div className='codeText'>{(step >= 0) ? step.toString()+'. ': null} {executing}</div>
   )
 }
 
@@ -38,7 +38,9 @@ class ShowContainer extends Component{
     const objectName = props.containerState.object.classname
     const method = props.containerState.method
     this.params = props.containerState.params
-    
+  
+    this.setState({Visualize: EmptyComp, Executing: EmptyComp, Stop: false})    
+    setTimeout(()=>{
     if (objectName === 'List') {
       switch(method){
         case 'pushBack': 
@@ -90,6 +92,7 @@ class ShowContainer extends Component{
           this.setState({Visualize: EmptyComp, Executing: CodeComp,Stop: false});
       }
     }
+    }, 10)
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -114,7 +117,7 @@ class ShowContainer extends Component{
       clearTimeout(this.sto2);
       console.log('clear timeout, stopShow true');
       this.setState({Stop: true})
-      this.sto1 = setTimeout(() => this.setState({Visualize: NextComp, Stop: false}), 50);
+      // this.sto1 = setTimeout(() => this.setState({Visualize: NextComp, Stop: false}), 50);
       return false;
     }
 
@@ -133,8 +136,8 @@ class ShowContainer extends Component{
       this.sto2 = setTimeout(() => {
         clearTimeout(this.sto1);
         clearTimeout(this.sto2);
-        this.setState({Visualize: NextComp, Executing: EmptyComp, Stop: false})
-      }, 50);
+        this.setState({Visualize: EmptyComp, Executing: EmptyComp, Stop: false})
+      }, 10);
 
       if (!nextProps.step) {
         clearTimeout(this.stoNewSubmit)
@@ -168,8 +171,9 @@ class ShowContainer extends Component{
     console.log('call initiate')
     console.log(this.props.containerState.object)
     this.sto1 = setTimeout(() => {
-      this.setState({Visualize: NextComp, Executing: EmptyComp, Stop: false})
-      this.sto2 = setTimeout(() => this.props.nextStep(submitStack), 1000)
+      // this.setState({Visualize: NextComp, Executing: EmptyComp, Stop: false})
+      this.setState({Visualize: EmptyComp, Executing: EmptyComp, Stop: false})
+      this.sto2 = setTimeout(() => this.props.nextStep(submitStack), 10)
     }, time)
   }
 
@@ -182,9 +186,9 @@ class ShowContainer extends Component{
           <input type='range' min={20} max={250} value={this.props.duration} onChange={e => this.props.changeDuration(e.target.value)} className='slider' />
         </div>
         <div className='text-show3'>Executing: </div>
-        <this.state.Executing executing = {this.props.executingCode} />
+        <this.state.Executing executing = {this.props.executingCode} step={this.props.step}/>
         <div className='drawing'>
-        {console.log('out: ', this.props.containerState.object, this.props.stopShow)}
+        {console.log('out: ', this.state.Visualize, this.props.containerState.object, this.props.stopShow)}
         <this.state.Visualize duration={Number(this.props.duration)/100} stop={this.state.Stop} initiate={this.initiate} object={this.props.containerState.object} params = {this.params}/>
         </div>
       </div>
