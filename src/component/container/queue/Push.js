@@ -15,6 +15,9 @@ ex) 1,2,3,empty,empty,empty,10,6
 */
 const Push = ({initiate=f=>f, object, params=[], duration=1}) => {
   const origin = object.queue;
+  if (origin === undefined) {
+    return (<div/>)
+  }
   const queue = new Queue();
   queue._elements = [];
   origin._elements.map(n => queue._elements.push(n))
