@@ -61,6 +61,9 @@ class Pop extends Component {
       return false
     }
 
+    
+    this.duration = nextProps.duration;
+
     return true
   }
 

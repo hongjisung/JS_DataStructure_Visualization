@@ -97,6 +97,15 @@ class ShowContainer extends Component{
 
   shouldComponentUpdate(nextProps, nextState) {
     console.log(nextProps, this.props)
+    
+    // duration change, clear initiate call
+    if (this.props.duration !== nextProps && nextProps.containerState.object.classname !== 'PriorityQueue') {
+      console.log('call duration change')
+      clearTimeout(this.sto1)
+      clearTimeout(this.sto2)
+    }
+
+
     // if state change, return true;
     if (this.state !== nextState) {
       return true;
