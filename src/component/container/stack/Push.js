@@ -3,7 +3,7 @@ import DataNode from '../DataNode'
 import '../../../stylesheet/container/stack/Push.css'
 import {Stack} from 'js_dsal'
 
-const Push = ({initiate=f=>f, object, params=[], duration = 1}) => {
+const Push = ({initiate=f=>f, object, params=[], duration = 1, stop = false}) => {
   const stack = new Stack(object.stack)
   const express = []
   const width = 65;
@@ -13,7 +13,9 @@ const Push = ({initiate=f=>f, object, params=[], duration = 1}) => {
   let keyid = 1;
 
   // execute next code
-  initiate(duration*2*1000)
+  if (!stop) {
+    initiate(duration * 2 * 1000)
+  }
 
   express.push(<text key={keyid} className='pqPopSizeErase' style={{animationDuration: (duration*2).toString()+'s'}} x={interval} y={20} width={30} height={15}>size: {showSize}</text>)
   keyid += 1;

@@ -4,7 +4,7 @@ import '../../../stylesheet/container/stack/Pop.css'
 import {Stack} from 'js_dsal'
 
 
-const Pop = ({initiate=f=>f, object, params=[], duration = 1}) => {
+const Pop = ({initiate=f=>f, object, params=[], duration = 1, stop = false}) => {
   const stack = new Stack(object.stack)
   const express = []
   const width = 65;
@@ -14,7 +14,9 @@ const Pop = ({initiate=f=>f, object, params=[], duration = 1}) => {
   let keyid = 1;
 
   // execute next code
-  initiate(duration*2*1000)
+  if (!stop) {
+    initiate(duration * 2 * 1000)
+  }
   
   let size = (stack.size()>shownodenum)?shownodenum : stack.size();
   const lastpoint = (size>5)?5:size;

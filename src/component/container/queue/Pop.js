@@ -10,7 +10,7 @@ import {Queue} from 'js_dsal'
 4) else
 */
 
-const Pop = ({initiate=f=>f, object, params=[], duration = 1}) => { 
+const Pop = ({initiate=f=>f, object, params=[], duration = 1, stop = false}) => { 
   const origin = object.queue;
   if (origin === undefined) {
     return (<div />)
@@ -35,7 +35,9 @@ const Pop = ({initiate=f=>f, object, params=[], duration = 1}) => {
   let maxSize = queue._maxSize;
 
   // execute next code
-  initiate(duration * 2 * 1000)
+  if (!stop) {
+    initiate(duration * 2 * 1000)
+  }
 
   // size svg
   if (nodeSize) {

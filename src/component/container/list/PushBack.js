@@ -4,7 +4,7 @@ import Arrow from '../Arrow'
 import '../../../stylesheet/container/list/PushBack.css'
 
 
-const PushBack = ({initiate=f=>f, object, params=[], duration = 1}) => {
+const PushBack = ({initiate=f=>f, object, params=[], duration = 1, stop = false}) => {
   const list = object
   let itr = list.rbegin();
   const express = []
@@ -14,7 +14,9 @@ const PushBack = ({initiate=f=>f, object, params=[], duration = 1}) => {
   let keyid = 1;
 
   // execute next code
-  initiate(duration*2* 1000)
+  if (!stop) {
+    initiate(duration * 2 * 1000)
+  }
 
   // draw node
   let count = (list.size()>5)?5 : list.size();

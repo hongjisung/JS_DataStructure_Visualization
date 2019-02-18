@@ -13,7 +13,7 @@ ex) 1,2,3,empty,empty,empty,10,6
 3) full
 4) empty
 */
-const Push = ({initiate=f=>f, object, params=[], duration=1}) => {
+const Push = ({initiate=f=>f, object, params=[], duration=1, stop = false}) => {
   const origin = object.queue;
   if (origin === undefined) {
     return (<div/>)
@@ -37,7 +37,9 @@ const Push = ({initiate=f=>f, object, params=[], duration=1}) => {
   let maxSize = queue._maxSize;
 
   // execute next code
-  initiate(duration*2*1000)
+  if (!stop) {
+    initiate(duration * 2 * 1000)
+  }
 
   // size svg
   textSvg.push(<text key={keyid} className='pqPopSizeErase' style={{animationDuration: (duration*2).toString()+'s'}} x={interval} y={20} width={30} height={15}>size: {nodeSize}</text>)
