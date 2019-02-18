@@ -89,6 +89,9 @@ class Stack {
     return this.stack.compare(otherStack);
   }
 
+  toString() {
+    return this.stack.toString();
+  }
 
   // new method
   copy() {

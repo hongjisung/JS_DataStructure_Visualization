@@ -89,7 +89,9 @@ class PriorityQueue {
     return this.pq.pop();
   }
 
-  
+  toString() {
+    return this.pq.toString();
+  }
 
   //new method
   copy() {

@@ -125,6 +125,10 @@ class Deque {
     return this.deque.compare();
   }
 
+  toString() {
+    return this.deque.toString();
+  }
+
   // new method
   copy() {
     return new Deque(this.deque);

@@ -108,6 +108,10 @@ class Queue {
     return this.queue.compare(otherQueue);
   }
 
+  toString() {
+    return this.queue.toString();
+  }
+
   //new method
   copy() {
     const output = new Queue();

@@ -270,6 +270,10 @@ class List {
     return iterator;
   }
 
+  toString() {
+    return this.list.toString();
+  }
+
   // new method
   copy() {
     return new List(this.list);
