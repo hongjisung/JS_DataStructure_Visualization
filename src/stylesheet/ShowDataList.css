@@ -56,6 +56,15 @@
   border-style: solid;
 }
 
+.datastring {
+  width: 100%;
+  position: relative;
+  border-color: black;
+  border-width: 1px;
+  overflow: hidden;
+  border-style: solid;
+}
+
 .dataname {
   height: 100%;
   position:relative;

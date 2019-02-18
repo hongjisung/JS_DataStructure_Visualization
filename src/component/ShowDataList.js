@@ -7,6 +7,8 @@ class ShowDataList extends React.Component {
     super()
     this.state = {
       showdata: false,
+      showstring: false,
+      string: null,
     }
   }
 
@@ -15,6 +17,10 @@ class ShowDataList extends React.Component {
       this.props.changeStop();
     }
     this.setState({showdata:!this.state.showdata});
+  }
+
+  changeShowString = (string = null) => {
+    this.setState({showstring: !this.state.showstring, string: string});
   }
 
   consolelog = (value) => {
@@ -26,6 +32,7 @@ class ShowDataList extends React.Component {
       <div className='datascript'>
         <div className='dataname'>Name: {data.name.substring(0,20)}</div>
         <button className='consolelog' onClick={() => console.log(data.value)}>Console.log</button>        
+        <button className='consolelog' onClick={() => this.changeShowString(data.value.toString())}>toString</button>   
       </div>
     )
   }
@@ -40,6 +47,14 @@ class ShowDataList extends React.Component {
             {this.props.dataStates.map(data=>this.dataScript(data))}
             <button className='closeshowdata' onClick={this.changeShowdata}>close</button>
           </div>
+        </div>
+        :null}
+        {(this.state.showstring)?
+        <div className='dataContent'>
+          <div className='datastring'>
+          {this.state.string.split('\n').map(n => <div>{'-'+n}<br /></div>)}
+          </div>
+          <button className='closeshowdata' onClick={this.changeShowString}>close</button>
         </div>
         :null}
       </div>
