@@ -4,7 +4,7 @@ import '../stylesheet/OperationState.css'
 
 const OperationState = ({ operationCount={count: 0} }) =>
   <div className='operation-state'>
-    <b className='op-section'>연산 횟수: {`${operationCount['count']}`}</b>
+    <b className='op-section'>rhfktj@gmail.com</b>
   </div>
 
 OperationState.propTypes = {
