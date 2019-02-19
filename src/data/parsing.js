@@ -11,9 +11,12 @@ import std from './visualizeContainer'
 constructors['new std.Stack([1,2,3'])].copy()로 바꿔버린다.
 
 코드에서 클래스 메소드에 세 개의 변수 추가, 현재 이 변수 이름, variable state, visualizeDatas
-
-
 문자열처리
+
+
+2019.02.15
+몇번째 줄에서 발생했는지 처리추가 구상
+
 */
 
 const collectionName = {
@@ -43,7 +46,7 @@ const reservedWord = [
   'throw', 'throws', 'transient', 'true', 'try', 'typeof', 'var', 'void', 'volatile', 'while', 
   'with', 'yield'
 ];
-const visualizeMethod = ['push', 'pushFront', 'pushBack', 'pop', 'popFront', 'popBack']
+const visualizeMethod = ['insert', 'push', 'pushFront', 'pushBack', 'pop', 'popFront', 'popBack']
 const varFilter = 'variables.filter(nkffadv_43s => eval("typeof("+nkffadv_43s+")") !== "undefined").map(nkffad_18dv_43s => {return{name: nkffad_18dv_43s, value: eval(nkffad_18dv_43s)}})'
 
 /**
@@ -59,7 +62,8 @@ const parsing = ({inputCode='', inputData=''}) => {
     'Stack': new std.Stack(),
     'Queue': new std.Queue(),
     'Deque': new std.Deque(),
-    'PriorityQueue': new std.PriorityQueue()
+    'PriorityQueue': new std.PriorityQueue(),
+    'SetTree': new std.SetTree(),
   }; 
   
   // data에 값 할당
