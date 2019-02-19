@@ -48,3 +48,12 @@ npm start
 
 ### **SetTree**
 - insert
+
+### **MultiSetTree**
+- insert
+
+### **MapTree**
+- insert
+
+### **MultiMapTree**
+- insert
