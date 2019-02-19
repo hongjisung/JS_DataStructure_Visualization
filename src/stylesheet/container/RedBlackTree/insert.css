@@ -1,0 +1,60 @@
+@keyframes AppearDisappear {
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.appeardisappear {
+  opacity: 0;
+  animation-name: AppearDisappear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes Disappear80 {
+  0% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.disappear80 {
+  opacity: 1;
+  animation-name: Disappear80;
+  animation-fill-mode: forwards;
+}
+
+@keyframes Appear80 {
+  0% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.appear80 {
+  opacity: 0;
+  animation-name: Appear80;
+  animation-fill-mode: forwards;
+}

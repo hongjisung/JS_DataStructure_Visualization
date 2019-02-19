@@ -91,6 +91,14 @@ class ShowContainer extends Component{
         default:
           this.setState({Visualize: EmptyComp, Executing: CodeComp,Stop: false});
       }
+    } else if (objectName === 'SetTree') {
+      switch (method) {
+        case 'insert':
+          this.setState({Visualize: std.RedBlackTree.Insert, Executing: CodeComp,Stop: false});
+          break;
+        default:
+          this.setState({Visualize: EmptyComp, Executing: CodeComp,Stop: false});
+      }
     }
     }, 10)
   }
