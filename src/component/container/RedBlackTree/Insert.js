@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import TreeNode from '../TreeNode'
 import Arrow from '../TreeArrow'
 import PropTypes from 'prop-types'
-import {SetTree, MapTree, MultiSetTree, MultiMapTree} from 'js_dsal'
 import Node from 'js_dsal/src/containers/node/TreeNode'
 import '../../../stylesheet/container/RedBlackTree/insert.css'
 /*
@@ -194,6 +193,10 @@ const getunum = (node) => {
   return 2;
 }
 
+const getNodeData = (node, kind) => {
+  return (node.getKey() !== null) ? node.getKey().toString() + ((kind === 'map')?'    \n: ' + node.getValue().toString(): ''): 'LEAF'
+}
+
 class Insert extends Component {
   constructor(duration = 1, stop = false, intiate = f=>f, object = {}, params = []) {
     super()
@@ -211,13 +214,17 @@ class Insert extends Component {
 
   // lifecycle 
   componentDidMount() {
-    if (this.props.object.classname === 'SetTree') {
-      this.tree = this.props.object.copy()._settree._tree;
+    if (this.props.object.classname === 'SetTree' || this.props.object.classname === 'MultiSetTree') {
+      if (this.props.object.classname === 'SetTree') {
+        this.tree = this.props.object.copy()._settree._tree;
+      } else {
+        this.tree = this.props.object.copy()._multisettree._tree;
+      }
       this.treekind = 'set';
-      this.newNodeExample = [<TreeNode key={this.keyid} data={this.props.params[0].toString()} cx = {this.interval+20} cy={75} r={18} color={'red'} strokewidth='0px'/>]
+      this.newNodeExample = [<TreeNode key={this.keyid} data={this.props.params[0].toString() + ((this.treekind === 'map')?'    \n: ' + this.props.params[1].toString(): '')} cx = {this.interval+20} cy={75} r={18} color={'red'} strokewidth='0px'/>]
       this.keyid += 1;
 
-      if (this.tree.contains(this.props.params[0])) {
+      if (this.tree.contains(this.props.params[0]) && this.props.object.classname === 'SetTree') {
         // duplicated key
         this.props.initiate(this.props.duration*2*1000);
         this.setState({textSvg: [<text key={this.keyid} x={this.interval} y={50} width={30} height={15}>Error: SetTree contains key already</text>]});
@@ -227,7 +234,7 @@ class Insert extends Component {
         this.props.initiate(this.props.duration*2*1000);
         
         let ElementSvg = [];
-        ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={this.props.duration.toString() + 's'} data={this.props.params[0].toString()} cx={290} cy={120} r={20} color={'black'}/>)
+        ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={this.props.duration.toString() + 's'} data={this.props.params[0].toString() + ((this.treekind === 'map')?'    \n: ' + this.props.params[1].toString(): '')} cx={290} cy={120} r={20} color={'black'}/>)
         this.keyid += 1;
         ElementSvg.push(<TreeNode key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={this.props.duration.toString() + 's'} data={'LEAF'} cx={140} cy={200} r={20} color={'black'}/>)
         this.keyid +=1;
@@ -243,7 +250,47 @@ class Insert extends Component {
         this.keyid +=1;
       } else {
         const ElementSvg = this.drawNodeArrow(this.tree._root);
-        this.setState({ElementSvg, textSvg: [<text key={this.keyid} x={this.interval} y={50} width={30} height={15}>Original SetTree</text>]});
+        this.setState({ElementSvg, textSvg: [<text key={this.keyid} x={this.interval} y={50} width={30} height={15}>Original {(this.props.object.classname === 'SetTree') ? 'SetTree' : 'MultiSetTree'}</text>]});
+        this.keyid +=1;
+        this.sto = setTimeout(() => this.findInsertPose(this.tree._root), this.props.duration*1*1000);
+      }
+    } else if (this.props.object.classname === 'MapTree' || this.props.object.classname === 'MultiMapTree') {
+      if (this.props.object.classname === 'MapTree') {
+        this.tree = this.props.object.copy()._maptree._tree;
+      } else {
+        this.tree = this.props.object.copy()._multimaptree._tree;
+      }
+      this.treekind = 'map';
+      this.newNodeExample = [<TreeNode key={this.keyid} data={this.props.params[0].toString() + ((this.treekind === 'map')?'    \n: ' + this.props.params[1].toString(): '')} cx = {this.interval+20} cy={75} r={18} color={'red'} strokewidth='0px'/>]
+      this.keyid += 1;
+
+      if (this.tree.contains(this.props.params[0]) && this.props.object.classname === 'MapTree') {
+        // duplicated key
+        this.props.initiate(this.props.duration*2*1000);
+        this.setState({textSvg: [<text key={this.keyid} x={this.interval} y={50} width={30} height={15}>Error: MapTree contains key already</text>]});
+        this.keyid +=1;
+      } else if (this.tree.size() === 0) {
+        // empty tree
+        this.props.initiate(this.props.duration*2*1000);
+        
+        let ElementSvg = [];
+        ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={this.props.duration.toString() + 's'} data={this.props.params[0].toString() + ((this.treekind === 'map')?'    \n: ' + this.props.params[1].toString(): '')} cx={290} cy={120} r={20} color={'black'}/>)
+        this.keyid += 1;
+        ElementSvg.push(<TreeNode key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={this.props.duration.toString() + 's'} data={'LEAF'} cx={140} cy={200} r={20} color={'black'}/>)
+        this.keyid +=1;
+        ElementSvg.push(<TreeNode key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={this.props.duration.toString() + 's'} data={'LEAF'} cx={430} cy={200} r={20} color={'black'}/>)
+        this.keyid +=1;
+        // new Arrow
+        ElementSvg = (Arrow(290, 120, 140, 200, 'appear80', this.keyid, this.props.duration.toString() + 's', this.props.duration.toString() + 's')).concat(ElementSvg)
+        this.keyid += 1;  
+        ElementSvg = (Arrow(290, 120, 430, 200, 'appear80', this.keyid, this.props.duration.toString() + 's', this.props.duration.toString() + 's')).concat(ElementSvg)
+        this.keyid += 1;  
+
+        this.setState({ElementSvg, textSvg: [<text key={this.keyid} x={this.interval} y={50} width={30} height={15}>Insert To Empty Tree</text>]});
+        this.keyid +=1;
+      } else {
+        const ElementSvg = this.drawNodeArrow(this.tree._root);
+        this.setState({ElementSvg, textSvg: [<text key={this.keyid} x={this.interval} y={50} width={30} height={15}>Original MapTree</text>]});
         this.keyid +=1;
         this.sto = setTimeout(() => this.findInsertPose(this.tree._root), this.props.duration*1*1000);
       }
@@ -281,11 +328,11 @@ class Insert extends Component {
         ElementSvg = this.drawNodeArrow(grandparent(node), '', this.props.duration.toString() + 's', (this.props.duration*2).toString() + 's');
       }
       // node border
-      ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} data={(node.getKey() !== null) ? node.getKey().toString(): 'LEAF'} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
+      ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} data={getNodeData(node, this.treekind)} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
       this.keyid +=1;
 
       // new node
-      ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={this.props.duration.toString() + 's'} data={key.toString()} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={'red'}/>)
+      ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={this.props.duration.toString() + 's'} data={key.toString() + ((this.treekind === 'map')?'    \n: ' + this.props.params[1].toString(): '')} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={'red'}/>)
       this.keyid += 1;
       ElementSvg.push(<TreeNode key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={this.props.duration.toString() + 's'} data={'LEAF'} cx={this.drawPos[nnum*2+1][0]} cy={this.drawPos[nnum*2+1][1]} r={20} color={'black'}/>)
       this.keyid +=1;
@@ -300,7 +347,7 @@ class Insert extends Component {
       this.setState({ElementSvg, textSvg})
       
       
-      const newnode = new Node(key, key, 'red', null, new Node(null, null, 'black', null, null, null),
+      const newnode = new Node(key, (this.treekind==='map') ? this.props.params[1] : key, 'red', null, new Node(null, null, 'black', null, null, null),
         new Node(null, null, 'black', null, null, null), null, null);
       const parentnode = parent(node);
 
@@ -327,20 +374,20 @@ class Insert extends Component {
       ElementSvg = this.drawNodeArrow(grandparent(node), '', this.props.duration.toString() + 's', (this.props.duration*2).toString() + 's');
     }
     // node border
-    ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} data={(node.getKey() !== null) ? node.getKey().toString(): 'LEAF'} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
+    ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} data={getNodeData(node, this.treekind)} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
     this.keyid +=1;
     
     // node not leaf
-    ElementSvg.push(<TreeNode border='black' key={this.keyid} className={'appear'} ani_dur={(this.props.duration).toString() + 's'} ani_delay={(this.props.duration).toString() + 's'} data={(node.getKey() !== null) ? node.getKey().toString(): 'LEAF'} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
+    ElementSvg.push(<TreeNode border='black' key={this.keyid} className={'appear'} ani_dur={(this.props.duration).toString() + 's'} ani_delay={(this.props.duration).toString() + 's'} data={getNodeData(node, this.treekind)} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
     this.keyid +=1;
     
     if (this.tree.keyComp()(node.getKey(), key)) {
       node = node.getLeftChild();
-      ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} className={'appear'} ani_dur={(this.props.duration).toString() + 's'} ani_delay={(this.props.duration).toString() + 's'} data={(node.getKey() !== null) ? node.getKey().toString(): 'LEAF'} cx={this.drawPos[nnum*2+1][0]} cy={this.drawPos[nnum*2+1][1]} r={20} color={node.getColor()}/>)
+      ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} className={'appear'} ani_dur={(this.props.duration).toString() + 's'} ani_delay={(this.props.duration).toString() + 's'} data={getNodeData(node, this.treekind)} cx={this.drawPos[nnum*2+1][0]} cy={this.drawPos[nnum*2+1][1]} r={20} color={node.getColor()}/>)
       this.keyid +=1;
     } else {
       node = node.getRightChild();
-      ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} className={'appear'} ani_dur={(this.props.duration).toString() + 's'} ani_delay={(this.props.duration).toString() + 's'} data={(node.getKey() !== null) ? node.getKey().toString(): 'LEAF'} cx={this.drawPos[nnum*2+2][0]} cy={this.drawPos[nnum*2+2][1]} r={20} color={node.getColor()}/>)
+      ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} className={'appear'} ani_dur={(this.props.duration).toString() + 's'} ani_delay={(this.props.duration).toString() + 's'} data={getNodeData(node, this.treekind)} cx={this.drawPos[nnum*2+2][0]} cy={this.drawPos[nnum*2+2][1]} r={20} color={node.getColor()}/>)
       this.keyid +=1;
     }
 
@@ -379,14 +426,14 @@ class Insert extends Component {
       ElementSvg = this.drawNodeArrow(grandparent(node), '', this.props.duration.toString() + 's', (this.props.duration*2).toString() + 's');
     }
     // node border
-    ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} data={(node.getKey() !== null) ? node.getKey().toString(): 'LEAF'} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
+    ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} data={getNodeData(node, this.treekind)} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
     this.keyid +=1;
     
     // change
     node.setColor('black');
     
     // node border
-    ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={this.props.duration.toString() + 's'} data={(node.getKey() !== null) ? node.getKey().toString(): 'LEAF'} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
+    ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={this.props.duration.toString() + 's'} data={getNodeData(node, this.treekind)} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
     this.keyid +=1;
     
     this.setState({ElementSvg, textSvg})
@@ -408,7 +455,7 @@ class Insert extends Component {
       ElementSvg = this.drawNodeArrow(grandparent(node), '', this.props.duration.toString() + 's', (this.props.duration*2).toString() + 's');
     }
     // node border
-    ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} data={(node.getKey() !== null) ? node.getKey().toString(): 'LEAF'} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
+    ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} data={getNodeData(node, this.treekind)} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
     this.keyid +=1;
     
     this.setState({ElementSvg, textSvg})
@@ -425,16 +472,16 @@ class Insert extends Component {
     ElementSvg = this.drawNodeArrow(grandparent(node), '', this.props.duration.toString() + 's', (this.props.duration*2).toString() + 's');
 
     // node border
-    ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} data={(node.getKey() !== null) ? node.getKey().toString(): 'LEAF'} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
+    ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} data={getNodeData(node, this.treekind)} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
     this.keyid +=1;
     // parent border
-    ElementSvg.push(<TreeNode border='yellow' key={this.keyid} data={(parent(node).getKey() !== null) ? parent(node).getKey().toString(): 'LEAF'} cx={this.drawPos[pnum][0]} cy={this.drawPos[pnum][1]} r={20} color={parent(node).getColor()}/>)
+    ElementSvg.push(<TreeNode border='yellow' key={this.keyid} data={getNodeData(parent(node), this.treekind)} cx={this.drawPos[pnum][0]} cy={this.drawPos[pnum][1]} r={20} color={parent(node).getColor()}/>)
     this.keyid +=1;
     // uncle border
-    ElementSvg.push(<TreeNode border='magenta' key={this.keyid} data={(uncle(node).getKey() !== null) ? uncle(node).getKey().toString(): 'LEAF'} cx={this.drawPos[unum][0]} cy={this.drawPos[unum][1]} r={20} color={uncle(node).getColor()}/>)
+    ElementSvg.push(<TreeNode border='magenta' key={this.keyid} data={getNodeData(uncle(node), this.treekind)} cx={this.drawPos[unum][0]} cy={this.drawPos[unum][1]} r={20} color={uncle(node).getColor()}/>)
     this.keyid +=1;
     // grandparent border
-    ElementSvg.push(<TreeNode border='gray' key={this.keyid} data={(grandparent(node).getKey() !== null) ? grandparent(node).getKey().toString(): 'LEAF'} cx={this.drawPos[gnum][0]} cy={this.drawPos[gnum][1]} r={20} color={grandparent(node).getColor()}/>)
+    ElementSvg.push(<TreeNode border='gray' key={this.keyid} data={getNodeData(grandparent(node), this.treekind)} cx={this.drawPos[gnum][0]} cy={this.drawPos[gnum][1]} r={20} color={grandparent(node).getColor()}/>)
     this.keyid +=1;
     
     // change
@@ -443,16 +490,16 @@ class Insert extends Component {
     grandparent(node).setColor('red');
     
     // node
-    ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={this.props.duration.toString() + 's'} data={(node.getKey() !== null) ? node.getKey().toString(): 'LEAF'} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
+    ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={this.props.duration.toString() + 's'} data={getNodeData(node, this.treekind)} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
     this.keyid +=1;
     // parent
-    ElementSvg.push(<TreeNode border='yellow' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={this.props.duration.toString() + 's'} data={(parent(node).getKey() !== null) ? parent(node).getKey().toString(): 'LEAF'} cx={this.drawPos[pnum][0]} cy={this.drawPos[pnum][1]} r={20} color={parent(node).getColor()}/>)
+    ElementSvg.push(<TreeNode border='yellow' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={this.props.duration.toString() + 's'} data={getNodeData(parent(node), this.treekind)} cx={this.drawPos[pnum][0]} cy={this.drawPos[pnum][1]} r={20} color={parent(node).getColor()}/>)
     this.keyid +=1;
     // uncle 
-    ElementSvg.push(<TreeNode border='magenta' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={this.props.duration.toString() + 's'} data={(uncle(node).getKey() !== null) ? uncle(node).getKey().toString(): 'LEAF'} cx={this.drawPos[unum][0]} cy={this.drawPos[unum][1]} r={20} color={uncle(node).getColor()}/>)
+    ElementSvg.push(<TreeNode border='magenta' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={this.props.duration.toString() + 's'} data={getNodeData(uncle(node), this.treekind)} cx={this.drawPos[unum][0]} cy={this.drawPos[unum][1]} r={20} color={uncle(node).getColor()}/>)
     this.keyid +=1;
     // grandparent
-    ElementSvg.push(<TreeNode border='gray' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={this.props.duration.toString() + 's'} data={(grandparent(node).getKey() !== null) ? grandparent(node).getKey().toString(): 'LEAF'} cx={this.drawPos[gnum][0]} cy={this.drawPos[gnum][1]} r={20} color={grandparent(node).getColor()}/>)
+    ElementSvg.push(<TreeNode border='gray' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={this.props.duration.toString() + 's'} data={getNodeData(grandparent(node), this.treekind)} cx={this.drawPos[gnum][0]} cy={this.drawPos[gnum][1]} r={20} color={grandparent(node).getColor()}/>)
     this.keyid +=1;
     
     this.setState({ElementSvg, textSvg})
@@ -472,16 +519,16 @@ class Insert extends Component {
     ElementSvg = this.drawNodeArrow(grandparent(node), 'disappear', (this.props.duration).toString() + 's', (this.props.duration).toString() + 's');
 
     // node border
-    ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} className='disappear' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration).toString() + 's'} data={(node.getKey() !== null) ? node.getKey().toString(): 'LEAF'} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
+    ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} className='disappear' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration).toString() + 's'} data={getNodeData(node, this.treekind)} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
     this.keyid +=1;
     // parent border
-    ElementSvg.push(<TreeNode border='yellow' key={this.keyid} className='disappear' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration).toString() + 's'} data={(parent(node).getKey() !== null) ? parent(node).getKey().toString(): 'LEAF'} cx={this.drawPos[pnum][0]} cy={this.drawPos[pnum][1]} r={20} color={parent(node).getColor()}/>)
+    ElementSvg.push(<TreeNode border='yellow' key={this.keyid} className='disappear' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration).toString() + 's'} data={getNodeData(parent(node), this.treekind)} cx={this.drawPos[pnum][0]} cy={this.drawPos[pnum][1]} r={20} color={parent(node).getColor()}/>)
     this.keyid +=1;
     // uncle border
-    ElementSvg.push(<TreeNode border='magenta' key={this.keyid} className='disappear' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration).toString() + 's'} data={(uncle(node).getKey() !== null) ? uncle(node).getKey().toString(): 'LEAF'} cx={this.drawPos[unum][0]} cy={this.drawPos[unum][1]} r={20} color={uncle(node).getColor()}/>)
+    ElementSvg.push(<TreeNode border='magenta' key={this.keyid} className='disappear' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration).toString() + 's'} data={getNodeData(uncle(node), this.treekind)} cx={this.drawPos[unum][0]} cy={this.drawPos[unum][1]} r={20} color={uncle(node).getColor()}/>)
     this.keyid +=1;
     // grandparent border
-    ElementSvg.push(<TreeNode border='gray' key={this.keyid} className='disappear' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration).toString() + 's'} data={(grandparent(node).getKey() !== null) ? grandparent(node).getKey().toString(): 'LEAF'} cx={this.drawPos[gnum][0]} cy={this.drawPos[gnum][1]} r={20} color={grandparent(node).getColor()}/>)
+    ElementSvg.push(<TreeNode border='gray' key={this.keyid} className='disappear' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration).toString() + 's'} data={getNodeData(grandparent(node), this.treekind)} cx={this.drawPos[gnum][0]} cy={this.drawPos[gnum][1]} r={20} color={grandparent(node).getColor()}/>)
     this.keyid +=1;
 
 
@@ -507,23 +554,23 @@ class Insert extends Component {
 
     this.drawNodeArrow(parent(node), 'appear80', (this.props.duration).toString() + 's', (this.props.duration*2).toString() + 's').map(n=>ElementSvg.push(n));
     // node border
-    ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration*2).toString() + 's'} data={(node.getKey() !== null) ? node.getKey().toString(): 'LEAF'} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
+    ElementSvg.push(<TreeNode border='deepskyblue' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration*2).toString() + 's'} data={getNodeData(node, this.treekind)} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
     this.keyid +=1;
     // parent border
     if (nnum === 1) {
       // parent border
-      ElementSvg.push(<TreeNode border='yellow' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration*2).toString() + 's'} data={(node.getLeftChild().getKey() !== null) ? node.getLeftChild().getKey().toString(): 'LEAF'} cx={this.drawPos[pnum][0]} cy={this.drawPos[pnum][1]} r={20} color={node.getLeftChild().getColor()}/>)
+      ElementSvg.push(<TreeNode border='yellow' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration*2).toString() + 's'} data={getNodeData(node.getLeftChild(), this.treekind)} cx={this.drawPos[pnum][0]} cy={this.drawPos[pnum][1]} r={20} color={node.getLeftChild().getColor()}/>)
       this.keyid +=1;
     } else {
       // parent border
-      ElementSvg.push(<TreeNode border='yellow' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration*2).toString() + 's'} data={(node.getRightChild().getKey() !== null) ? node.getRightChild().getKey().toString(): 'LEAF'} cx={this.drawPos[pnum][0]} cy={this.drawPos[pnum][1]} r={20} color={node.getRightChild().getColor()}/>)
+      ElementSvg.push(<TreeNode border='yellow' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration*2).toString() + 's'} data={getNodeData(node.getRightChild(), this.treekind)} cx={this.drawPos[pnum][0]} cy={this.drawPos[pnum][1]} r={20} color={node.getRightChild().getColor()}/>)
       this.keyid +=1;
     }
     // uncle border
-    ElementSvg.push(<TreeNode border='magenta' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration*2).toString() + 's'} data={(sibling(node).getKey() !== null) ? sibling(node).getKey().toString(): 'LEAF'} cx={this.drawPos[unum][0]} cy={this.drawPos[unum][1]} r={20} color={sibling(node).getColor()}/>)
+    ElementSvg.push(<TreeNode border='magenta' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration*2).toString() + 's'} data={getNodeData(sibling(node), this.treekind)} cx={this.drawPos[unum][0]} cy={this.drawPos[unum][1]} r={20} color={sibling(node).getColor()}/>)
     this.keyid +=1;
     // grandparent border
-    ElementSvg.push(<TreeNode border='gray' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration*2).toString() + 's'} data={(parent(node).getKey() !== null) ? parent(node).getKey().toString(): 'LEAF'} cx={this.drawPos[gnum][0]} cy={this.drawPos[gnum][1]} r={20} color={parent(node).getColor()}/>)
+    ElementSvg.push(<TreeNode border='gray' key={this.keyid} className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration*2).toString() + 's'} data={getNodeData(parent(node), this.treekind)} cx={this.drawPos[gnum][0]} cy={this.drawPos[gnum][1]} r={20} color={parent(node).getColor()}/>)
     this.keyid +=1;
 
     this.setState({ElementSvg, textSvg})
@@ -541,16 +588,16 @@ class Insert extends Component {
     ElementSvg = this.drawNodeArrow(grandparent(node), 'disappear', this.props.duration.toString() + 's', (this.props.duration).toString() + 's');
 
     // node border
-    ElementSvg.push(<TreeNode border='deepskyblue' className='disappear' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration).toString() + 's'} key={this.keyid} data={(node.getKey() !== null) ? node.getKey().toString(): 'LEAF'} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
+    ElementSvg.push(<TreeNode border='deepskyblue' className='disappear' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration).toString() + 's'} key={this.keyid} data={getNodeData(node, this.treekind)} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
     this.keyid +=1;
     // parent border
-    ElementSvg.push(<TreeNode border='yellow' className='disappear' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration).toString() + 's'} key={this.keyid} data={(parent(node).getKey() !== null) ? parent(node).getKey().toString(): 'LEAF'} cx={this.drawPos[pnum][0]} cy={this.drawPos[pnum][1]} r={20} color={parent(node).getColor()}/>)
+    ElementSvg.push(<TreeNode border='yellow' className='disappear' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration).toString() + 's'} key={this.keyid} data={getNodeData(parent(node), this.treekind)} cx={this.drawPos[pnum][0]} cy={this.drawPos[pnum][1]} r={20} color={parent(node).getColor()}/>)
     this.keyid +=1;
     // uncle border
-    ElementSvg.push(<TreeNode border='magenta' className='disappear' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration).toString() + 's'} key={this.keyid} data={(uncle(node).getKey() !== null) ? uncle(node).getKey().toString(): 'LEAF'} cx={this.drawPos[unum][0]} cy={this.drawPos[unum][1]} r={20} color={uncle(node).getColor()}/>)
+    ElementSvg.push(<TreeNode border='magenta' className='disappear' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration).toString() + 's'} key={this.keyid} data={getNodeData(uncle(node), this.treekind)} cx={this.drawPos[unum][0]} cy={this.drawPos[unum][1]} r={20} color={uncle(node).getColor()}/>)
     this.keyid +=1;
     // grandparent border
-    ElementSvg.push(<TreeNode border='gray' className='disappear' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration).toString() + 's'} key={this.keyid} data={(grandparent(node).getKey() !== null) ? grandparent(node).getKey().toString(): 'LEAF'} cx={this.drawPos[gnum][0]} cy={this.drawPos[gnum][1]} r={20} color={grandparent(node).getColor()}/>)
+    ElementSvg.push(<TreeNode border='gray' className='disappear' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration).toString() + 's'} key={this.keyid} data={getNodeData(grandparent(node), this.treekind)} cx={this.drawPos[gnum][0]} cy={this.drawPos[gnum][1]} r={20} color={grandparent(node).getColor()}/>)
     this.keyid +=1;
 
     // change
@@ -577,23 +624,23 @@ class Insert extends Component {
     this.drawNodeArrow(parent(node), 'appear80', (this.props.duration).toString() + 's', (this.props.duration*2).toString() + 's').map(n=>ElementSvg.push(n));
 
     // node border
-    ElementSvg.push(<TreeNode border='deepskyblue' className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration*2).toString() + 's'} key={this.keyid} data={(node.getKey() !== null) ? node.getKey().toString(): 'LEAF'} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
+    ElementSvg.push(<TreeNode border='deepskyblue' className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration*2).toString() + 's'} key={this.keyid} data={getNodeData(node, this.treekind)} cx={this.drawPos[nnum][0]} cy={this.drawPos[nnum][1]} r={20} color={node.getColor()}/>)
     this.keyid +=1;
     // parent border
-    ElementSvg.push(<TreeNode border='yellow' className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration*2).toString() + 's'} key={this.keyid} data={(parent(node).getKey() !== null) ? parent(node).getKey().toString(): 'LEAF'} cx={this.drawPos[pnum][0]} cy={this.drawPos[pnum][1]} r={20} color={parent(node).getColor()}/>)
+    ElementSvg.push(<TreeNode border='yellow' className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration*2).toString() + 's'} key={this.keyid} data={getNodeData(parent(node), this.treekind)} cx={this.drawPos[pnum][0]} cy={this.drawPos[pnum][1]} r={20} color={parent(node).getColor()}/>)
     this.keyid +=1;
     // uncle border
     if (nnum === 1) {
       // uncle border
-      ElementSvg.push(<TreeNode border='magenta' className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration*2).toString() + 's'} key={this.keyid} data={(sibling(node).getRightChild().getKey() !== null) ? sibling(node).getRightChild().getKey().toString(): 'LEAF'} cx={this.drawPos[unum][0]} cy={this.drawPos[unum][1]} r={20} color={sibling(node).getRightChild().getColor()}/>)
+      ElementSvg.push(<TreeNode border='magenta' className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration*2).toString() + 's'} key={this.keyid} data={getNodeData(sibling(node).getRightChild(), this.treekind)} cx={this.drawPos[unum][0]} cy={this.drawPos[unum][1]} r={20} color={sibling(node).getRightChild().getColor()}/>)
       this.keyid +=1;
     } else {
       // uncle border
-      ElementSvg.push(<TreeNode border='magenta' className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration*2).toString() + 's'} key={this.keyid} data={(sibling(node).getLeftChild().getKey() !== null) ? sibling(node).getLeftChild().getKey().toString(): 'LEAF'} cx={this.drawPos[unum][0]} cy={this.drawPos[unum][1]} r={20} color={sibling(node).getLeftChild().getColor()}/>)
+      ElementSvg.push(<TreeNode border='magenta' className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration*2).toString() + 's'} key={this.keyid} data={getNodeData(sibling(node).getLeftChild(), this.treekind)} cx={this.drawPos[unum][0]} cy={this.drawPos[unum][1]} r={20} color={sibling(node).getLeftChild().getColor()}/>)
       this.keyid +=1;
     }
     // grandparent border
-    ElementSvg.push(<TreeNode border='gray' className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration*2).toString() + 's'} key={this.keyid} data={(sibling(node).getKey() !== null) ? sibling(node).getKey().toString(): 'LEAF'} cx={this.drawPos[gnum][0]} cy={this.drawPos[gnum][1]} r={20} color={sibling(node).getColor()}/>)
+    ElementSvg.push(<TreeNode border='gray' className='appear80' ani_dur={this.props.duration.toString() + 's'} ani_delay={(this.props.duration*2).toString() + 's'} key={this.keyid} data={getNodeData(sibling(node), this.treekind)} cx={this.drawPos[gnum][0]} cy={this.drawPos[gnum][1]} r={20} color={sibling(node).getColor()}/>)
     this.keyid +=1;
 
     
@@ -653,7 +700,7 @@ class Insert extends Component {
 
     existnum.map((n,i) => {
       if (n !== null) {
-        ElementSvg.push(<TreeNode key={this.keyid} className={aniname} ani_dur={ani_dur} ani_delay={ani_delay} data={(n.getKey() !== null)? n.getKey().toString() : 'LEAF'} cx={this.drawPos[i][0]} cy={this.drawPos[i][1]} r={20} color={n.getColor()}/>)
+        ElementSvg.push(<TreeNode key={this.keyid} className={aniname} ani_dur={ani_dur} ani_delay={ani_delay} data={getNodeData(n, this.treekind)} cx={this.drawPos[i][0]} cy={this.drawPos[i][1]} r={20} color={n.getColor()}/>)
         this.keyid += 1
       }
       return true;

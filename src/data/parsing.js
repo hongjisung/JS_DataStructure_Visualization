@@ -64,6 +64,9 @@ const parsing = ({inputCode='', inputData=''}) => {
     'Deque': new std.Deque(),
     'PriorityQueue': new std.PriorityQueue(),
     'SetTree': new std.SetTree(),
+    'MapTree': new std.MapTree(),
+    'MultiSetTree': new std.MultiSetTree(),
+    'MultiMapTree': new std.MultiMapTree(),
   }; 
   
   // data에 값 할당
