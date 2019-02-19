@@ -52,7 +52,7 @@ class ShowDataList extends React.Component {
         {(this.state.showstring)?
         <div className='dataContent'>
           <div className='datastring'>
-          {this.state.string.split('\n').map(n => <div>{'-'+n}<br /></div>)}
+          {this.state.string.split('\n').map(n => <div>{'+'+n}<br /></div>)}
           </div>
           <button className='closeshowdata' onClick={this.changeShowString}>close</button>
         </div>
