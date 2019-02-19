@@ -74,6 +74,17 @@ button.input-button {
   cursor: pointer;
 }
 
+button.input-button-close {
+  height:10%;
+  margin-top: 1%;
+  float: right;
+  text-align: middle;
+  border: none;
+  background-color: Black;
+  color: white;
+  cursor: pointer;
+}
+
 p.linestyle {
   margin:5px;
 }

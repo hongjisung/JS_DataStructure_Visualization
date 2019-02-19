@@ -44,8 +44,8 @@ class InputSection extends Component {
           <p className='linestyle'>4. The method in parameter does not animationized</p>
           <p className='linestyle'>5. Paste the '.' and name</p>
           <p className='linestyle'>6. Make toString() function to object data. This shows you 6 characters</p>
-          <button className='input-button' onClick={this.changeShow}>close</button>
-        </div>
+          <button className='input-button-close' onClick={this.changeShow}>close</button>
+        </div> 
         </div>
         :null}
       </section>
