@@ -104,7 +104,19 @@ class List {
    * @param {*} data - The data to insert list.
    * @returns {boolean|Node} - If node is not Node object, return false, else return this node.
    */
-  insert(node, data) {
+  insert(variableName='', dataStates=[], visualizeDatas=[], executingCode='', node, data) {
+    // array, object, js_dsal의 class만 deepcopy하자
+    const newdataStates = dataStates.map(n => {
+      if (n.value.classname !== undefined) {
+        return {...n, value: n.value.copy()}
+      } else if (typeof n.value === 'object') {
+        return {...n, value: JSON.parse(JSON.stringify(n))};
+      } else {
+        return n;
+      }
+    })
+    visualizeDatas.push({dataStates: newdataStates, executingCode: executingCode.trim(), containerState: {object: this.copy(), method: 'insert', params: [data]}}); 
+    
     return this.list.insert(node, data);
   }
 
