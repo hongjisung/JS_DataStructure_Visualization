@@ -17,9 +17,15 @@ class InputCode extends Component {
   constructor() {
     super()
     this.code = `
+let tree = new std.SetTree();
 let pq = new std.PriorityQueue();
 let qu = new std.Queue();
 let st = new std.Stack();
+
+for(let i=0; i<20; i+=1) {
+  const n = Math.floor(Math.random()*1000);
+  tree.insert(n);
+}
 
 [1,6,3,10,9,2,5,4].map(n=>pq.push(n));
 [1,1,1,1,].map(k=>pq.pop());
@@ -31,8 +37,7 @@ qu.pop();
 [1,2,3].map(i=>qu.push(i));
 qu.push(4);
 
-st.push(3);
-st.push(qu.size());
+['queue', 'stack', 'list', 'tree', 'priority queue'].map(n=>st.push(n))
 `
   }
   
