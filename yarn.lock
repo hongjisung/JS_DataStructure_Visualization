@@ -4855,9 +4855,9 @@ js-yaml@^3.12.0, js-yaml@^3.7.0, js-yaml@^3.9.0:
     argparse "^1.0.7"
     esprima "^4.0.0"
 
-js_dsal@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/js_dsal/-/js_dsal-1.0.2.tgz#b3a78db5e9284bde890fcd09a08110ed2a84a6f8"
+js_dsal@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/js_dsal/-/js_dsal-1.0.4.tgz#00745886b2ffb23fde61c5382c8d858f94426f22"
 
 jsbn@~0.1.0:
   version "0.1.1"
