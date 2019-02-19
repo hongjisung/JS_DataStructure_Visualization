@@ -32,34 +32,41 @@ npm start
 - pushBack
 - popBack
 - pushFront
-- popFront
+- popFront  
+
 ![video](./example/list.gif)
 
 ### **Stack**
 - push
-- pop
+- pop  
+
 ![video](./example/stack.gif)
 
 ### **queue**
 - push
-- pop
+- pop  
+
 ![video](./example/queue.gif)
 
 ### **priority queue**
 - push
 - pop
+
 ![video](./example/priorityqueue.gif)
 
 ### **SetTree**
 - insert
+
 ![video](./example/settree.gif)
 
 ### **MultiSetTree**
 - insert
+
 ![video](./example/multisettree.gif)
 
 ### **MapTree**
 - insert
+
 ![video](./example/maptree.gif)
 
 ### **MultiMapTree**
