@@ -50,7 +50,7 @@ class ShowMethodList extends React.Component {
 
 ShowMethodList.propTypes = {
   goMethod: PropTypes.func,
-  methodList: PropTypes.object,
+  methodList: PropTypes.array,
   changeStop: PropTypes.func
 }
 

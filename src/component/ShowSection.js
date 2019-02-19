@@ -17,7 +17,7 @@ const ShowSection = ({goMethod=f=>f, methodList=[], duration = 1, changeDuration
   </section>
 
 ShowSection.propTypes = {
-  duration: PropTypes.number,
+  duration: PropTypes.string,
   changeDuration: PropTypes.func,
   changeStop: PropTypes.func,
   stopShow: PropTypes.bool,

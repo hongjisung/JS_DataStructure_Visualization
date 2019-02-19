@@ -220,7 +220,7 @@ ShowContainer.propTypes = {
   nextStep: PropTypes.func,
   containerState: PropTypes.object,
   executingCode: PropTypes.string,
-  duration: PropTypes.number,
+  duration: PropTypes.string,
   changeDuration: PropTypes.func,
 }
 
