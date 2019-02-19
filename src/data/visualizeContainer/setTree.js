@@ -21,7 +21,7 @@ class SetTree {
      * @private
      */
     this._settree = new OldSetTree(data);
-    this.classname = 'SetTree'
+    this.classname = 'SetTree';
   }
 
   /**
@@ -205,7 +205,6 @@ class SetTree {
    * @returns {string}
    */
   toString() {
-    console.log(this._settree)
     return this._settree.toString();
   }
 
