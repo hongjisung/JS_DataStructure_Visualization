@@ -45,3 +45,6 @@ npm start
 ### **priority queue**
 - push
 - pop
+
+### **SetTree**
+- insert
