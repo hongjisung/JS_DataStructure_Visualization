@@ -214,6 +214,8 @@ class Insert extends Component {
     if (this.props.object.classname === 'SetTree') {
       this.tree = this.props.object.copy()._settree._tree;
       this.treekind = 'set';
+      this.newNodeExample = [<TreeNode key={this.keyid} data={this.props.params[0].toString()} cx = {this.interval+20} cy={75} r={18} color={'red'} strokewidth='0px'/>]
+      this.keyid += 1;
 
       if (this.tree.contains(this.props.params[0])) {
         // duplicated key
@@ -665,6 +667,7 @@ class Insert extends Component {
     return (
       <svg style={{width: "100%", height: "100%"}}>
         {this.state.textSvg}
+        {this.newNodeExample}
         {this.state.ElementSvg}
       </svg>
     )
