@@ -24,6 +24,8 @@ class App extends Component {
       submitStack: 0, // this is for stop the executing process now.
       stopShow: false,
       duration: '100',
+      methodAnimation: true,
+      specificData: {},
     }
   }
 
@@ -35,7 +37,8 @@ class App extends Component {
       code, 
       step: -1, 
       submitStack: this.state.submitStack+1,
-      stopShow:false
+      stopShow:false,
+      methodAnimation: true,
     })
   }
   getData = (data) => {
@@ -46,7 +49,8 @@ class App extends Component {
       data, 
       step: -1, 
       submitStack: this.state.submitStack+1,
-      stopShow: false
+      stopShow: false,
+      methodAnimation: true,
     })
   }
 
@@ -79,7 +83,8 @@ class App extends Component {
         dataStates: this.testDatas[nextstep].dataStates,
         executingCode: this.testDatas[nextstep].executingCode,
         containerState: this.testDatas[nextstep].containerState,
-        step: nextstep})
+        step: nextstep,
+        methodAnimation: true,})
     } else if (submitStack === state.submitStack && nextstep === lastvalue) {
       this.setState({
         executingCode: '',
@@ -87,13 +92,16 @@ class App extends Component {
         code:``,
         data:{},
         step: -1,
-        stopShow: false
+        stopShow: false,
+        methodAnimation: true,
       })
     }
   }
 
   changeStop = () => {
-    this.setState({stopShow: !this.state.stopShow})
+    this.setState({
+      stopShow: !this.state.stopShow,
+      methodAnimation: true,})
   }
 
   goMethod = (idx) => {
@@ -103,12 +111,20 @@ class App extends Component {
       executingCode: this.testDatas[idx].executingCode,
       containerState: this.testDatas[idx].containerState,
       step: idx,
+      methodAnimation: true,
     })
   }
 
   changeDuration = (value) => {
     console.log('change duration: ', value)
-    this.setState({duration: value});
+    this.setState({
+      duration: value,
+      methodAnimation: true,
+    });
+  }
+
+  showSpecificData = (data) => {
+    this.setState({specificData:data, methodAnimation: false})
   }
 
   render() {
@@ -117,7 +133,7 @@ class App extends Component {
         <TopBar github='https://github.com/hongjisung/JS_DataStructure_Visualization'
                 docLink='https://hongjisung.github.io/DataStructure/'
                 operationCount={{count: 0}}/> 
-        <ShowSection goMethod={this.goMethod} methodList={this.testDatas.filter(n=>n.executingCode)} duration={this.state.duration} changeDuration={this.changeDuration} changeStop={this.changeStop} stopShow = {this.state.stopShow} step={this.state.step} submitStack={this.state.submitStack} nextStep={this.nextStep} dataStates={this.state.dataStates} executingCode = {this.state.executingCode} containerState={this.state.containerState}/>
+        <ShowSection specificData={this.state.specificData} showSpecificData={this.showSpecificData} methodAnimation={this.state.methodAnimation} goMethod={this.goMethod} methodList={this.testDatas.filter(n=>n.executingCode)} duration={this.state.duration} changeDuration={this.changeDuration} changeStop={this.changeStop} stopShow = {this.state.stopShow} step={this.state.step} submitStack={this.state.submitStack} nextStep={this.nextStep} dataStates={this.state.dataStates} executingCode = {this.state.executingCode} containerState={this.state.containerState}/>
         <InputSection getCode={this.getCode} getData={this.getData}/>
       </div>
     );

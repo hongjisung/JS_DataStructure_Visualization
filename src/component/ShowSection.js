@@ -5,18 +5,26 @@ import ShowDatas from './ShowDatas'
 import ShowDataList from './ShowDataList'
 import ShowMethodList from './ShowMethodList'
 import ShowContainer from './ShowContainer'
+import ShowSpecificData from './ShowSpecificData'
 
-const ShowSection = ({goMethod=f=>f, methodList=[], duration = 1, changeDuration = f=>f, changeStop=f=>f, stopShow=false,step=0,submitStack=0, nextStep= f=>f, dataStates=[], executingCode="", containerState={} }) =>
+const ShowSection = ({specificData={}, showSpecificData=f=>f, methodAnimation = true, goMethod=f=>f, methodList=[], duration = 1, changeDuration = f=>f, changeStop=f=>f, stopShow=false,step=0,submitStack=0, nextStep= f=>f, dataStates=[], executingCode="", containerState={} }) =>
   <section className='show-section'>
     <div className='text-show1'>Variables</div>
-    <ShowDataList stopShow={stopShow} dataStates={dataStates} changeStop={changeStop}/>
+    <ShowDataList showSpecificData={showSpecificData} stopShow={stopShow} dataStates={dataStates} changeStop={changeStop}/>
     <ShowMethodList stopShow={stopShow} goMethod={goMethod} methodList={methodList} changeStop={changeStop}/>
     <button className='stopping' onClick={changeStop}>{(stopShow)?'Restart':'Stop'}</button>
     <ShowDatas dataStates={dataStates} />
-    <ShowContainer duration={duration} changeDuration={changeDuration} stopShow={stopShow} step={step} submitStack={submitStack} nextStep = {nextStep} containerState={containerState} executingCode={executingCode}/>
+    {
+      (methodAnimation)?
+      <ShowContainer duration={duration} changeDuration={changeDuration} stopShow={stopShow} step={step} submitStack={submitStack} nextStep = {nextStep} containerState={containerState} executingCode={executingCode}/>
+      :<ShowSpecificData specificData={specificData} />
+    }
   </section>
 
 ShowSection.propTypes = {
+  specificData: PropTypes.object,
+  showSpecificData: PropTypes.func,
+  methodAnimation: PropTypes.bool,
   duration: PropTypes.string,
   changeDuration: PropTypes.func,
   changeStop: PropTypes.func,

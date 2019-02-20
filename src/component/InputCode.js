@@ -18,6 +18,7 @@ class InputCode extends Component {
     super()
     this.code = `
 let tree = new std.SetTree();
+let li = new std.List([1,3,5,6,8,9,4,10,15,20,-10,'sss','abc','d','z','cd'])
 let pq = new std.PriorityQueue();
 let qu = new std.Queue();
 let st = new std.Stack();

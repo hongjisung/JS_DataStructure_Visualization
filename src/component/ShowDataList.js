@@ -27,12 +27,20 @@ class ShowDataList extends React.Component {
     console.log(value)
   }
 
+  viewContainer = (data = null) => {
+    this.changeShowdata();
+    this.props.showSpecificData(data);
+  }
+
   dataScript = (data) => {
     return (
       <div className='datascript'>
         <div className='dataname'>Name: {data.name.substring(0,20)}</div>
         <button className='consolelog' onClick={() => console.log(data.value)}>Console.log</button>        
-        <button className='consolelog' onClick={() => this.changeShowString(data.value.toString())}>toString</button>   
+        <button className='toString' onClick={() => this.changeShowString(data.value.toString())}>toString</button>   
+        {(data.value.classname === 'List')?
+        <button className='viewobject' onClick={() => this.viewContainer(data)}>View</button>   
+        :null}
       </div>
     )
   }
@@ -65,6 +73,7 @@ class ShowDataList extends React.Component {
 ShowDataList.propTypes = {
   dataStates: PropTypes.array,
   changeStop: PropTypes.func,
+  showSpecificData: PropTypes.func,
 }
 
 export default ShowDataList;
