@@ -27,6 +27,9 @@ If not, the relative path make error.
 npm start
 ```
 
+## **Implement Static Data Structure**
+- **List**
+
 ## **Implemented Method**
 ### **list**
 - pushBack
