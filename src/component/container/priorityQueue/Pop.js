@@ -251,7 +251,7 @@ class Pop extends Component {
   // add node to svg
   addNodes(index = 0) {
     const nodeSvg = [];
-    const lastpoint = (index > 4) ? 4 : index;
+    const lastpoint = (index > 5) ? 5 : index;
     let totalShow = 14;
     
     let i = 0;
