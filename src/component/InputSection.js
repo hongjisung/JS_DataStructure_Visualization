@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import InputCode from './InputCode'
 import InputData from './InputData'
+import SampleCode from './SampleCode'
 import '../stylesheet/InputSection.css'
 
 class InputSection extends Component {
@@ -10,15 +11,22 @@ class InputSection extends Component {
     this.state = {
       submit:false,
       showCaution: false,
+      sampleCode: ``,
+      sampleData: ``,
     };
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    if (nextState.sampleCode !== ``) {
+      return true;
+    }
     const {submit, showCaution} = this.state;
     return (!submit && nextState.submit) || (showCaution !== nextState.showCaution)
   }
   componentDidUpdate() {
-    this.setState({submit: false})
+    if (this.state.submit) {
+      this.setState({submit: false})
+    }
   }
 
   changeShow = () => {
@@ -32,9 +40,10 @@ class InputSection extends Component {
         <div className='text-input1'>Write Code</div>
         <button className='precaution' onClick={this.changeShow}><img className='cautionImg' src={require('../public/caution.png')} alt='caution'/></button>    
         <button className='input-button' onClick={input => this.setState({submit: true})}>submit</button>
-        <InputCode submit={this.state.submit} getCode={this.props.getCode}/>
+        <SampleCode changeSample = {(code, data) => this.setState({sampleCode: code, sampleData: data})}/>
+        <InputCode submit={this.state.submit} getCode={this.props.getCode} sampleCode = {this.state.sampleCode}/>
         <div className='text-input2'>Input Data JSON</div>
-        <InputData submit={this.state.submit} getData={this.props.getData}/>
+        <InputData submit={this.state.submit} getData={this.props.getData} sampleData = {this.state.sampleData}/>
         {(this.state.showCaution)?
         <div className='coverDom'>
         <div className='cautionContent'>

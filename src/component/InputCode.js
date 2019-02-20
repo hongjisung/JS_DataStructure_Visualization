@@ -45,6 +45,10 @@ qu.push(4);
     if(nextProps.submit) {
       this.props.getCode(this.txtarea.value)
     }
+
+    if(nextProps.sampleCode !== ``) {
+      this.txtarea.value = nextProps.sampleCode;
+    }
   }
 
   render() {
@@ -61,12 +65,14 @@ qu.push(4);
 
 InputCode.propTypes = {
   submit: PropTypes.bool,
-  getCode: PropTypes.func
+  getCode: PropTypes.func,
+  sampleCode: PropTypes.string
 }
 
 InputCode.defaultProps ={
   submit: false,
-  getCode: f=>f
+  getCode: f=>f,
+  sampleCode: ``,
 }
 
 export default InputCode

@@ -16,6 +16,9 @@ class InputData extends Component {
     if(nextProps.submit) {
       this.props.getData(this.txtarea.value)
     }
+    if (nextProps.sampleData !== ``) {
+      this.txtarea.value = nextProps.sampleData;
+    }
   }
   render() {
     return (
