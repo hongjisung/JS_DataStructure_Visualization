@@ -27,8 +27,8 @@ Below is 'js_dsal' library documentation
 yarn build
 ```
 **Precaution**  
-For deploy webpage, It should be done that change package.json homepage to "."  
-If not, the relative path make error.
+For deploy webpage, you should change the package.json homepage to "."  
+If not, the relative path makes error.
 
 ### **Run Page**
 ```
