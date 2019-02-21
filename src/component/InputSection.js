@@ -23,9 +23,18 @@ class InputSection extends Component {
     const {submit, showCaution} = this.state;
     return (!submit && nextState.submit) || (showCaution !== nextState.showCaution)
   }
+
   componentDidUpdate() {
     if (this.state.submit) {
-      this.setState({submit: false})
+      this.setState({
+        submit: false,
+        sampleCode: ``,
+        sampleData: ``,})
+    } else {
+      this.setState({
+        sampleCode: ``,
+        sampleData: ``
+      })
     }
   }
 
