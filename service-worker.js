@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/hongjisung/JS_DataStructure_Visualization/precache-manifest.86f95f3c2ba534a0ae09219b50913147.js"
+  "/JS_DataStructure_Visualization/precache-manifest.71658756190cdae50fbca801b95f1a02.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/hongjisung/JS_DataStructure_Visualization/index.html", {
+workbox.routing.registerNavigationRoute("/JS_DataStructure_Visualization/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
