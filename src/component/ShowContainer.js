@@ -23,6 +23,8 @@ const EmptyComp = () => {
   )
 }
 
+let complexCollections = ['PriorityQueue', 'SetTree', 'MapTree', 'MultiSetTree', 'MultiMapTree'];
+
 class ShowContainer extends Component{
   constructor() {
     super()
@@ -131,7 +133,7 @@ class ShowContainer extends Component{
     console.log(nextProps, this.props)
     
     // duration change, clear initiate call
-    if (this.props.duration !== nextProps && nextProps.containerState.object.classname !== 'PriorityQueue') {
+    if (this.props.duration !== nextProps && complexCollections.indexOf(nextProps.containerState.object.classname) === -1) {
       console.log('call duration change')
       clearTimeout(this.sto1)
       clearTimeout(this.sto2)
